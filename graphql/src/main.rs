@@ -1,9 +1,8 @@
 use std::collections::HashMap;
 
+use actix_cors::Cors;
 use actix_web::{
-    middleware,
-    web::{self, Data},
-    App, Error, HttpResponse, HttpServer,
+    http::header, middleware, web::{self, Data}, App, Error, HttpResponse, HttpServer
 };
 use juniper::{graphql_object, EmptyMutation, EmptySubscription, GraphQLObject, RootNode};
 use juniper_actix::{graphql_handler, playground_handler};
@@ -80,6 +79,14 @@ async fn main() -> std::io::Result<()> {
     let server = HttpServer::new(move || {
         App::new()
             .app_data(Data::new(schema()))
+            .wrap(
+                Cors::default()
+                    .allow_any_origin()
+                    .allowed_methods(vec!["GET", "POST"])
+                    .allowed_headers(vec![header::CONTENT_TYPE, header::AUTHORIZATION, header::ACCEPT])
+                    .supports_credentials() // accepts cookies
+                    .max_age(3600),
+            )
             .wrap(middleware::Logger::default())
             .service(
                 web::resource("/graphql")
