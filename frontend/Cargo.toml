@@ -4,4 +4,18 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+graphql_client = { version = "0.14.0", features = ["reqwest"] } # make sure to install the cli too for codegen
+log = "0.4.27"
+reqwest = "0.12.15"
+serde = { version = "1.0.219", features = ["derive"] }
+wasm-bindgen-futures = "0.4.50"
+wasm-logger = "0.2.0"
 yew = { version = "0.21.0", features = ["csr"] } # grabs client side rendering related code
+
+
+# for graphql client code generation
+# make sure to install the cli: cargo install graphql_client_cli
+# first introspect the schema
+# graphql-client introspect-schema http://127.0.0.1:4000/graphql --output schema.json
+# then generate the code
+# graphql-client generate ./graphql/query.graphql --schema-path schema.json --output-directory src/generated/
