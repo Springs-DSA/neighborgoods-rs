@@ -4,3 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+yew = { version = "0.21.0", features = ["csr"] } # grabs client side rendering related code
