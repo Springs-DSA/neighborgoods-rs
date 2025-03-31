@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeighborGoods - Federated Library of Things</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 0;
+            font-weight: normal;
+        }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+        .feature {
+            flex-basis: 30%;
+            background-color: white;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .feature h3 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        .cta {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 1rem;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .secondary-button {
+            background-color: transparent;
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+        }
+        .secondary-button:hover {
+            background-color: #f0f0f0;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .feature {
+                flex-basis: 100%;
+            }
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>NeighborGoods</h1>
+            <p class="tagline">A Federated Library of Things</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Welcome to {{node_name}}</h2>
+            <p>{{node_description}}</p>
+            <p>NeighborGoods is a platform that helps communities share resources, reduce waste, and build stronger connections through collaborative consumption.</p>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <h3>Item Borrowing</h3>
+                <p>Offer items you own to your community or borrow items you need, without the hassle of purchasing things you'll only use a few times.</p>
+            </div>
+            <div class="feature">
+                <h3>Skill Certification</h3>
+                <p>Gain certification for your skills through peer assessment, allowing you to access more items as you develop your expertise.</p>
+            </div>
+            <div class="feature">
+                <h3>Collective Action</h3>
+                <p>Join forces with your neighbors to accomplish community projects, solve collective problems, and make decisions together.</p>
+            </div>
+            <div class="feature">
+                <h3>Community Knowledge</h3>
+                <p>Access and contribute to a shared knowledge base, including guides, tutorials, and community-specific information.</p>
+            </div>
+            <div class="feature">
+                <h3>Local Communication</h3>
+                <p>Connect with others nearby through location-based threads and discussions to coordinate meetups and exchanges.</p>
+            </div>
+            <div class="feature">
+                <h3>Federated Network</h3>
+                <p>This node is part of a larger network, allowing you to connect with other communities while maintaining local autonomy.</p>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Ready to start sharing?</h2>
+            <p>Join our community today to start borrowing and lending items, sharing skills, and connecting with neighbors.</p>
+            <a href="/login" class="button">Log In</a>
+            <a href="/signup" class="button secondary-button">Sign Up</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+        </div>
+    </footer>
+</body>
+</html>

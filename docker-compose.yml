@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:15
+    ports:
+      - "5444:5432"
+    command: -p 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=neighborgoods
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
