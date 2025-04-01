@@ -1,6 +1,20 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
+    items (id) {
+        id -> Uuid,
+        name -> Varchar,
+        description -> Nullable<Text>,
+        contributed_by -> Uuid,
+        upload_directory_path -> Varchar,
+        lat -> Nullable<Numeric>,
+        lng -> Nullable<Numeric>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     node_settings (id) {
         id -> Int4,
         entity -> Varchar,
@@ -29,7 +43,10 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(items -> users (contributed_by));
+
 diesel::allow_tables_to_appear_in_same_query!(
+    items,
     node_settings,
     users,
 );
