@@ -9,15 +9,6 @@ CREATE TABLE node_settings (
     UNIQUE (entity, attribute)
 );
 
--- Initial default settings
-INSERT INTO node_settings (entity, attribute, value, data_type) VALUES
-    ('node', 'name', 'NeighborGoods Local Node', 'string'),
-    ('node', 'id', '1', 'integer'),
-    ('node', 'description', 'A local instance of the NeighborGoods federated library of things', 'string'),
-    ('item', 'budget_per_person', '5', 'integer'),
-    ('collective_action', 'min_votes', '3', 'integer'),
-    ('collective_action', 'expiry_days', '14', 'integer');
-
 -- Create a function to update the updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$

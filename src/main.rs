@@ -6,15 +6,17 @@ mod schema;
 extern crate rocket;
 
 use dotenvy::dotenv;
+use models::init;
 use rocket_db_pools::{Database, Connection};
-use rocket_db_pools::diesel::{AsyncPgConnection, QueryResult, PgPool, prelude::*};
+use rocket_db_pools::diesel::{PgPool, prelude::*};
 use rocket_dyn_templates::{Template, context};
+use rocket::{fairing::{self, AdHoc}, Rocket, Build};
 use schema::node_settings;
-// use std::env;
+use std::env;
 
 #[derive(Database)]
 #[database("neighborgoods_db")]
-struct DbConn(PgPool);
+struct Db(PgPool);
 
 // Legacy route
 #[get("/hello/<name>")]
@@ -23,9 +25,9 @@ fn hello(name: &str) -> String {
 }
 
 #[get("/")]
-async fn landing(mut db: Connection<DbConn>) -> Template {
+async fn landing(mut db: Connection<Db>) -> Template {
     let results = node_settings::table
-        .filter(node_settings::entity.eq("node"))
+        .filter(node_settings::entity.eq(env::var("NODE_ID").expect("NODE_ID must be set")))
         .filter(node_settings::attribute.eq_any(vec!["name", "description"]))
         .load::<models::node_settings::NodeSettings>(&mut db)
         .await;
@@ -62,5 +64,34 @@ fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![hello, landing])
         .attach(Template::fairing())
-        .attach(DbConn::init())
+        .attach(Db::init())
+        .attach(AdHoc::try_on_ignite("Initialize Node Settings", run_migrations))
+}
+
+
+async fn run_migrations(rocket: Rocket<Build>) -> fairing::Result {
+    if let Some(db) = Db::fetch(&rocket) {
+        // Get a connection from the pool
+        match db.get().await {
+            Ok(mut conn) => {
+                match init::initialize_node_settings(&mut conn).await {
+                    Ok(_) => {
+                        info!("Successfully initialized node settings");
+                        Ok(rocket)
+                    },
+                    Err(e) => {
+                        error!("Failed to initialize node settings: {}", e);
+                        Err(rocket)
+                    }
+                }
+            },
+            Err(e) => {
+                error!("Failed to get database connection: {}", e);
+                Err(rocket)
+            }
+        }
+    } else {
+        error!("Failed to fetch database pool");
+        Err(rocket)
+    }
 }
