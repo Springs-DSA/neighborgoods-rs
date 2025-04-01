@@ -23,14 +23,32 @@ fn hello(name: &str) -> String {
 }
 
 #[get("/")]
-async fn list(mut db: Connection<DbConn>) -> Template {
+async fn landing(mut db: Connection<DbConn>) -> Template {
     let results = node_settings::table
+        .filter(node_settings::entity.eq("node"))
+        .filter(node_settings::attribute.eq_any(vec!["name", "description"]))
         .load::<models::node_settings::NodeSettings>(&mut db)
         .await;
 
     match results {
         Ok(settings) => {
-            let context = context! { settings };
+            // Extract name and description from settings
+            let node_name = settings.iter()
+                .find(|s| s.attribute == "name")
+                .map(|s| s.value.clone())
+                .unwrap_or_else(|| "NeighborGoods Node".to_string());
+                
+            let node_description = settings.iter()
+                .find(|s| s.attribute == "description")
+                .map(|s| s.value.clone())
+                .unwrap_or_else(|| "A local instance of NeighborGoods".to_string());
+                
+            // Create context with specific values
+            let context = context! { 
+                node_name,
+                node_description
+            };
+            
             Template::render("landing", &context)
         }
         Err(_) => Template::render("error", context! { error: "Failed to load settings" }),
@@ -42,7 +60,7 @@ fn rocket() -> _ {
     dotenv().ok();
     
     rocket::build()
-        .mount("/", routes![hello, list])
+        .mount("/", routes![hello, landing])
         .attach(Template::fairing())
         .attach(DbConn::init())
 }
