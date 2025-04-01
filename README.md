@@ -64,7 +64,6 @@ The following are database models that will be needed for the above system:
 19. WikiEntry - Marks the indicated post as belonging to the community wiki.
 20. MapThread - Short form comments, tied to a location
 21. MapThreadVote - a vote that either extends or decreases the amount of time before a map thread expires. Join table.
-22. Location - a what3words location, with the w3w string, lat, and long. The primary key of the table is the w3w string.
 
 
 # Pages
