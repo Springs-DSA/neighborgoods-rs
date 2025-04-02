@@ -1,5 +1,34 @@
 // @generated automatically by Diesel CLI.
 
+pub mod sql_types {
+    #[derive(diesel::query_builder::QueryId, diesel::sql_types::SqlType)]
+    #[diesel(postgres_type(name = "transfer_purpose"))]
+    pub struct TransferPurpose;
+
+    #[derive(diesel::query_builder::QueryId, diesel::sql_types::SqlType)]
+    #[diesel(postgres_type(name = "transfer_status"))]
+    pub struct TransferStatus;
+}
+
+diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::TransferPurpose;
+    use super::sql_types::TransferStatus;
+
+    item_transfers (id) {
+        id -> Uuid,
+        item_id -> Uuid,
+        steward_id -> Uuid,
+        prev_steward_id -> Nullable<Uuid>,
+        purpose -> TransferPurpose,
+        lat -> Nullable<Numeric>,
+        lng -> Nullable<Numeric>,
+        status -> TransferStatus,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
 diesel::table! {
     items (id) {
         id -> Uuid,
@@ -7,8 +36,6 @@ diesel::table! {
         description -> Nullable<Text>,
         contributed_by -> Uuid,
         upload_directory_path -> Varchar,
-        lat -> Nullable<Numeric>,
-        lng -> Nullable<Numeric>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -43,9 +70,11 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
 
 diesel::allow_tables_to_appear_in_same_query!(
+    item_transfers,
     items,
     node_settings,
     users,

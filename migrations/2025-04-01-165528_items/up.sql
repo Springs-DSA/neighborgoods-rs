@@ -5,8 +5,6 @@ CREATE TABLE items (
     description TEXT,
     contributed_by UUID NOT NULL,
     upload_directory_path VARCHAR NOT NULL,
-    lat DECIMAL(10, 6),
-    lng DECIMAL(10, 6),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     

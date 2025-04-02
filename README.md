@@ -45,7 +45,7 @@ The eventual goal is to allow individuals to set up networks of these servers, a
 The following are database models that will be needed for the above system:
 1. User - contains the personal information of the user, allows for authentication.
 2. Item - the representation of an item
-3. ItemTransaction - new record created when an item changes hands, and maintains information about the item's condition, such as location. also contains use case (could be transferred to use the item, or perform maintenance, or to store the item.) - use what 3 words api?
+3. ItemTransfer - new record created when an item changes hands, and maintains information about the item's condition, such as location. also contains use case (could be transferred to use the item, or perform maintenance, or to store the item.) - use what 3 words api?
 4. ItemLog - a simple audit log for tracking items outside of transactions. Also used to track maintenance, restock, etc.
 5. Certification - acknowledgements of skill, knowledge, or training in specific areas, e.g. ability to use a 3d printer, drive a vehicle, or use a chainsaw. Also provide user permissions, such as being a system admin or a moderator.
 6. ItemCertRequirement - what certifications a user needs to have before an item can transfer to their stewardship. can have different requirements for different borrow types. Join table.
