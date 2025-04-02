@@ -25,6 +25,19 @@ diesel::table! {
 diesel::table! {
     use diesel::sql_types::*;
     use super::sql_types::TransferPurpose;
+
+    item_cert_requirements (item_id, cert_id) {
+        item_id -> Uuid,
+        cert_id -> Uuid,
+        purposes -> Array<Nullable<TransferPurpose>>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::TransferPurpose;
     use super::sql_types::TransferStatus;
 
     item_transfers (id) {
@@ -82,11 +95,14 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(item_cert_requirements -> certifications (cert_id));
+diesel::joinable!(item_cert_requirements -> items (item_id));
 diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
 
 diesel::allow_tables_to_appear_in_same_query!(
     certifications,
+    item_cert_requirements,
     item_transfers,
     items,
     node_settings,
