@@ -11,6 +11,18 @@ pub mod sql_types {
 }
 
 diesel::table! {
+    certifications (id) {
+        id -> Uuid,
+        code -> Varchar,
+        name -> Varchar,
+        description -> Nullable<Text>,
+        lifetime -> Nullable<Int4>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     use diesel::sql_types::*;
     use super::sql_types::TransferPurpose;
     use super::sql_types::TransferStatus;
@@ -74,6 +86,7 @@ diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
 
 diesel::allow_tables_to_appear_in_same_query!(
+    certifications,
     item_transfers,
     items,
     node_settings,
