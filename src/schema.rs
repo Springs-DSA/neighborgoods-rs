@@ -2,6 +2,10 @@
 
 pub mod sql_types {
     #[derive(diesel::query_builder::QueryId, diesel::sql_types::SqlType)]
+    #[diesel(postgres_type(name = "assessment_type"))]
+    pub struct AssessmentType;
+
+    #[derive(diesel::query_builder::QueryId, diesel::sql_types::SqlType)]
     #[diesel(postgres_type(name = "transfer_purpose"))]
     pub struct TransferPurpose;
 
@@ -79,6 +83,22 @@ diesel::table! {
 }
 
 diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::AssessmentType;
+
+    peer_assessments (id) {
+        id -> Uuid,
+        assessor_id -> Nullable<Uuid>,
+        subject_id -> Nullable<Uuid>,
+        assessment -> AssessmentType,
+        comments -> Text,
+        expires_at -> Timestamp,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     user_certifications (user_id, cert_id) {
         user_id -> Uuid,
         cert_id -> Uuid,
@@ -118,6 +138,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     item_transfers,
     items,
     node_settings,
+    peer_assessments,
     user_certifications,
     users,
 );
