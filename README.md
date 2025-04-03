@@ -86,3 +86,11 @@ The following are the available pages to interact with the application:
 14. Feed - the untruncated list of all posts, including historical
 15. PostThread - a post in full, along with other posts that respond to it.
 16. Wiki - a collection of wiki posts, allowing posts to be collected into a knowledge base.
+
+[proposed palette](https://coolors.co/palette/f0ead2-dde5b6-adc178-a98467-6c584c)
+----------- 
+F0EAD2
+DDE5B6
+ADC178
+A98467
+6C584C
