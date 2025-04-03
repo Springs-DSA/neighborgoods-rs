@@ -2,6 +2,7 @@ mod models;
 mod schema;
 mod services;
 mod utils;
+mod routes;
 
 
 #[macro_use]
@@ -15,6 +16,7 @@ use rocket_dyn_templates::{Template, context};
 use rocket::{fairing::{self, AdHoc}, Rocket, Build};
 use schema::node_settings;
 use std::env;
+// use routes::signup::signup_page;
 
 #[derive(Database)]
 #[database("neighborgoods_db")]
