@@ -1,4 +1,5 @@
 pub mod certification;
+pub mod cert_assessment;
 pub mod init;
 pub mod item;
 pub mod item_cert_requirement;

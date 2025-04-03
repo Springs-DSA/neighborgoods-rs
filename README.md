@@ -55,15 +55,17 @@ The following are database models that will be needed for the above system:
 10. ItemTags - Join table for items and tags
 11. NodeSettings - An Entity Attribute Value (EAV) table that contains node specific server settings, such as item budget per person, node name, node id, collective action settings, etc.
 12. PeerAssessment - records of both peer punishments and peer endorsements. One mechanism by which certs are created and removed.
-13. CollectiveActionCampaign - the record of a (possibly attempted) collective action. Can be either system external (arranging a potluck) or system internal (assigning a cert to a user, modifying node settings.)
-14. Commitment - an individual user's commitment to a collective action campaign. Could be resources, could be a vote, etc. Once a campaign succeeds, the commitment is marked as "Outstanding", awaiting the campaign manager(s) confirmation that the commitment has been honored, or it is performed automatically (if it is a system internal campaign).
-15. CampaignManager - Join table, joining users to campaigns
-16. Post - a simple markdown document, with an author, and body. Can be approved / rejected by moderators.
-17. PostReply - Join table, joins posts to other posts
-18. CampaignReply - Join table, joins posts to Collective Action Campaigns.
-19. WikiEntry - Marks the indicated post as belonging to the community wiki.
-20. MapThread - Short form comments, tied to a location
-21. MapThreadVote - a vote that either extends or decreases the amount of time before a map thread expires. Join table.
+13. CertAssessment - a join table between certifications and peer assessments. this join table is in part what determines which certs are active, and which are not. 
+14. CollectiveActionCampaign - the record of a (possibly attempted) collective action. Can be either system external (arranging a potluck) or system internal (assigning a cert to a user, modifying node settings.)
+15. CollectiveActionCert - similar to CertAssessment, this is a join table between certs and collective action campaigns, that helps determine if a cert is active or not.
+16. Commitment - an individual user's commitment to a collective action campaign. Could be resources, could be a vote, etc. Once a campaign succeeds, the commitment is marked as "Outstanding", awaiting the campaign manager(s) confirmation that the commitment has been honored, or it is performed automatically (if it is a system internal campaign).
+17. CampaignManager - Join table, joining users to campaigns
+18. Post - a simple markdown document, with an author, and body. Can be approved / rejected by moderators.
+19. PostReply - Join table, joins posts to other posts
+20. CampaignReply - Join table, joins posts to Collective Action Campaigns.
+21. WikiEntry - Marks the indicated post as belonging to the community wiki.
+22. MapThread - Short form comments, tied to a location
+23. MapThreadVote - a vote that either extends or decreases the amount of time before a map thread expires. Join table.
 
 
 # Pages

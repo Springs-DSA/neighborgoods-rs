@@ -15,6 +15,15 @@ pub mod sql_types {
 }
 
 diesel::table! {
+    cert_assessments (peer_assessment_id, cert_id) {
+        peer_assessment_id -> Uuid,
+        cert_id -> Uuid,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     certifications (id) {
         id -> Uuid,
         code -> Varchar,
@@ -125,6 +134,8 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(cert_assessments -> certifications (cert_id));
+diesel::joinable!(cert_assessments -> peer_assessments (peer_assessment_id));
 diesel::joinable!(item_cert_requirements -> certifications (cert_id));
 diesel::joinable!(item_cert_requirements -> items (item_id));
 diesel::joinable!(item_transfers -> items (item_id));
@@ -133,6 +144,7 @@ diesel::joinable!(user_certifications -> certifications (cert_id));
 diesel::joinable!(user_certifications -> users (user_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
+    cert_assessments,
     certifications,
     item_cert_requirements,
     item_transfers,
