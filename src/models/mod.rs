@@ -5,3 +5,4 @@ pub mod item_cert_requirement;
 pub mod item_transfer;
 pub mod node_settings;
 pub mod user;
+pub mod user_certification;

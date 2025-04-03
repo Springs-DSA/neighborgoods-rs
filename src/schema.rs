@@ -79,6 +79,16 @@ diesel::table! {
 }
 
 diesel::table! {
+    user_certifications (user_id, cert_id) {
+        user_id -> Uuid,
+        cert_id -> Uuid,
+        expires_at -> Timestamp,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     users (id) {
         id -> Uuid,
         name -> Varchar,
@@ -99,6 +109,8 @@ diesel::joinable!(item_cert_requirements -> certifications (cert_id));
 diesel::joinable!(item_cert_requirements -> items (item_id));
 diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
+diesel::joinable!(user_certifications -> certifications (cert_id));
+diesel::joinable!(user_certifications -> users (user_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     certifications,
@@ -106,5 +118,6 @@ diesel::allow_tables_to_appear_in_same_query!(
     item_transfers,
     items,
     node_settings,
+    user_certifications,
     users,
 );
