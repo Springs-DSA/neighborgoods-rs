@@ -131,6 +131,8 @@ diesel::table! {
         password_reset_expiration -> Nullable<Timestamp>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
+        approved_at -> Nullable<Timestamp>,
+        approved_by -> Nullable<Uuid>,
     }
 }
 

@@ -19,4 +19,6 @@ pub struct User {
     pub password_reset_expiration: Option<chrono::NaiveDateTime>,
     pub created_at: chrono::NaiveDateTime,
     pub updated_at: chrono::NaiveDateTime,
+    pub approved_at: Option<chrono::NaiveDateTime>,
+    pub approved_by: Option<Uuid>,
 }
