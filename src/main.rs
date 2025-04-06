@@ -168,3 +168,10 @@ async fn signup_post(user: Form<UserData<'_>>, mut db: Connection<Db>) -> Flash<
 
     Flash::success(Redirect::to("/"), "User created! Approval pending...")
 }
+
+#[derive(FromForm)]
+struct LoginData<'r> {
+    r#email: &'r str,
+    r#password: &'r str
+}
+
