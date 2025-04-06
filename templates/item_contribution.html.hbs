@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute Item - NeighborGoods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #6C584C;
+            background-color: #F0EAD2;
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            padding: 1rem 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1, h2, h3 {
+            color: #A98467;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 0;
+            font-weight: normal;
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        .user-greeting {
+            margin-right: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #F0EAD2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .contribution-form {
+            background-color: #DDE5B6;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ADC178;
+            border-radius: 4px;
+            background-color: #F0EAD2;
+            color: #6C584C;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ADC178;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            background-color: #F0EAD2;
+            overflow: hidden;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+        .file-input-button {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        .file-input-button:hover {
+            background-color: #A98467;
+        }
+        .file-name {
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+        .cert-requirements {
+            margin-top: 20px;
+            border-top: 1px solid #ADC178;
+            padding-top: 20px;
+        }
+        .cert-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #F0EAD2;
+            border-radius: 4px;
+        }
+        .cert-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .cert-item-details {
+            flex-grow: 1;
+        }
+        .cert-name {
+            font-weight: bold;
+        }
+        .cert-description {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .cert-purpose-select {
+            margin-left: 15px;
+            padding: 5px;
+            border: 1px solid #ADC178;
+            border-radius: 4px;
+            background-color: #F0EAD2;
+        }
+        .buttons-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .cancel-button {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .cancel-button:hover {
+            background-color: #594940;
+        }
+        .submit-button {
+            background-color: #A98467;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #8D6E55;
+        }
+        .required-field::after {
+            content: "*";
+            color: #A98467;
+            margin-left: 5px;
+        }
+        .help-text {
+            font-size: 0.85rem;
+            margin-top: 5px;
+            color: #6C584C;
+            font-style: italic;
+        }
+        .agreement-checkbox {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #F0EAD2;
+            border-radius: 4px;
+            border-left: 3px solid #ADC178;
+        }
+        footer {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .user-menu {
+                margin-top: 15px;
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .buttons-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .cancel-button, .submit-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>NeighborGoods</h1>
+                    <p class="tagline">A Federated Library of Things</p>
+                </div>
+                <div class="user-menu">
+                    <div class="user-greeting">Welcome, {{user.name}}</div>
+                    <div class="nav-links">
+                        <a href="/inventory">Inventory</a>
+                        <a href="/feed">Feed</a>
+                        <a href="/campaigns">Campaigns</a>
+                        <a href="/profile">My Profile</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h2>Contribute a New Item</h2>
+        </div>
+        
+        <form class="contribution-form" action="/items/contribute" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="item-name" class="required-field">Item Name</label>
+                <input type="text" id="item-name" name="name" required placeholder="Enter a descriptive name for the item">
+                <p class="help-text">Choose a clear, descriptive name that helps others identify what the item is.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="item-description">Description</label>
+                <textarea id="item-description" name="description" placeholder="Describe the item, its condition, and any specific usage instructions"></textarea>
+                <p class="help-text">Include details about the item's condition, special features, and any information that would be helpful for borrowers.</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="item-category">Category</label>
+                <select id="item-category" name="category">
+                    <option value="">Select a category</option>
+                    <option value="tools">Tools</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="garden">Garden</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="sports">Sports</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="item-image">Item Image</label>
+                <div class="image-preview" id="image-preview-container">
+                    <img id="preview-image" src="" alt="Image preview">
+                    <span id="preview-placeholder">No image selected</span>
+                </div>
+                <div class="file-input-wrapper">
+                    <button type="button" class="file-input-button">Choose Image</button>
+                    <input type="file" id="item-image" name="image" accept="image/*">
+                </div>
+                <span class="file-name" id="file-name"></span>
+                <p class="help-text">Upload a clear photo of the item. This helps others identify and choose the item.</p>
+            </div>
+            
+            <div class="cert-requirements">
+                <h3>Certification Requirements</h3>
+                <p>Select any certifications that should be required for borrowing this item:</p>
+                
+                {{#if certifications.length}}
+                    {{#each certifications}}
+                        <div class="cert-item">
+                            <input type="checkbox" id="cert-{{this.id}}" name="certifications[]" value="{{this.id}}">
+                            <div class="cert-item-details">
+                                <div class="cert-name">{{this.name}}</div>
+                                <div class="cert-description">{{this.description}}</div>
+                            </div>
+                            <select class="cert-purpose-select" name="cert_purpose_{{this.id}}">
+                                <option value="use">Required for Use</option>
+                                <option value="maintenance">Required for Maintenance</option>
+                                <option value="both">Required for Both</option>
+                            </select>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <p>No certifications are available to choose from.</p>
+                {{/if}}
+                
+                <p class="help-text">Certifications help ensure that people who borrow your item have the necessary skills to use it safely and properly.</p>
+            </div>
+            
+            <div class="agreement-checkbox">
+                <input type="checkbox" id="agreement" name="agreement" required>
+                <label for="agreement">I confirm that I own this item and agree to make it available for borrowing by others in the NeighborGoods community, according to the <a href="/community-agreement" target="_blank">Community Agreement</a>.</label>
+            </div>
+            
+            <div class="buttons-row">
+                <a href="/inventory" class="cancel-button">Cancel</a>
+                <button type="submit" class="submit-button">Contribute Item</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Image preview functionality
+        document.getElementById('item-image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const fileNameElem = document.getElementById('file-name');
+            const previewImage = document.getElementById('preview-image');
+            const previewPlaceholder = document.getElementById('preview-placeholder');
+            
+            if (file) {
+                // Display file name
+                fileNameElem.textContent = file.name;
+                
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    previewPlaceholder.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                fileNameElem.textContent = '';
+                previewImage.style.display = 'none';
+                previewPlaceholder.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

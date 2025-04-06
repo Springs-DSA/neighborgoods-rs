@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory - NeighborGoods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #6C584C;
+            background-color: #F0EAD2;
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            padding: 1rem 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1, h2, h3 {
+            color: #A98467;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 0;
+            font-weight: normal;
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        .user-greeting {
+            margin-right: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #F0EAD2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .contribute-button {
+            background-color: #A98467;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        .contribute-button:hover {
+            background-color: #6C584C;
+        }
+        .filters {
+            background-color: #DDE5B6;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .filter-label {
+            font-weight: bold;
+        }
+        .filter-select, .search-input {
+            padding: 8px;
+            border: 1px solid #ADC178;
+            border-radius: 4px;
+            background-color: #F0EAD2;
+            color: #6C584C;
+        }
+        .search-input {
+            flex-grow: 1;
+            min-width: 200px;
+        }
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-gap: 20px;
+            margin: 20px 0;
+        }
+        .item-card {
+            background-color: #DDE5B6;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .item-image {
+            height: 180px;
+            background-color: #ADC178;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #F0EAD2;
+        }
+        .item-details {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .item-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #A98467;
+        }
+        .item-description {
+            margin-bottom: 15px;
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .item-status {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .status-available {
+            background-color: #ADC178;
+            color: #F0EAD2;
+        }
+        .status-borrowed {
+            background-color: #A98467;
+            color: #F0EAD2;
+        }
+        .status-maintenance {
+            background-color: #6C584C;
+            color: #F0EAD2;
+        }
+        .action-button {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover {
+            background-color: #A98467;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        .pagination-button {
+            background-color: #DDE5B6;
+            color: #6C584C;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .pagination-button.active {
+            background-color: #ADC178;
+            color: #F0EAD2;
+        }
+        .no-items {
+            text-align: center;
+            background-color: #DDE5B6;
+            padding: 40px;
+            border-radius: 5px;
+            grid-column: 1 / -1;
+        }
+        footer {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .user-menu {
+                margin-top: 15px;
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .inventory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>NeighborGoods</h1>
+                    <p class="tagline">A Federated Library of Things</p>
+                </div>
+                <div class="user-menu">
+                    <div class="user-greeting">Welcome, {{user.name}}</div>
+                    <div class="nav-links">
+                        <a href="/inventory">Inventory</a>
+                        <a href="/feed">Feed</a>
+                        <a href="/campaigns">Campaigns</a>
+                        <a href="/profile">My Profile</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h2>Community Inventory</h2>
+            <a href="/items/contribute" class="contribute-button">Contribute New Item</a>
+        </div>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <span class="filter-label">Status:</span>
+                <select class="filter-select" id="status-filter">
+                    <option value="all">All</option>
+                    <option value="available">Available</option>
+                    <option value="borrowed">Borrowed</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Category:</span>
+                <select class="filter-select" id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="tools">Tools</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="garden">Garden</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="sports">Sports</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="filter-group" style="flex-grow: 1;">
+                <span class="filter-label">Search:</span>
+                <input type="text" class="search-input" id="search-items" placeholder="Search by name or description...">
+            </div>
+        </div>
+        
+        <div class="inventory-grid">
+            {{#if items.length}}
+                {{#each items}}
+                    <div class="item-card">
+                        <div class="item-image">
+                            {{#if this.image_path}}
+                                <img src="{{this.image_path}}" alt="{{this.name}}" style="max-width: 100%; max-height: 100%;">
+                            {{else}}
+                                <span>No Image Available</span>
+                            {{/if}}
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">{{this.name}}</div>
+                            <div class="item-description">{{this.description}}</div>
+                            <div class="item-meta">
+                                <span>Contributed by: {{this.contributor_name}}</span>
+                                <span class="item-status status-{{this.status}}">{{this.status}}</span>
+                            </div>
+                            <a href="/items/{{this.id}}" class="action-button">View Details</a>
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="no-items">
+                    <h3>No items found</h3>
+                    <p>There are currently no items in the inventory matching your filters.</p>
+                    <p>Why not contribute the first item?</p>
+                    <a href="/items/contribute" class="contribute-button">Contribute New Item</a>
+                </div>
+            {{/if}}
+        </div>
+        
+        {{#if pagination}}
+            <div class="pagination">
+                {{#if pagination.prev}}
+                    <a href="?page={{pagination.prev}}" class="pagination-button">Previous</a>
+                {{/if}}
+                
+                {{#each pagination.pages}}
+                    <a href="?page={{this.number}}" class="pagination-button {{#if this.active}}active{{/if}}">{{this.number}}</a>
+                {{/each}}
+                
+                {{#if pagination.next}}
+                    <a href="?page={{pagination.next}}" class="pagination-button">Next</a>
+                {{/if}}
+            </div>
+        {{/if}}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+        </div>
+    </footer>
+</body>
+</html>
