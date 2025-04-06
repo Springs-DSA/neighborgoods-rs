@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - NeighborGoods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #6C584C;
+            background-color: #F0EAD2;
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 0;
+            font-weight: normal;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            background-color: #DDE5B6;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #A98467;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: #F0EAD2;
+            color: #6C584C;
+        }
+        input:focus {
+            outline: none;
+            border-color: #ADC178;
+            box-shadow: 0 0 5px rgba(173, 193, 120, 0.5);
+        }
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        .submit-btn {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #A98467;
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .signup-link a {
+            color: #A98467;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        .note {
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            color: #6C584C;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>NeighborGoods</h1>
+            <p class="tagline">A Federated Library of Things</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="form-container">
+            <h2>Log In</h2>
+            <p>Sign in to access your account and community resources.</p>
+            
+            {{#if error}}
+            <div class="error-message">{{error}}</div>
+            {{/if}}
+            
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" value="{{email}}" required>
+                    {{#if errors.email}}
+                    <div class="error-message">{{errors.email}}</div>
+                    {{/if}}
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    {{#if errors.password}}
+                    <div class="error-message">{{errors.password}}</div>
+                    {{/if}}
+                </div>
+                
+                <button type="submit" class="submit-btn">Log In</button>
+            </form>
+            
+            <div class="signup-link">
+                <p>Don't have an account? <a href="/signup">Sign up</a></p>
+            </div>
+            
+            <div class="signup-link">
+                <p><a href="/forgot-password">Forgot your password?</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+        </div>
+    </footer>
+</body>
+</html>

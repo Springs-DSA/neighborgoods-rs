@@ -8,21 +8,24 @@ mod routes;
 #[macro_use]
 extern crate rocket;
 
+use anyhow::Error;
 use chrono::{NaiveDateTime, Utc};
 use dotenvy::dotenv;
 use models::init;
 use models::user::User;
+use rocket::request::{self, Request, Outcome, FromRequest};
 use schema::users;
 use rocket_db_pools::{Database, Connection};
 use rocket_db_pools::diesel::{PgPool, prelude::*};
 use rocket_dyn_templates::{Template, context};
 use rocket::{fairing::{self, AdHoc}, Rocket, Build};
 use schema::node_settings;
-use uuid::uuid;
+use uuid::Uuid;
 use std::env;
 use rocket::form::Form;
 use rocket::response::{Flash, Redirect};
 use utils::password;
+use rocket::http::{Cookie, CookieJar, Status};
 // use routes::signup::signup_page;
 
 #[derive(Database)]
@@ -73,7 +76,7 @@ fn rocket() -> _ {
     dotenv().ok();
     
     rocket::build()
-        .mount("/", routes![hello, landing, signup_get, signup_post])
+        .mount("/", routes![hello, landing, signup_get, signup_post, login_get, login_post, dashboard_get, dashboard_redirect, logout])
         .attach(Template::fairing())
         .attach(Db::init())
         .attach(AdHoc::try_on_ignite("Initialize Node Settings", run_migrations))
@@ -175,3 +178,107 @@ struct LoginData<'r> {
     r#password: &'r str
 }
 
+#[get("/login")]
+fn login_get() -> Template {
+    let context = context! {};
+    Template::render("login", &context)
+}
+
+#[post("/login", data = "<login>")]
+async fn login_post(
+    login: Form<LoginData<'_>>,
+    mut db: Connection<Db>,
+    cookies: &CookieJar<'_>
+) -> Flash<Redirect> {
+    // get the user by email
+    let result = users::table
+        .filter(users::email.eq(login.email))
+        .first::<models::user::User>(&mut db)
+        .await;
+
+    match result {
+        Ok(user) => {
+            // if a user is found, check against the hashed password.
+            if let Ok(correct_pw) = password::verify_password(&user.password_hash, &login.password) {
+                if correct_pw {
+                    cookies.add_private(Cookie::new("user_id", user.id.to_string()));
+                    Flash::success(Redirect::to("/dashboard"), "User Logged In!")
+                } else {
+                    Flash::error(Redirect::to("/login"), "Incorrect email or password")
+                }
+            } else {
+                Flash::error(Redirect::to("/login"), "Error Verifying Password")
+            }
+
+        }
+        Err(_) => {
+            Flash::error(Redirect::to("/login"), "Incorrect email or password")
+        }
+    }
+}
+
+
+#[get("/dashboard")]
+fn dashboard_get(user: User) -> Template {
+    let context = context! {
+        user
+    };
+    Template::render("dashboard", &context)
+}
+
+#[rocket::async_trait]
+impl <'r> FromRequest<'r> for User {
+    type Error = ();
+
+    async fn from_request(request: &'r Request<'_>) -> request::Outcome<User, ()> {
+        // Get database connection
+        let db_outcome = request.guard::<Connection<Db>>().await;
+        let mut db = match db_outcome {
+            Outcome::Success(db) => db,
+            _ => return Outcome::Forward(Status::Unauthorized),
+        };
+
+        // Get user ID from cookie
+        let user_id = match request.cookies()
+            .get_private("user_id")
+            .and_then(|cookie| {
+                let val =cookie.value();
+                Uuid::parse_str(val).ok()
+            }) {
+                Some(id) => id,
+                None => return Outcome::Forward(Status::Unauthorized),
+            };
+
+        
+        // Query database with the user ID
+        match users::table
+            .find(user_id)
+            .first::<models::user::User>(&mut db)
+            .await {
+                Ok(user) => Outcome::Success(user),
+                Err(_) => Outcome::Forward(Status::Unauthorized),
+            }
+    }
+}
+
+
+#[get("/dashboard", rank = 2)]
+fn dashboard_redirect() -> Redirect {
+    Redirect::to("/")
+}
+
+/// Remove the `user_id` cookie.
+#[get("/logout")]
+fn logout(cookies: &CookieJar<'_>) -> Flash<Redirect> {
+    cookies.remove_private("user_id");
+    Flash::success(Redirect::to("/"), "Successfully logged out.")
+}
+
+
+
+// next TODO:
+// 1. create a dashboard stub template
+// 2. create a login page
+// 3. create a post login route that redirects to the dashboard page, AND adds a cookie for login
+// 4. ensure that the dashboard requires a logged in user to access
+// 5. create a logout route that removes the cookie.
