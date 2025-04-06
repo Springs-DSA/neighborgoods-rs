@@ -4,7 +4,7 @@ use rand::Rng;
 /// Generate a cryptographically secure random salt
 fn generate_salt() -> [u8; 16] {
     let mut salt = [0u8; 16];
-    rand::thread_rng().fill(&mut salt[..]);
+    rand::rng().fill(&mut salt[..]);
     salt
 }
 

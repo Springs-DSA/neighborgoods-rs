@@ -1,101 +1,74 @@
-// /* To be able to return Templates */
-// use std::collections::HashMap;
+use std::env;
 
-// /* Diesel query builder */
-// use diesel::prelude::*;
+use chrono::Utc;
+use rocket_db_pools::Connection;
+use rocket_db_pools::diesel::prelude::*;
+use rocket_dyn_templates::{Template, context};
+use rocket::response::{Flash, Redirect};
+use crate::models::user::User;
+use crate::utils::password;
+use rocket::form::Form;
+use crate::schema::users;
 
-// /* Database macros */
-// use crate::schema::*;
+use crate::Db;
 
-// /* Database data structs (Hero, NewHero) */
-// use crate::models::*;
-// use crate::utils;
+#[derive(FromForm)]
+pub struct UserData<'r> {
+    r#username: &'r str,
+    r#email: &'r str,
+    r#password: &'r str,
+    r#password_confirm: &'r str
+}
 
-// /* To be able to parse raw forms */
-// use rocket::http::ContentType;
-// use rocket::Data;
-// use rocket::forms::Form;
-// use rocket_multipart_form_data::{
-//     MultipartFormData, MultipartFormDataField, MultipartFormDataOptions,
-// };
+#[get("/signup")]
+pub fn signup_get() -> Template {
+    let context = context! {};
+    Template::render("signup", &context)
+}
 
-// use rocket_db_pools::{Database, Connection};
-// use rocket_db_pools::diesel::{PgPool, prelude::*};
-// use rocket_dyn_templates::{Template, context};
+#[post("/signup", data = "<user>")]
+pub async fn signup_post(user: Form<UserData<'_>>, mut db: Connection<Db>) -> Flash<Redirect> {
 
-// /* Flash message and redirect */
-// use rocket::request::FlashMessage;
-// use rocket::response::{Flash, Redirect};
+    // hash passwords
+    if user.password != user.password_confirm {
+        return Flash::error(Redirect::to("/signup"), "Passwords do not match!")
+    } 
+
+    let hashed_password = password::hash_password(user.password);
+    match hashed_password {
+        Ok(hp) => {
+
+            let now = Utc::now().naive_utc();
+
+            // Insert the new user into the database
+            let new_user = User {
+                id: uuid::Uuid::new_v4(),
+                name: user.username.into(),
+                email: user.email.into(),
+                password_hash: hp.clone(),
+                phone: None,
+                lat: None,
+                lng: None,
+                home_node_id: Some(env::var("NODE_ID").expect("NODE_ID must be set in the environment variables")),
+                password_reset_token: None,
+                password_reset_expiration: None,
+                created_at: now.clone(),
+                updated_at: now.clone(),
+                approved_at: None,
+                approved_by: None
+
+            };
+            diesel::insert_into(users::table)
+                .values(&new_user)
+                .execute(&mut db)
+                .await
+                .expect("Failed to create user");
+        }
+        Err(_) => {
+            return Flash::error(Redirect::to("/signup"), "Password Hash failed");
+        }
+    }
 
 
-// #[get("/signup")]
-// pub fn signup() -> Template {
-//     let mut context = HashMap::new();
-//     context.insert("title", "Sign Up");
-//     Template::render("signup", &context)
-// }
-
-// #[post("/signup", data = "<user_data>")]
-// pub fn signup_post(
-//     user_data: Data,
-//     content_type: &ContentType,
-//     flash: Option<FlashMessage>,
-//     &mut db: Connection<Db>,
-// ) -> Result<Flash<Redirect>, Flash<Redirect>> {
-//     // Parse the multipart form data
-//     let mut options = MultipartFormDataOptions::new();
-
-//     options.allowed_fields = vec![
-//         MultipartFormDataField::text("username"),
-//         MultipartFormDataField::text("password"),
-//         MultipartFormDataField::text("email"),
-//     ];
-
-//     let mut form_data = MultipartFormData::parse(content_type, user_data, options)
-//         .map_err(|_| Flash::error(Redirect::to("/signup"), "Failed to parse form data"))?;
-
-//     // Extract the fields from the parsed form data
-//     let username = form_data
-//         .fields
-//         .remove("username")
-//         .ok_or_else(|| Flash::error(Redirect::to("/signup"), "Missing username"))?;
-//     let password = form_data
-//         .fields
-//         .remove("password")
-//         .ok_or_else(|| Flash::error(Redirect::to("/signup"), "Missing password"))?;
-//     let email = form_data
-//         .fields
-//         .remove("email")
-//         .ok_or_else(|| Flash::error(Redirect::to("/signup"), "Missing email"))?;
-
-//     // Hash the password and store the user in the database
-//     let hashed_password = utils::password::hash_password(password);
-//     match hashed_password {
-//         Ok(hashed) => {
-//             // Create a new user
-//             let new_user = NewUser {
-//                 username: username[0].text.clone(),
-//                 password: hashed,
-//                 email: email[0].text.clone(),
-//             };
-
-//             // Insert the new user into the database
-//             diesel::insert_into(users::table)
-//                 .values(&new_user)
-//                 .execute(db)
-//                 .map_err(|_| Flash::error(Redirect::to("/signup"), "Failed to create user"))?;
-//         }
-//         Err(_) => {
-//             return Err(Flash::error(
-//                 Redirect::to("/signup"),
-//                 "Failed to hash password",
-//             ));
-//         }
-//     }
-
-//     // Redirect to a success page or login page
-//     Ok(Flash::success(
-//         Redirect::to("/"),
-//         "Signup successful, user approval pending!",
-//     ))
-// }
+    Flash::success(Redirect::to("/"), "User created! Approval pending...")
+}

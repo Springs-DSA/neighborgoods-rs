@@ -3,40 +3,34 @@ mod schema;
 mod services;
 mod utils;
 mod routes;
+mod db;
 
 
 #[macro_use]
 extern crate rocket;
 
-use anyhow::Error;
-use chrono::{NaiveDateTime, Utc};
+use db::Db;
+// use chrono::Utc;
 use dotenvy::dotenv;
 use models::init;
-use models::user::User;
-use rocket::request::{self, Request, Outcome, FromRequest};
-use schema::users;
+// use models::user::User;
+// use rocket::request::{self, Request, Outcome, FromRequest};
+// use schema::users;
 use rocket_db_pools::{Database, Connection};
-use rocket_db_pools::diesel::{PgPool, prelude::*};
+use rocket_db_pools::diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use rocket::{fairing::{self, AdHoc}, Rocket, Build};
 use schema::node_settings;
-use uuid::Uuid;
+// use uuid::Uuid;
 use std::env;
-use rocket::form::Form;
-use rocket::response::{Flash, Redirect};
-use utils::password;
-use rocket::http::{Cookie, CookieJar, Status};
-// use routes::signup::signup_page;
+// use rocket::form::Form;
+// use rocket::response::{Flash, Redirect};
+// use utils::password;
+// use rocket::http::{Cookie, CookieJar, Status};
+use routes::signup::{signup_get, signup_post};
+use routes::login::{login_get, login_post, logout};
+use routes::dashboard::{dashboard_get, dashboard_redirect};
 
-#[derive(Database)]
-#[database("neighborgoods_db")]
-struct Db(PgPool);
-
-// Legacy route
-#[get("/hello/<name>")]
-fn hello(name: &str) -> String {
-    format!("Hello, {}!", name)
-}
 
 #[get("/")]
 async fn landing(mut db: Connection<Db>) -> Template {
@@ -71,18 +65,6 @@ async fn landing(mut db: Connection<Db>) -> Template {
     }
 }
 
-#[launch]
-fn rocket() -> _ {
-    dotenv().ok();
-    
-    rocket::build()
-        .mount("/", routes![hello, landing, signup_get, signup_post, login_get, login_post, dashboard_get, dashboard_redirect, logout])
-        .attach(Template::fairing())
-        .attach(Db::init())
-        .attach(AdHoc::try_on_ignite("Initialize Node Settings", run_migrations))
-}
-
-
 async fn run_migrations(rocket: Rocket<Build>) -> fairing::Result {
     if let Some(db) = Db::fetch(&rocket) {
         // Get a connection from the pool
@@ -110,175 +92,30 @@ async fn run_migrations(rocket: Rocket<Build>) -> fairing::Result {
     }
 }
 
-
-#[derive(FromForm)]
-struct UserData<'r> {
-    r#username: &'r str,
-    r#email: &'r str,
-    r#password: &'r str,
-    r#password_confirm: &'r str
+#[launch]
+fn rocket() -> _ {
+    dotenv().ok();
+    
+    rocket::build()
+        .mount("/", routes![
+            landing,
+            signup_get,
+            signup_post,
+            login_get,
+            login_post,
+            logout,
+            dashboard_get,
+            dashboard_redirect,
+        ])
+        .attach(Template::fairing())
+        .attach(Db::init())
+        .attach(AdHoc::try_on_ignite("Initialize Node Settings", run_migrations))
 }
-
-#[get("/signup")]
-fn signup_get() -> Template {
-    let context = context! {};
-    Template::render("signup", &context)
-}
-
-#[post("/signup", data = "<user>")]
-async fn signup_post(user: Form<UserData<'_>>, mut db: Connection<Db>) -> Flash<Redirect> {
-
-    // hash passwords
-    if user.password != user.password_confirm {
-        return Flash::error(Redirect::to("/signup"), "Passwords do not match!")
-    } 
-
-    let hashed_password = password::hash_password(user.password);
-    match hashed_password {
-        Ok(hp) => {
-
-            let now = Utc::now().naive_utc();
-
-            // Insert the new user into the database
-            let new_user = User {
-                id: uuid::Uuid::new_v4(),
-                name: user.username.into(),
-                email: user.email.into(),
-                password_hash: hp.clone(),
-                phone: None,
-                lat: None,
-                lng: None,
-                home_node_id: Some(env::var("NODE_ID").expect("NODE_ID must be set in the environment variables")),
-                password_reset_token: None,
-                password_reset_expiration: None,
-                created_at: now.clone(),
-                updated_at: now.clone(),
-                approved_at: None,
-                approved_by: None
-
-            };
-            diesel::insert_into(users::table)
-                .values(&new_user)
-                .execute(&mut db)
-                .await
-                .expect("Failed to create user");
-        }
-        Err(_) => {
-            return Flash::error(Redirect::to("/signup"), "Password Hash failed");
-        }
-    }
-
-
-    Flash::success(Redirect::to("/"), "User created! Approval pending...")
-}
-
-#[derive(FromForm)]
-struct LoginData<'r> {
-    r#email: &'r str,
-    r#password: &'r str
-}
-
-#[get("/login")]
-fn login_get() -> Template {
-    let context = context! {};
-    Template::render("login", &context)
-}
-
-#[post("/login", data = "<login>")]
-async fn login_post(
-    login: Form<LoginData<'_>>,
-    mut db: Connection<Db>,
-    cookies: &CookieJar<'_>
-) -> Flash<Redirect> {
-    // get the user by email
-    let result = users::table
-        .filter(users::email.eq(login.email))
-        .first::<models::user::User>(&mut db)
-        .await;
-
-    match result {
-        Ok(user) => {
-            // if a user is found, check against the hashed password.
-            if let Ok(correct_pw) = password::verify_password(&user.password_hash, &login.password) {
-                if correct_pw {
-                    cookies.add_private(Cookie::new("user_id", user.id.to_string()));
-                    Flash::success(Redirect::to("/dashboard"), "User Logged In!")
-                } else {
-                    Flash::error(Redirect::to("/login"), "Incorrect email or password")
-                }
-            } else {
-                Flash::error(Redirect::to("/login"), "Error Verifying Password")
-            }
-
-        }
-        Err(_) => {
-            Flash::error(Redirect::to("/login"), "Incorrect email or password")
-        }
-    }
-}
-
-
-#[get("/dashboard")]
-fn dashboard_get(user: User) -> Template {
-    let context = context! {
-        user
-    };
-    Template::render("dashboard", &context)
-}
-
-#[rocket::async_trait]
-impl <'r> FromRequest<'r> for User {
-    type Error = ();
-
-    async fn from_request(request: &'r Request<'_>) -> request::Outcome<User, ()> {
-        // Get database connection
-        let db_outcome = request.guard::<Connection<Db>>().await;
-        let mut db = match db_outcome {
-            Outcome::Success(db) => db,
-            _ => return Outcome::Forward(Status::Unauthorized),
-        };
-
-        // Get user ID from cookie
-        let user_id = match request.cookies()
-            .get_private("user_id")
-            .and_then(|cookie| {
-                let val =cookie.value();
-                Uuid::parse_str(val).ok()
-            }) {
-                Some(id) => id,
-                None => return Outcome::Forward(Status::Unauthorized),
-            };
-
-        
-        // Query database with the user ID
-        match users::table
-            .find(user_id)
-            .first::<models::user::User>(&mut db)
-            .await {
-                Ok(user) => Outcome::Success(user),
-                Err(_) => Outcome::Forward(Status::Unauthorized),
-            }
-    }
-}
-
-
-#[get("/dashboard", rank = 2)]
-fn dashboard_redirect() -> Redirect {
-    Redirect::to("/")
-}
-
-/// Remove the `user_id` cookie.
-#[get("/logout")]
-fn logout(cookies: &CookieJar<'_>) -> Flash<Redirect> {
-    cookies.remove_private("user_id");
-    Flash::success(Redirect::to("/"), "Successfully logged out.")
-}
-
-
 
 // next TODO:
-// 1. create a dashboard stub template
-// 2. create a login page
-// 3. create a post login route that redirects to the dashboard page, AND adds a cookie for login
-// 4. ensure that the dashboard requires a logged in user to access
-// 5. create a logout route that removes the cookie.
+// 2. page for contributing a new item.
+// 3. list of your contributed items
+// 4. list of all available items
+// 5. Borrow an item
+// 6. list of all your currently borrowed items
+// 7. create issues for: only log in if approved, handle updating users if signup form is re-submitted before approval, validation of password, email, phone requirements, actual about page/info (settable from a node setting), map picker for lat and lng, include with signup, prevent going to login/signup pages when already logged in.
