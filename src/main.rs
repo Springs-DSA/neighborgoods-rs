@@ -118,7 +118,8 @@ fn rocket() -> _ {
 }
 
 // next TODO:
-// 2. page for contributing a new item.
+// 1. clean up and move previous work to appropriate files - DONE
+// 2. page for contributing a new item. - DONE
 // 3. list of your contributed items
 // 4. list of all available items
 // 5. Borrow an item
@@ -127,6 +128,8 @@ fn rocket() -> _ {
 // 8. COMMUNITY AGREEMENT
 // 9. dashboard link on navbar, separate navbar component
 // 10. items have multiple images/files uploaded to them.
+// 11. items should have tags instead of categories
+// 12. should actually do something with the confirmation checkbox
 
 
 #[get("/inventory")]
