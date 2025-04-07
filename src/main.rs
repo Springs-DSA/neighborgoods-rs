@@ -10,27 +10,31 @@ mod db;
 extern crate rocket;
 
 use db::Db;
-// use chrono::Utc;
+use chrono::Utc;
 use dotenvy::dotenv;
 use models::init;
-// use models::user::User;
+use models::user::User;
+use models::item::Item;
 // use rocket::request::{self, Request, Outcome, FromRequest};
 // use schema::users;
 use rocket_db_pools::{Database, Connection};
 use rocket_db_pools::diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use rocket::{fairing::{self, AdHoc}, Rocket, Build};
-use schema::node_settings;
-// use uuid::Uuid;
+use schema::{node_settings, items};
+use uuid::Uuid;
 use std::env;
-// use rocket::form::Form;
-// use rocket::response::{Flash, Redirect};
+use std::fmt::format;
+use rocket::form::Form;
+use rocket::response::{Flash, Redirect};
 // use utils::password;
 // use rocket::http::{Cookie, CookieJar, Status};
 use routes::signup::{signup_get, signup_post};
 use routes::login::{login_get, login_post, logout};
 use routes::dashboard::{dashboard_get, dashboard_redirect};
 
+use rocket::fs::TempFile;
+use std::fs;
 
 #[get("/")]
 async fn landing(mut db: Connection<Db>) -> Template {
@@ -106,6 +110,7 @@ fn rocket() -> _ {
             logout,
             dashboard_get,
             dashboard_redirect,
+            inventory_get, items_contribute_get, items_contribute_post
         ])
         .attach(Template::fairing())
         .attach(Db::init())
@@ -118,4 +123,86 @@ fn rocket() -> _ {
 // 4. list of all available items
 // 5. Borrow an item
 // 6. list of all your currently borrowed items
-// 7. create issues for: only log in if approved, handle updating users if signup form is re-submitted before approval, validation of password, email, phone requirements, actual about page/info (settable from a node setting), map picker for lat and lng, include with signup, prevent going to login/signup pages when already logged in, move styling to the same file and consolidate.
+// 7. create issues for: only log in if approved, handle updating users if signup form is re-submitted before approval, validation of password, email, phone requirements, actual about page/info (settable from a node setting), map picker for lat and lng, include with signup, prevent going to login/signup pages when already logged in, move styling to the same file and consolidate, redirects if not authorized on other pages, async across the board on routes.
+// 8. COMMUNITY AGREEMENT
+// 9. dashboard link on navbar, separate navbar component
+// 10. items have multiple images/files uploaded to them.
+
+
+#[get("/inventory")]
+pub fn inventory_get(user: User) -> Template {
+    let context = context! {
+        user
+    };
+    Template::render("inventory", &context)
+}
+
+#[derive(FromForm, Debug)]
+pub struct ItemData<'r> {
+    r#name: &'r str,
+    r#description: &'r str,
+    r#category: &'r str,
+    image: TempFile<'r>,
+}
+
+#[get("/items/contribute")]
+pub fn items_contribute_get(user: User) -> Template {
+    let context = context! {
+        user
+    };
+    Template::render("item_contribution", &context)
+}
+
+#[post("/items/contribute", data = "<item>")]
+pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut db: Connection<Db>) -> Flash<Redirect> {
+    println!("ItemData: {:?}", item);
+    // create the item in the database
+    let item_id = Uuid::new_v4();
+    let now = Utc::now().naive_utc();
+    let new_item = Item {
+        id: item_id,
+        name: item.name.into(),
+        description: Some(item.description.into()),
+        contributed_by: user.id,
+        upload_directory_path: format!("uploads/{}", item_id.to_string()),
+        created_at: now.clone(),
+        updated_at: now.clone()
+    };
+
+    // create item upload dir.
+    let dir_path = format!("uploads/{}", item_id.to_string());
+    fs::create_dir(dir_path).unwrap();
+
+    // upload item
+    if let Some(name) = item.image.name() {
+
+        let path = format!("uploads/{}/{}", item_id.to_string(), name);
+        
+        let upload_result = item.image.persist_to(path).await;
+        match upload_result {
+            Ok(_) => {
+                println!(">>> file path: {}", item.image.path().unwrap().to_str().unwrap());
+            },
+            Err(e) => {
+                println!("ERROR: {}", e); // need to have full path specified.
+                return Flash::error(Redirect::to("/inventory"), "Item file(s) couldn't be uploaded");
+            }
+        }
+    }
+
+    // if we've arrived here, then we have successfully uploaded.
+
+    let db_result = diesel::insert_into(items::table)
+        .values(&new_item)
+        .execute(&mut db)
+        .await;
+    
+    match db_result {
+        Ok(_) => Flash::success(Redirect::to("/inventory"), "Item successfully created"),
+        Err(e) => {
+            println!("ERROR: {}", e);
+            //TODO remove uploaded folder/files
+            Flash::error(Redirect::to("/inventory"), "Item record couldn't be created")
+        },
+    }
+}

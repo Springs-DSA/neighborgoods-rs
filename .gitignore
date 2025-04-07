@@ -2,6 +2,8 @@
 */target
 */dist
 
+/uploads
+
 notes.txt
 notes.md
 .env
