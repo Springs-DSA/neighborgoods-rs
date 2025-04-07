@@ -24,7 +24,7 @@ use rocket::{fairing::{self, AdHoc}, Rocket, Build};
 use schema::{node_settings, items};
 use uuid::Uuid;
 use std::env;
-use std::fmt::format;
+use std::ops::DerefMut;
 use rocket::form::Form;
 use rocket::response::{Flash, Redirect};
 // use utils::password;
@@ -33,7 +33,7 @@ use routes::signup::{signup_get, signup_post};
 use routes::login::{login_get, login_post, logout};
 use routes::dashboard::{dashboard_get, dashboard_redirect};
 
-use rocket::fs::TempFile;
+use rocket::fs::{FileServer, relative, TempFile};
 use std::fs;
 
 #[get("/")]
@@ -112,6 +112,7 @@ fn rocket() -> _ {
             dashboard_redirect,
             inventory_get, items_contribute_get, items_contribute_post
         ])
+        .mount("/public", FileServer::from(relative!("uploads")))
         .attach(Template::fairing())
         .attach(Db::init())
         .attach(AdHoc::try_on_ignite("Initialize Node Settings", run_migrations))
@@ -130,11 +131,15 @@ fn rocket() -> _ {
 // 10. items have multiple images/files uploaded to them.
 // 11. items should have tags instead of categories
 // 12. should actually do something with the confirmation checkbox
+// 13. landing page should redirect to the dashboard when logged in. 
 
 
 #[get("/inventory")]
-pub fn inventory_get(user: User) -> Template {
+pub async fn inventory_get(user: User, mut db: Connection<Db>) -> Template {
+    // get list of items
+    let items = items::table.load::<Item>(&mut db).await.expect("Error loading items");
     let context = context! {
+        items,
         user
     };
     Template::render("inventory", &context)
@@ -149,7 +154,7 @@ pub struct ItemData<'r> {
 }
 
 #[get("/items/contribute")]
-pub fn items_contribute_get(user: User) -> Template {
+pub async fn items_contribute_get(user: User) -> Template {
     let context = context! {
         user
     };
@@ -162,29 +167,34 @@ pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut
     // create the item in the database
     let item_id = Uuid::new_v4();
     let now = Utc::now().naive_utc();
-    let new_item = Item {
+    let mut new_item = Item {
         id: item_id,
         name: item.name.into(),
         description: Some(item.description.into()),
         contributed_by: user.id,
-        upload_directory_path: format!("uploads/{}", item_id.to_string()),
+        upload_directory_path: format!("public/{}/", item_id.to_string()),
         created_at: now.clone(),
         updated_at: now.clone()
     };
 
+    // public/625c26f5-b010-46af-a937-8962b49aa48e/Gemini_Generated_Image_xlsclqxlsclqxlsc
     // create item upload dir.
     let dir_path = format!("uploads/{}", item_id.to_string());
     fs::create_dir(dir_path).unwrap();
 
     // upload item
-    if let Some(name) = item.image.name() {
+    if let Some(name) = item.deref_mut().image.name() {
 
         let path = format!("uploads/{}/{}", item_id.to_string(), name);
+        // attach the image file to the end of the upload_directory_path
+        // TODO need to be able to handle all the files in the directory, not just one
+        new_item.upload_directory_path.push_str(name);
         
         let upload_result = item.image.persist_to(path).await;
         match upload_result {
             Ok(_) => {
                 println!(">>> file path: {}", item.image.path().unwrap().to_str().unwrap());
+                println!(">>> item upload dir path: {}", new_item.upload_directory_path);
             },
             Err(e) => {
                 println!("ERROR: {}", e); // need to have full path specified.
