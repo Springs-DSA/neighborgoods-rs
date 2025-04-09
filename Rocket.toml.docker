@@ -1,0 +1,13 @@
+[default.databases.neighborgoods_db]
+url = "postgres://postgres:password@db:5432/neighborgoods"
+
+# Only `url` is required. These have sane defaults and are optional.
+min_connections = 64
+max_connections = 1024
+connect_timeout = 5
+idle_timeout = 120
+
+[default]
+address = "0.0.0.0"
+port = 8000
+limits = { file = "5 MiB" }

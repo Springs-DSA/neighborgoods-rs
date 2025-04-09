@@ -1,6 +1,26 @@
 version: '3.8'
 
 services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - cargo_cache:/usr/local/cargo/registry
+      - target_cache:/app/target
+      - ./uploads:/app/uploads
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/neighborgoods
+      - ROCKET_DATABASES={neighborgoods_db={url="postgres://postgres:password@db:5432/neighborgoods"}}
+      - ROCKET_ADDRESS=0.0.0.0
+      - ROCKET_PORT=8000
+      - NODE_ID=local_dev_node
+    restart: unless-stopped
 
   db:
     image: postgres:15
@@ -17,3 +37,5 @@ services:
 
 volumes:
   postgres_data:
+  cargo_cache:
+  target_cache:
