@@ -111,7 +111,7 @@ fn rocket() -> _ {
             logout,
             dashboard_get,
             dashboard_redirect,
-            inventory_get, items_contribute_get, items_contribute_post, item_get
+            inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete
         ])
         .mount("/public", FileServer::from(relative!("uploads")))
         .attach(Template::fairing())
@@ -195,7 +195,7 @@ pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut
         // TODO need to be able to handle all the files in the directory, not just one
         new_item.upload_directory_path.push_str(name);
         
-        let upload_result = item.image.persist_to(path).await;
+        let upload_result = item.image.move_copy_to(path).await;
         match upload_result {
             Ok(_) => {
                 println!(">>> file path: {}", item.image.path().unwrap().to_str().unwrap());
@@ -320,4 +320,31 @@ pub async fn item_get(user: User, item_id: Uuid, mut db: Connection<Db>) -> Temp
     };
     
     Template::render("item_view", &context)
+}
+
+#[delete("/items/<item_id>")]
+pub async fn item_delete(user: User, item_id: Uuid, mut db: Connection<Db>) -> Flash<Redirect> {
+    // full delete an item. This deletes it from the database, removes uploads, and removes item transfers
+
+    // first, check if this user is the one who contributed the item
+    let item = items::table
+        .find(item_id)
+        .first::<Item>(&mut db)
+        .await
+        .expect("unable to find item");
+
+    if item.contributed_by == user.id {
+        // delete item, should cascade through item transfers
+        diesel::delete(
+            items::table
+            .filter(items::id.eq(item_id))
+        ).execute(&mut db)
+        .await
+        .expect("Couldn't delete item");
+        
+        Flash::success(Redirect::to("/inventory"), "Item deleted!")
+    } else {
+        Flash::error(Redirect::to(format!("/items/{}", item_id)), "Item record can't be deleted by non-owner")
+    }
+
 }

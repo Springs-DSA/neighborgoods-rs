@@ -136,6 +136,23 @@
         .action-button:hover {
             background-color: #A98467;
         }
+        .delete-button {
+            background-color: #c14545;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .delete-button:hover {
+            background-color: #a13030;
+        }
         .transfer-history {
             background-color: #DDE5B6;
             border-radius: 5px;
@@ -281,6 +298,13 @@
                             {{/if}}
                         {{/with}}
                     {{/if}}
+                    
+                    <!-- Show delete button only if the current user is the item contributor -->
+                    {{#if (eq user.id item.contributed_by)}}
+                        <button id="delete-item-btn" class="delete-button" onclick="confirmDelete('{{item.id}}')">
+                            🗑️ Delete Item
+                        </button>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -311,5 +335,42 @@
             <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
         </div>
     </footer>
+
+    <script>
+        function confirmDelete(itemId) {
+            // Show confirmation dialog
+            const isConfirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
+            
+            // If user confirms, send DELETE request
+            if (isConfirmed) {
+                // Create fetch request to delete the item
+                fetch(`/items/${itemId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        // If the response contains a redirect URL, follow it
+                        window.location.href = response.url;
+                    } else {
+                        // Handle the response based on status
+                        if (response.ok) {
+                            // Redirect to inventory page on success
+                            window.location.href = '/inventory';
+                        } else {
+                            // Show error message
+                            alert('Failed to delete item. Please try again.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the item.');
+                });
+            }
+        }
+    </script>
 </body>
 </html>
