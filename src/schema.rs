@@ -144,6 +144,7 @@ diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
 diesel::joinable!(user_certifications -> certifications (cert_id));
 diesel::joinable!(user_certifications -> users (user_id));
+diesel::joinable!(item_transfers -> users (steward_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     cert_assessments,

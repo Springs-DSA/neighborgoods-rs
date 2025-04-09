@@ -257,16 +257,16 @@
             
             <div class="card">
                 <h3>Items You're Responsible For</h3>
-                {{#if items.length}}
+                {{#if items}}
                     {{#each items}}
                         <div class="list-item">
-                            <div class="list-item-title">{{this.name}}</div>
-                            <div class="list-item-description">{{this.description}}</div>
+                            <div class="list-item-title">{{this.1.name}}</div>
+                            <div class="list-item-description">{{this.1.description}}</div>
                             <div class="list-item-meta">
-                                <span>Status: {{this.status}}</span>
-                                <span>Return By: {{this.return_date}}</span>
+                                <span>Borrow Purpose: {{this.0.purpose}}</span>
+                                <span>Borrowed At: {{this.0.created_at}}</span>
                             </div>
-                            <a href="/items/{{this.id}}" class="action-button">View Item</a>
+                            <a href="/items/{{this.1.id}}" class="action-button">View Item</a>
                         </div>
                     {{/each}}
                 {{else}}

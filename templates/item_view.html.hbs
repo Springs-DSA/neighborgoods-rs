@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details - NeighborGoods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #6C584C;
+            background-color: #F0EAD2;
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            padding: 1rem 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1, h2, h3 {
+            color: #A98467;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 0;
+            font-weight: normal;
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        .user-greeting {
+            margin-right: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #F0EAD2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #A98467;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .item-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .item-image-container {
+            flex: 1;
+            min-width: 300px;
+            background-color: #DDE5B6;
+            border-radius: 5px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .item-image {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+        .item-details {
+            flex: 2;
+            min-width: 300px;
+            background-color: #DDE5B6;
+            border-radius: 5px;
+            padding: 20px;
+        }
+        .item-name {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #A98467;
+        }
+        .item-description {
+            margin-bottom: 20px;
+        }
+        .item-meta {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .meta-label {
+            font-weight: bold;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .action-button {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover {
+            background-color: #A98467;
+        }
+        .transfer-history {
+            background-color: #DDE5B6;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .transfer-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ADC178;
+        }
+        .transfer-header {
+            font-weight: bold;
+            color: #A98467;
+        }
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background-color: #ADC178;
+            color: #F0EAD2;
+        }
+        footer {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .user-menu {
+                margin-top: 15px;
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .item-container {
+                flex-direction: column;
+            }
+            .item-meta {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .transfer-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>NeighborGoods</h1>
+                    <p class="tagline">A Federated Library of Things</p>
+                </div>
+                <div class="user-menu">
+                    <div class="user-greeting">Welcome, {{user.name}}</div>
+                    <div class="nav-links">
+                        <a href="/inventory">Inventory</a>
+                        <a href="/feed">Feed</a>
+                        <a href="/campaigns">Campaigns</a>
+                        <a href="/profile">My Profile</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="/inventory" class="back-button">← Back to Inventory</a>
+        
+        <div class="item-container">
+            <div class="item-image-container">
+                {{#if item.upload_directory_path}}
+                    <img src="/{{item.upload_directory_path}}" alt="{{item.name}}" class="item-image">
+                {{else}}
+                    <div style="color: #A98467; text-align: center;">No Image Available</div>
+                {{/if}}
+            </div>
+            
+            <div class="item-details">
+                <h2 class="item-name">{{item.name}}</h2>
+                
+                {{#if item.description}}
+                    <div class="item-description">{{item.description}}</div>
+                {{else}}
+                    <div class="item-description">No description available.</div>
+                {{/if}}
+                
+                <div class="item-meta">
+                    <div class="meta-label">Contributed by:</div>
+                    <div>
+                        {{contributor.name}}
+                    </div>
+                    
+                    <div class="meta-label">Current Steward:</div>
+                    <div>
+                        {{#if transfers_with_stewards}}
+                            {{#with transfers_with_stewards.[0] as |current|}}
+                                {{current.1.name}}
+                            {{/with}}
+                        {{else}}
+                            Not available
+                        {{/if}}
+                    </div>
+                    
+                    <div class="meta-label">Contributed on:</div>
+                    <div>{{item.created_at}}</div>
+                </div>
+                
+                <div class="action-buttons">
+                    {{#if transfers_with_stewards}}
+                        {{#with transfers_with_stewards.[0] as |current|}}
+                            {{#if (eq current.0.status "Completed")}}
+                                {{#if ../is_current_steward}}
+                                    <!-- If I'm the current steward -->
+                                    <a href="/items/{{../item.id}}/transfer" class="action-button">Transfer to Someone Else</a>
+                                {{else}}
+                                    <!-- If I'm not the current steward -->
+                                    <a href="/items/{{../item.id}}/request" class="action-button">Request to Borrow</a>
+                                {{/if}}
+                            {{/if}}
+                        {{/with}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        
+        <div class="transfer-history">
+            <h3>Stewardship History</h3>
+            
+            <div class="transfer-item transfer-header">
+                <div>Date</div>
+                <div>Purpose</div>
+                <div>Steward</div>
+                <div>Status</div>
+            </div>
+            
+            {{#each transfers_with_stewards as |transfer|}}
+            <div class="transfer-item">
+                <div>{{transfer.0.updated_at}}</div>
+                <div>{{transfer.0.purpose}}</div>
+                <div>{{transfer.1.name}}</div>
+                <div>{{transfer.0.status}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+        </div>
+    </footer>
+</body>
+</html>

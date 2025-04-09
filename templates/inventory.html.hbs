@@ -323,20 +323,19 @@
                 {{#each items}}
                     <div class="item-card">
                         <div class="item-image">
-                            {{#if this.upload_directory_path}}
-                                <img src="{{this.upload_directory_path}}" alt="{{this.name}}" style="max-width: 100%; max-height: 100%;">
+                            {{#if this.0.upload_directory_path}}
+                                <img src="{{this.0.upload_directory_path}}" alt="{{this.0.name}}" style="max-width: 100%; max-height: 100%;">
                             {{else}}
-                                <span>No Image Available, {{this.upload_directory_path}}</span>
+                                <span>No Image Available, {{this.0.upload_directory_path}}</span>
                             {{/if}}
                         </div>
                         <div class="item-details">
-                            <div class="item-name">{{this.name}}</div>
-                            <div class="item-description">{{this.description}}</div>
+                            <div class="item-name">{{this.0.name}}</div>
+                            <div class="item-description">{{this.0.description}}</div>
                             <div class="item-meta">
-                                <span>Contributed by: {{this.contributor_name}}</span>
-                                <span class="item-status status-{{this.status}}">{{this.status}}</span>
+                                <span>Contributed by: {{this.1.name}}</span>
                             </div>
-                            <a href="/items/{{this.id}}" class="action-button">View Details</a>
+                            <a href="/items/{{this.0.id}}" class="action-button">View Details</a>
                         </div>
                     </div>
                 {{/each}}

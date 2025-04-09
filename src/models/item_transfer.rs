@@ -7,20 +7,20 @@ use uuid::Uuid;
 #[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum)]
 #[db_enum(existing_type_path = "crate::schema::sql_types::TransferPurpose")]
 pub enum TransferPurpose {
-    USE,
-    MAINTAIN,
-    RESTOCK,
-    CONSUME,
-    CONTRIBUTE,
-    DELIST,
+    Use,
+    Maintain,
+    Restock,
+    Consume,
+    Contribute,
+    Delist,
 }
 
 #[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum)]
 #[db_enum(existing_type_path = "crate::schema::sql_types::TransferStatus")]
 pub enum TransferStatus {
-    RESERVED,
-    COMPLETED,
-    CANCELED,
+    Reserved,
+    Completed,
+    Canceled,
 }
 
 #[derive(Queryable, Insertable, Debug, Serialize, Deserialize)]

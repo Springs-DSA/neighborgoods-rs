@@ -15,13 +15,14 @@ use dotenvy::dotenv;
 use models::init;
 use models::user::User;
 use models::item::Item;
+use models::item_transfer::{ItemTransfer, TransferPurpose, TransferStatus};
 // use rocket::request::{self, Request, Outcome, FromRequest};
 // use schema::users;
 use rocket_db_pools::{Database, Connection};
 use rocket_db_pools::diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use rocket::{fairing::{self, AdHoc}, Rocket, Build};
-use schema::{node_settings, items};
+use schema::{item_transfers, items, node_settings, users};
 use uuid::Uuid;
 use std::env;
 use std::ops::DerefMut;
@@ -110,7 +111,7 @@ fn rocket() -> _ {
             logout,
             dashboard_get,
             dashboard_redirect,
-            inventory_get, items_contribute_get, items_contribute_post
+            inventory_get, items_contribute_get, items_contribute_post, item_get
         ])
         .mount("/public", FileServer::from(relative!("uploads")))
         .attach(Template::fairing())
@@ -132,12 +133,17 @@ fn rocket() -> _ {
 // 11. items should have tags instead of categories
 // 12. should actually do something with the confirmation checkbox
 // 13. landing page should redirect to the dashboard when logged in. 
+// 14. files should be compressed when uploaded (thumbnail versions of pictures.)
 
 
 #[get("/inventory")]
 pub async fn inventory_get(user: User, mut db: Connection<Db>) -> Template {
     // get list of items
-    let items = items::table.load::<Item>(&mut db).await.expect("Error loading items");
+    let items = items::table
+        .inner_join(users::table)
+        .load::<(Item, User)>(&mut db)
+        .await
+        .expect("Error loading items");
     let context = context! {
         items,
         user
@@ -177,7 +183,6 @@ pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut
         updated_at: now.clone()
     };
 
-    // public/625c26f5-b010-46af-a937-8962b49aa48e/Gemini_Generated_Image_xlsclqxlsclqxlsc
     // create item upload dir.
     let dir_path = format!("uploads/{}", item_id.to_string());
     fs::create_dir(dir_path).unwrap();
@@ -211,11 +216,108 @@ pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut
         .await;
     
     match db_result {
-        Ok(_) => Flash::success(Redirect::to("/inventory"), "Item successfully created"),
+        Ok(_) => {
+            // also, create the first item transfer to move the item to the contributing user's stewardship.
+
+            let initial_item_transfer = ItemTransfer { 
+                id: Uuid::new_v4(),
+                item_id,
+                steward_id: user.id,
+                prev_steward_id: None,
+                purpose: TransferPurpose::Contribute,
+                lat: None,
+                lng: None,
+                status: TransferStatus::Completed,
+                created_at: now.clone(),
+                updated_at: now.clone()
+            };
+
+            let iit_result = diesel::insert_into(item_transfers::table)
+                .values(&initial_item_transfer)
+                .execute(&mut db)
+                .await;
+            match iit_result {
+                Ok(_) => {
+                    println!("Successfully created item transfer");
+                    Flash::success(Redirect::to("/inventory"), "Item successfully created")
+                },
+                Err(e) => {
+                    // TODO delete item record, remove uploads.
+                    // https://stackoverflow.com/questions/75939019/transactions-in-rust-diesel
+                    println!(">>> couldn't create item transfer, {}", e);
+                    Flash::error(Redirect::to("/inventory"), "Item record couldn't be created")
+                }
+            
+            }
+
+            
+        },
         Err(e) => {
             println!("ERROR: {}", e);
             //TODO remove uploaded folder/files
             Flash::error(Redirect::to("/inventory"), "Item record couldn't be created")
         },
     }
+}
+
+// get an individual item's page.
+#[get("/items/<item_id>")]
+pub async fn item_get(user: User, item_id: Uuid, mut db: Connection<Db>) -> Template {
+    // 1. Load just the item first
+    let item_result = items::table
+        .find(item_id)
+        .get_result::<Item>(&mut db)
+        .await;
+    
+    let item = match item_result {
+        Ok(item) => item,
+        Err(_) => return Template::render("error", context! { error: "Item not found" }),
+    };
+    
+    // 2. Load the contributor
+    let contributor_result = users::table
+        .find(item.contributed_by)
+        .get_result::<User>(&mut db)
+        .await;
+    
+    let contributor = match contributor_result {
+        Ok(contributor) => contributor,
+        Err(_) => return Template::render("error", context! { error: "Contributor not found" }),
+    };
+    
+    // 3. Load the 5 most recent transfers with their stewards
+    let transfers_with_stewards = item_transfers::table
+        .filter(item_transfers::item_id.eq(item_id))
+        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id)))
+        .order(item_transfers::updated_at.desc())
+        .limit(5)
+        .load::<(ItemTransfer, User)>(&mut db)
+        .await
+        .expect("error getting item transfers"); // Default to empty vector if error
+    
+    // 4. Extract the current steward ID from the first transfer (if available)
+    let current_steward_id = item_transfers::table
+        .filter(item_transfers::item_id.eq(item_id))
+        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id)))
+        .order(item_transfers::updated_at.desc())
+        .first::<(ItemTransfer, User)>(&mut db)
+        .await
+        .expect("error getting item transfers")
+        .1.id;
+    
+    // 5. Check if the current user is the steward
+    let is_current_steward = current_steward_id == user.id;
+    //     .map(|steward_id| steward_id == user.id)
+    //     .unwrap_or(false);
+    
+    let context = context! {
+        user,
+        item,
+        contributor,
+        transfers_with_stewards,
+        current_steward_id,
+        is_current_steward
+    };
+    
+    Template::render("item_view", &context)
 }

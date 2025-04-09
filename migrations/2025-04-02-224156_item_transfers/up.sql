@@ -1,6 +1,6 @@
 -- Create ENUMs for purpose and status
-CREATE TYPE transfer_purpose AS ENUM ('USE', 'MAINTAIN', 'RESTOCK', 'CONSUME', 'CONTRIBUTE', 'DELIST');
-CREATE TYPE transfer_status AS ENUM ('RESERVED', 'COMPLETED', 'CANCELED');
+CREATE TYPE transfer_purpose AS ENUM ('use', 'maintain', 'restock', 'consume', 'contribute', 'delist');
+CREATE TYPE transfer_status AS ENUM ('reserved', 'completed', 'canceled');
 
 -- Create the item_transfers table
 CREATE TABLE item_transfers (
