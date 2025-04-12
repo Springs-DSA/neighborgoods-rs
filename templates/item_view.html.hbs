@@ -13,6 +13,78 @@
             color: #6C584C;
             background-color: #F0EAD2;
         }
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal {
+            background-color: #F0EAD2;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            padding: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            color: #A98467;
+            margin: 0;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6C584C;
+        }
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #A98467;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ADC178;
+            border-radius: 4px;
+            font-size: 1rem;
+            color: #6C584C;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .container {
             width: 85%;
             margin: 0 auto;
@@ -135,6 +207,23 @@
         }
         .action-button:hover {
             background-color: #A98467;
+        }
+        .cancel-button {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .cancel-button:hover {
+            background-color: #4F4037;
         }
         .delete-button {
             background-color: #c14545;
@@ -271,10 +360,8 @@
                     
                     <div class="meta-label">Current Steward:</div>
                     <div>
-                        {{#if transfers_with_stewards}}
-                            {{#with transfers_with_stewards.[0] as |current|}}
-                                {{current.1.name}}
-                            {{/with}}
+                        {{#if current_steward}}
+                            {{current_steward.name}}
                         {{else}}
                             Not available
                         {{/if}}
@@ -288,13 +375,10 @@
                     {{#if transfers_with_stewards}}
                         {{#with transfers_with_stewards.[0] as |current|}}
                             {{#if (eq current.0.status "Completed")}}
-                                {{#if ../is_current_steward}}
-                                    <!-- If I'm the current steward -->
-                                    <a href="/items/{{../item.id}}/transfer" class="action-button">Transfer to Someone Else</a>
-                                {{else}}
-                                    <!-- If I'm not the current steward -->
-                                    <a href="/items/{{../item.id}}/request" class="action-button">Request to Borrow</a>
-                                {{/if}}
+                                {{#unless ../is_current_steward}}
+                                    <!-- If I'm not the current steward, show the borrow button -->
+                                    <button class="action-button" onclick="openTransferModal()">Request to Borrow</button>
+                                {{/unless}}
                             {{/if}}
                         {{/with}}
                     {{/if}}
@@ -336,6 +420,33 @@
         </div>
     </footer>
 
+    <!-- Transfer Modal -->
+    <div id="transferModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Request to Borrow {{item.name}}</h3>
+                <button class="close-modal" onclick="closeTransferModal()">×</button>
+            </div>
+            <form id="transfer-form" action="/items/{{item.id}}/transfer" method="POST" class="modal-form">
+                <!-- Hidden input for the current user as recipient -->
+                <input type="hidden" name="recipient_id" value="{{user.id}}">
+                
+                <div class="form-group">
+                    <label for="transfer-purpose">Purpose:</label>
+                    <select id="transfer-purpose" name="purpose" required>
+                        <option value="" disabled selected>Select a purpose</option>
+                        <option value="Use">Use</option>
+                    </select>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="submit" class="action-button">Request Transfer</button>
+                    <button type="button" class="cancel-button" onclick="closeTransferModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function confirmDelete(itemId) {
             // Show confirmation dialog
@@ -371,6 +482,27 @@
                 });
             }
         }
+        
+        // Modal functionality
+        function openTransferModal() {
+            document.getElementById('transferModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+        
+        function closeTransferModal() {
+            document.getElementById('transferModal').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        // Close modal if clicking outside of it
+        document.addEventListener('click', function(event) {
+            const modal = document.querySelector('.modal');
+            const modalOverlay = document.getElementById('transferModal');
+            
+            if (event.target === modalOverlay && !modal.contains(event.target)) {
+                closeTransferModal();
+            }
+        });
     </script>
 </body>
 </html>

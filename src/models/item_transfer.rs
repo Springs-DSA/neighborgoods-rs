@@ -4,7 +4,7 @@ use bigdecimal::BigDecimal;
 use serde::{Serialize, Deserialize};
 use uuid::Uuid;
 
-#[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum)]
+#[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum, FromFormField)]
 #[db_enum(existing_type_path = "crate::schema::sql_types::TransferPurpose")]
 pub enum TransferPurpose {
     Use,
@@ -37,3 +37,5 @@ pub struct ItemTransfer {
     pub created_at: chrono::NaiveDateTime,
     pub updated_at: chrono::NaiveDateTime,
 }
+
+// Diesel generates these joinable! instances only for cases where there is only a single relation between two tables based on a non-composite foreign key. All other cases require to specify an explicit the ON clause while constructing such joins.

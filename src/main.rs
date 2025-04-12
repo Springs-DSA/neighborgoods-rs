@@ -12,7 +12,7 @@ extern crate rocket;
 use db::Db;
 use chrono::Utc;
 use dotenvy::dotenv;
-use models::init;
+use models::{init, item};
 use models::user::User;
 use models::item::Item;
 use models::item_transfer::{ItemTransfer, TransferPurpose, TransferStatus};
@@ -36,6 +36,7 @@ use routes::dashboard::{dashboard_get, dashboard_redirect};
 
 use rocket::fs::{FileServer, relative, TempFile};
 use std::fs;
+use services::item_transfer_service::{ItemViewContext, get_item_view_context};
 
 #[get("/")]
 async fn landing(mut db: Connection<Db>) -> Template {
@@ -111,7 +112,8 @@ fn rocket() -> _ {
             logout,
             dashboard_get,
             dashboard_redirect,
-            inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete
+            inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete,
+            item_transfer_post
         ])
         .mount("/public", FileServer::from(relative!("uploads")))
         .attach(Template::fairing())
@@ -262,64 +264,14 @@ pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut
 
 // get an individual item's page.
 #[get("/items/<item_id>")]
-pub async fn item_get(user: User, item_id: Uuid, mut db: Connection<Db>) -> Template {
-    // 1. Load just the item first
-    let item_result = items::table
-        .find(item_id)
-        .get_result::<Item>(&mut db)
-        .await;
-    
-    let item = match item_result {
-        Ok(item) => item,
-        Err(_) => return Template::render("error", context! { error: "Item not found" }),
+pub async fn item_get(user: User, item_id: Uuid, db: Connection<Db>) -> Template {
+    let context_result = get_item_view_context(user, item_id, db).await;
+    let context = match context_result {
+        Ok(context) => context,
+        Err(_) => return Template::render("error", context! { error: "Could not make context" }),
     };
     
-    // 2. Load the contributor
-    let contributor_result = users::table
-        .find(item.contributed_by)
-        .get_result::<User>(&mut db)
-        .await;
-    
-    let contributor = match contributor_result {
-        Ok(contributor) => contributor,
-        Err(_) => return Template::render("error", context! { error: "Contributor not found" }),
-    };
-    
-    // 3. Load the 5 most recent transfers with their stewards
-    let transfers_with_stewards = item_transfers::table
-        .filter(item_transfers::item_id.eq(item_id))
-        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id)))
-        .order(item_transfers::updated_at.desc())
-        .limit(5)
-        .load::<(ItemTransfer, User)>(&mut db)
-        .await
-        .expect("error getting item transfers"); // Default to empty vector if error
-    
-    // 4. Extract the current steward ID from the first transfer (if available)
-    let current_steward_id = item_transfers::table
-        .filter(item_transfers::item_id.eq(item_id))
-        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id)))
-        .order(item_transfers::updated_at.desc())
-        .first::<(ItemTransfer, User)>(&mut db)
-        .await
-        .expect("error getting item transfers")
-        .1.id;
-    
-    // 5. Check if the current user is the steward
-    let is_current_steward = current_steward_id == user.id;
-    //     .map(|steward_id| steward_id == user.id)
-    //     .unwrap_or(false);
-    
-    let context = context! {
-        user,
-        item,
-        contributor,
-        transfers_with_stewards,
-        current_steward_id,
-        is_current_steward
-    };
-    
-    Template::render("item_view", &context)
+    Template::render("item_view", context)
 }
 
 #[delete("/items/<item_id>")]
@@ -347,4 +299,66 @@ pub async fn item_delete(user: User, item_id: Uuid, mut db: Connection<Db>) -> F
         Flash::error(Redirect::to(format!("/items/{}", item_id)), "Item record can't be deleted by non-owner")
     }
 
+}
+
+
+// pub async fn item_edit_get()
+// pub async fn item_edit_put()
+
+// for requesting an item, use a post or other informal means. For making a transfer, or putting a hold on an item, use item transfer get
+// pub async fn item_request_get() -> Template {
+//     todo!()
+// }
+
+// pub async fn item_request_post() -> Flash<Redirect> {
+//     todo!()
+// }
+
+
+#[derive(FromForm, Debug)]
+pub struct TransferRequest {
+    purpose: TransferPurpose,
+}
+
+#[post("/items/<item_id>/transfer", data = "<transfer_request>")]
+pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: Form<TransferRequest>, mut db: Connection<Db>) -> Flash<Redirect> {
+    // when a transfer is first made, its status will be reserved, and the most recent completed item transfer/user will need to be 
+    // found to get the current steward, so they can be marked as the previous steward in the new item transfer.
+
+    // get the item transfer and user
+    let current_transfer = item_transfers::table
+        .filter(item_transfers::item_id.eq(item_id))
+        .filter(item_transfers::status.eq(TransferStatus::Completed))
+        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id)))
+        .order(item_transfers::updated_at.desc())
+        .first::<(ItemTransfer, User)>(&mut db)
+        .await
+        .expect("error getting item transfers");
+
+    let now = Utc::now().naive_utc();
+    // create the new item transfer
+    let new_transfer = ItemTransfer {
+        id: Uuid::new_v4(),
+        item_id,
+        steward_id: user.id,
+        prev_steward_id: Some(current_transfer.1.id),
+        purpose: transfer_request.into_inner().purpose,
+        lat: None,
+        lng: None,
+        status: TransferStatus::Reserved,
+        created_at: now.clone(),
+        updated_at: now.clone()
+    };
+
+    let transfer_result = diesel::insert_into(item_transfers::table)
+        .values(&new_transfer)
+        .execute(&mut db)
+        .await;
+
+    let item_url = format!("/items/{}", item_id);
+
+    match transfer_result {
+        Ok(_) => Flash::success(Redirect::to(item_url), "Item transfer requested!"),
+        Err(_) => Flash::error(Redirect::to(item_url), "Item transfer was unable to be created"),
+    }
 }
