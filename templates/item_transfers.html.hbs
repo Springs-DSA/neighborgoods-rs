@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Transfers - NeighborGoods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #6C584C;
+            background-color: #F0EAD2;
+        }
+        .container {
+            width: 85%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            padding: 1rem 0;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1, h2, h3 {
+            color: #A98467;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            margin-top: 0;
+            font-weight: normal;
+        }
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        .user-greeting {
+            margin-right: 15px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: #F0EAD2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #A98467;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .section-header {
+            margin: 30px 0 15px 0;
+            border-bottom: 2px solid #ADC178;
+            padding-bottom: 10px;
+        }
+        .transfers-container {
+            margin-bottom: 40px;
+        }
+        .transfer-card {
+            background-color: #DDE5B6;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .transfer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .transfer-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #A98467;
+        }
+        .transfer-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background-color: #ADC178;
+            color: #F0EAD2;
+        }
+        .transfer-details {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .detail-label {
+            font-weight: bold;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .action-button {
+            background-color: #ADC178;
+            color: #F0EAD2;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover {
+            background-color: #A98467;
+        }
+        .confirm-button {
+            background-color: #609966;
+        }
+        .confirm-button:hover {
+            background-color: #40513B;
+        }
+        .cancel-button {
+            background-color: #6C584C;
+            color: #F0EAD2;
+        }
+        .cancel-button:hover {
+            background-color: #4F4037;
+        }
+        .no-transfers {
+            background-color: #DDE5B6;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #6C584C;
+            color: #F0EAD2;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .user-menu {
+                margin-top: 15px;
+                flex-direction: column;
+            }
+            .nav-links {
+                margin-top: 15px;
+            }
+            .transfer-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .transfer-details {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>NeighborGoods</h1>
+                    <p class="tagline">A Federated Library of Things</p>
+                </div>
+                <div class="user-menu">
+                    <div class="user-greeting">Welcome, {{user.name}}</div>
+                    <div class="nav-links">
+                        <a href="/inventory">Inventory</a>
+                        <a href="/feed">Feed</a>
+                        <a href="/campaigns">Campaigns</a>
+                        <a href="/profile">My Profile</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="/inventory" class="back-button">← Back to Inventory</a>
+        
+        <h2>Pending Item Transfers</h2>
+        
+        <!-- My Requested Items Section -->
+        <div class="transfers-container">
+            <h3 class="section-header">My Requested Items</h3>
+            
+            {{#if my_reserved_item_transfers}}
+                {{#each my_reserved_item_transfers}}
+                <div class="transfer-card">
+                    <div class="transfer-header">
+                        <div class="transfer-title">Transfer Request #{{this.0.id}}</div>
+                        <div class="transfer-status">Status: {{this.0.status}}</div>
+                    </div>
+                    
+                    <div class="transfer-details">
+                        <div class="detail-label">Item ID:</div>
+                        <div>{{this.0.item_id}}</div>
+                        
+                        <div class="detail-label">Requested from:</div>
+                        <div>
+                            {{#if this.0.prev_steward_id}}
+                                Previous Steward ID: {{this.0.prev_steward_id}}
+                            {{else}}
+                                Original Contribution
+                            {{/if}}
+                        </div>
+                        
+                        <div class="detail-label">Purpose:</div>
+                        <div>{{this.0.purpose}}</div>
+                        
+                        <div class="detail-label">Requested on:</div>
+                        <div>{{this.0.created_at}}</div>
+                        
+                        <div class="detail-label">Last updated:</div>
+                        <div>{{this.0.updated_at}}</div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="/items/{{this.0.item_id}}" class="action-button">View Item</a>
+                        <button class="action-button cancel-button" onclick="confirmCancelTransfer('{{this.0.id}}')">Cancel Request</button>
+                    </div>
+                </div>
+                {{/each}}
+            {{else}}
+                <div class="no-transfers">
+                    <h3>No pending requests</h3>
+                    <p>You haven't requested any items from other members.</p>
+                    <p>Browse the <a href="/inventory">inventory</a> to find items you'd like to borrow.</p>
+                </div>
+            {{/if}}
+        </div>
+        
+        <!-- Requests From Others Section -->
+        <div class="transfers-container">
+            <h3 class="section-header">Requests From Others</h3>
+            
+            {{#if my_outstanding_item_transfers}}
+                {{#each my_outstanding_item_transfers}}
+                <div class="transfer-card">
+                    <div class="transfer-header">
+                        <div class="transfer-title">{{this.1.name}}</div>
+                        <div class="transfer-status">Status: {{this.0.status}}</div>
+                    </div>
+                    
+                    <div class="transfer-details">
+                        <div class="detail-label">Requested by:</div>
+                        <div>{{this.2.name}}</div>
+                        
+                        <div class="detail-label">Purpose:</div>
+                        <div>{{this.0.purpose}}</div>
+                        
+                        <div class="detail-label">Requested on:</div>
+                        <div>{{this.0.created_at}}</div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="/items/{{this.1.id}}" class="action-button">View Item</a>
+                        <form action="/items/{{this.1.id}}/transfer/{{this.0.id}}/confirm" method="POST" style="display: inline;">
+                            <button type="submit" class="action-button confirm-button">Approve Transfer</button>
+                        </form>
+                        <form action="/items/{{this.1.id}}/transfer/{{this.0.id}}/deny" method="POST" style="display: inline;">
+                            <button type="submit" class="action-button cancel-button">Deny Transfer</button>
+                        </form>
+                    </div>
+                </div>
+                {{/each}}
+            {{else}}
+                <div class="no-transfers">
+                    <h3>No pending requests</h3>
+                    <p>No one has requested any items from you.</p>
+                </div>
+            {{/if}}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+        </div>
+    </footer>
+
+    <script>
+        function confirmCancelTransfer(transferId) {
+            const isConfirmed = confirm("Are you sure you want to cancel this transfer request?");
+            
+            if (isConfirmed) {
+                // Create form and submit
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/items/transfer/${transferId}/cancel`;
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+</body>
+</html>

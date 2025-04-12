@@ -11,6 +11,7 @@ extern crate rocket;
 
 use db::Db;
 use chrono::Utc;
+use rocket_db_pools::diesel::dsl::exists;
 use dotenvy::dotenv;
 use models::{init, item};
 use models::user::User;
@@ -113,7 +114,7 @@ fn rocket() -> _ {
             dashboard_get,
             dashboard_redirect,
             inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete,
-            item_transfer_post
+            item_transfer_post, item_transfers_get
         ])
         .mount("/public", FileServer::from(relative!("uploads")))
         .attach(Template::fairing())
@@ -231,7 +232,9 @@ pub async fn items_contribute_post(user: User, mut item: Form<ItemData<'_>>, mut
                 lng: None,
                 status: TransferStatus::Completed,
                 created_at: now.clone(),
-                updated_at: now.clone()
+                updated_at: now.clone(),
+                steward_confirmed_at: Some(now.clone()),
+                prev_steward_confirmed_at: Some(now.clone())
             };
 
             let iit_result = diesel::insert_into(item_transfers::table)
@@ -347,7 +350,9 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
         lng: None,
         status: TransferStatus::Reserved,
         created_at: now.clone(),
-        updated_at: now.clone()
+        updated_at: now.clone(),
+        steward_confirmed_at: None,
+        prev_steward_confirmed_at: None
     };
 
     let transfer_result = diesel::insert_into(item_transfers::table)
@@ -361,4 +366,50 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
         Ok(_) => Flash::success(Redirect::to(item_url), "Item transfer requested!"),
         Err(_) => Flash::error(Redirect::to(item_url), "Item transfer was unable to be created"),
     }
+}
+
+#[get("/items/transfers")]
+pub async fn item_transfers_get(user: User, mut db: Connection<Db>) -> Template {
+    // get any item transfers where:
+    // a) the current user is the steward, and the transfer status is reserved
+    // b) the current user is not the steward, the transfer status is reserved, and the current user IS the current steward of the item.
+    let my_reserved_item_transfers = item_transfers::table
+        .filter(item_transfers::status.eq(TransferStatus::Reserved))
+        .inner_join(users::table.on(
+            item_transfers::steward_id.eq(users::id)
+            .and(users::id.eq(user.id))
+        ))
+        .order(item_transfers::updated_at.desc())
+        .load::<(ItemTransfer, User)>(&mut db)
+        .await
+        .expect("error getting reserved item transfers");
+
+    // First, find all items stewarded by the current user
+    let items_stewarded_by_user: Vec<Uuid> = item_transfers::table
+        .filter(item_transfers::status.eq(TransferStatus::Completed))
+        .filter(item_transfers::steward_id.eq(user.id))
+        .group_by(item_transfers::item_id)
+        .select(item_transfers::item_id)
+        .load::<Uuid>(&mut db)
+        .await
+        .expect("error finding stewarded items");
+
+    // Then find all reserved transfers for those items where someone else is requesting them
+    let my_outstanding_item_transfers = item_transfers::table
+        .filter(item_transfers::status.eq(TransferStatus::Reserved))
+        .filter(item_transfers::steward_id.ne(user.id)) // Exclude transfers where user is the steward
+        .filter(item_transfers::item_id.eq_any(&items_stewarded_by_user))
+        .inner_join(items::table) // Join with items table
+        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id))) // Join with users for steward info
+        .order(item_transfers::updated_at.desc())
+        .load::<(ItemTransfer, Item, User)>(&mut db)
+        .await
+        .expect("error getting outstanding item transfers");
+
+    let context = context! {
+        user,
+        my_reserved_item_transfers,
+        my_outstanding_item_transfers
+    };
+    Template::render("item_transfers", &context)
 }

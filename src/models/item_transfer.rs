@@ -36,6 +36,8 @@ pub struct ItemTransfer {
     pub status: TransferStatus,
     pub created_at: chrono::NaiveDateTime,
     pub updated_at: chrono::NaiveDateTime,
+    pub steward_confirmed_at: Option<chrono::NaiveDateTime>,
+    pub prev_steward_confirmed_at: Option<chrono::NaiveDateTime>,
 }
 
 // Diesel generates these joinable! instances only for cases where there is only a single relation between two tables based on a non-composite foreign key. All other cases require to specify an explicit the ON clause while constructing such joins.
