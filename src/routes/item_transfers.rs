@@ -8,7 +8,7 @@ use rocket_dyn_templates::{context, Template};
 use uuid::Uuid;
 use rocket::request::FromParam;
 
-use crate::{db::Db, models::{item::Item, item_transfer::{ItemTransfer, TransferPurpose, TransferStatus}, user::User}, schema::{item_transfers, items, users}};
+use crate::{db::Db, models::{item::Item, item_transfer::{ItemTransfer, TransferPurpose, TransferStatus}, user::User}, schema::{item_transfers, items, users}, services::item_transfer_service::current_steward_get};
 
 
 
@@ -24,15 +24,9 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
     // when a transfer is first made, its status will be reserved, and the most recent completed item transfer/user will need to be 
     // found to get the current steward, so they can be marked as the previous steward in the new item transfer.
 
-    // get the item transfer and user
-    let current_transfer = item_transfers::table
-        .filter(item_transfers::item_id.eq(item_id))
-        .filter(item_transfers::status.eq(TransferStatus::Completed))
-        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id)))
-        .order(item_transfers::updated_at.desc())
-        .first::<(ItemTransfer, User)>(&mut db)
+    let current_transfer = current_steward_get(item_id, &mut db)
         .await
-        .expect("error getting item transfers");
+        .expect("Unable to get current steward transfer");
 
     let now = Utc::now().naive_utc();
     // create the new item transfer

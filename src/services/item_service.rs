@@ -1,5 +1,5 @@
 use anyhow::Result;
-// this module provides functions for transferring stewardship of items and calculating related data.
+
 use rocket_db_pools::Connection;
 use rocket_db_pools::diesel::prelude::*;
 use serde::Serialize;
