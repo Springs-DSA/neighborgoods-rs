@@ -383,6 +383,25 @@
                         {{/with}}
                     {{/if}}
                     
+                    <!-- Calculate if we need to show transfers link -->
+                    {{#if is_current_steward}}
+                        <!-- For condition b: User is current steward -->
+                        {{#each transfers_with_stewards}}
+                            {{#if (eq this.0.status "Reserved")}}
+                                <a href="/items/transfers" class="action-button">View Pending Transfers</a>
+                            {{/if}}
+                        {{/each}}
+                    {{else}}
+                        <!-- For condition a: User has reserved transfer -->
+                        {{#each transfers_with_stewards}}
+                            {{#if (eq this.0.status "Reserved")}}
+                                {{#if (eq this.1.id ../user.id)}}
+                                    <a href="/items/transfers" class="action-button">View Pending Transfers</a>
+                                {{/if}}
+                            {{/if}}
+                        {{/each}}
+                    {{/if}}
+                    
                     <!-- Show delete button only if the current user is the item contributor -->
                     {{#if (eq user.id item.contributed_by)}}
                         <button id="delete-item-btn" class="delete-button" onclick="confirmDelete('{{item.id}}')">

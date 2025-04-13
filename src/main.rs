@@ -11,7 +11,7 @@ extern crate rocket;
 
 use db::Db;
 use chrono::Utc;
-use rocket_db_pools::diesel::dsl::exists;
+use rocket::request::FromParam;
 use dotenvy::dotenv;
 use models::{init, item};
 use models::user::User;
@@ -27,6 +27,7 @@ use schema::{item_transfers, items, node_settings, users};
 use uuid::Uuid;
 use std::env;
 use std::ops::DerefMut;
+use std::str::FromStr;
 use rocket::form::Form;
 use rocket::response::{Flash, Redirect};
 // use utils::password;
@@ -114,7 +115,7 @@ fn rocket() -> _ {
             dashboard_get,
             dashboard_redirect,
             inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete,
-            item_transfer_post, item_transfers_get
+            item_transfer_post, item_transfers_get, item_transfer_put
         ])
         .mount("/public", FileServer::from(relative!("uploads")))
         .attach(Template::fairing())
@@ -370,17 +371,16 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
 
 #[get("/items/transfers")]
 pub async fn item_transfers_get(user: User, mut db: Connection<Db>) -> Template {
-    // get any item transfers where:
-    // a) the current user is the steward, and the transfer status is reserved
-    // b) the current user is not the steward, the transfer status is reserved, and the current user IS the current steward of the item.
+
     let my_reserved_item_transfers = item_transfers::table
         .filter(item_transfers::status.eq(TransferStatus::Reserved))
+        .filter(item_transfers::steward_id.eq(user.id))  // User is the new steward (requester)
         .inner_join(users::table.on(
-            item_transfers::steward_id.eq(users::id)
-            .and(users::id.eq(user.id))
+            item_transfers::prev_steward_id.eq(users::id.nullable())  // Join on previous steward (current holder)
         ))
+        .inner_join(items::table)
         .order(item_transfers::updated_at.desc())
-        .load::<(ItemTransfer, User)>(&mut db)
+        .load::<(ItemTransfer, User, Item)>(&mut db)
         .await
         .expect("error getting reserved item transfers");
 
@@ -399,10 +399,10 @@ pub async fn item_transfers_get(user: User, mut db: Connection<Db>) -> Template 
         .filter(item_transfers::status.eq(TransferStatus::Reserved))
         .filter(item_transfers::steward_id.ne(user.id)) // Exclude transfers where user is the steward
         .filter(item_transfers::item_id.eq_any(&items_stewarded_by_user))
-        .inner_join(items::table) // Join with items table
         .inner_join(users::table.on(item_transfers::steward_id.eq(users::id))) // Join with users for steward info
+        .inner_join(items::table) // Join with items table
         .order(item_transfers::updated_at.desc())
-        .load::<(ItemTransfer, Item, User)>(&mut db)
+        .load::<(ItemTransfer, User, Item)>(&mut db)
         .await
         .expect("error getting outstanding item transfers");
 
@@ -412,4 +412,89 @@ pub async fn item_transfers_get(user: User, mut db: Connection<Db>) -> Template 
         my_outstanding_item_transfers
     };
     Template::render("item_transfers", &context)
+}
+
+#[derive(Debug, PartialEq)]
+pub enum TransferRole {
+    NewSteward,
+    PrevSteward,
+}
+
+impl FromStr for TransferRole {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "NewSteward" => Ok(TransferRole::NewSteward),
+            "PrevSteward" => Ok(TransferRole::PrevSteward),
+            _ => Err(()),
+        }
+    }
+}
+
+impl<'r> FromParam<'r> for TransferRole {
+    type Error = &'r str;
+
+    fn from_param(param: &'r str) -> Result<Self, Self::Error> {
+        match TransferRole::from_str(param) {
+            Ok(tr) => Ok(tr),
+            Err(_) => Err(param),
+        }
+    }
+}
+// #[derive(FromForm, Debug)]
+// pub struct TransferConfirmation {
+//     role: TransferRole,
+// }
+
+#[put("/items/transfers/<transfer_id>/<role>")]
+pub async fn item_transfer_put(
+    user: User,
+    transfer_id: Uuid,
+    role: TransferRole,
+    mut db: Connection<Db>
+) -> Flash<Redirect> {
+    
+    // update the item transfer with the appropriate confirmation
+    let confirm_time = Utc::now().naive_utc();
+    match role {
+        TransferRole::NewSteward => {
+            diesel::update(item_transfers::table.filter(item_transfers::id.eq(transfer_id)))
+                .set(item_transfers::steward_confirmed_at.eq(confirm_time.clone()))
+                .get_result::<ItemTransfer>(&mut db)
+                .await
+                .expect("Could not confirm ItemTransfer");
+        },
+        TransferRole::PrevSteward => {
+            diesel::update(item_transfers::table.filter(item_transfers::id.eq(transfer_id)))
+                .set((
+                    item_transfers::prev_steward_confirmed_at.eq(confirm_time.clone()),
+                    item_transfers::prev_steward_id.eq(Some(user.id))
+                ))
+                .get_result::<ItemTransfer>(&mut db)
+                .await
+                .expect("Could not confirm ItemTransfer");
+        },
+    }
+
+    // after the transfer has been updated, we need to query it to see if both confirmations have been set. If so, then
+    // we can update the status of this item transfer to complete.
+    let item_transfer = item_transfers::table
+        .find(transfer_id)
+        .first::<ItemTransfer>(&mut db)
+        .await
+        .expect("Could not find the item transfer we just updated");
+
+    if item_transfer.steward_confirmed_at.is_some() && item_transfer.prev_steward_confirmed_at.is_some() {
+        diesel::update(item_transfers::table.filter(item_transfers::id.eq(transfer_id)))
+                .set(item_transfers::status.eq(TransferStatus::Completed))
+                .get_result::<ItemTransfer>(&mut db)
+                .await
+                .expect("Could not complete ItemTransfer");
+
+        // update all OTHER reserved item transfers so that they point
+        // at the correct previous steward.
+    }
+
+    Flash::success(Redirect::to("/items/transfers"), "Item transfer confirmed! You may have to wait for the other party to confirm before the transfer shows as completed.")
 }
