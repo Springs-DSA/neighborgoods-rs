@@ -8,7 +8,7 @@ use rocket_dyn_templates::{context, Template};
 use uuid::Uuid;
 use rocket::request::FromParam;
 
-use crate::{db::Db, models::{item::Item, item_transfer::{ItemTransfer, TransferPurpose, TransferStatus}, user::User}, schema::{item_transfers, items, users}, services::item_transfer_service::current_steward_get};
+use crate::{db::Db, models::{item::Item, item_transfer::{ItemTransfer, TransferPurpose, TransferStatus}, user::User}, schema::{item_transfers, items, users}, services::item_transfer_service::{current_steward_get, get_transfers_context, TransferRole}};
 
 
 
@@ -61,80 +61,9 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
 #[get("/items/transfers")]
 pub async fn item_transfers_get(user: User, mut db: Connection<Db>) -> Template {
 
-    let my_reserved_item_transfers = item_transfers::table
-        .filter(item_transfers::status.eq(TransferStatus::Reserved))
-        .filter(item_transfers::steward_id.eq(user.id))  // User is the new steward (requester)
-        .inner_join(users::table.on(
-            item_transfers::prev_steward_id.eq(users::id.nullable())  // Join on previous steward (current holder)
-        ))
-        .inner_join(items::table)
-        .order(item_transfers::updated_at.desc())
-        .load::<(ItemTransfer, User, Item)>(&mut db)
-        .await
-        .expect("error getting reserved item transfers");
-
-    // First, find all items stewarded by the current user
-    let items_stewarded_by_user: Vec<Uuid> = item_transfers::table
-        .filter(item_transfers::status.eq(TransferStatus::Completed))
-        .filter(item_transfers::steward_id.eq(user.id))
-        .group_by(item_transfers::item_id)
-        .select(item_transfers::item_id)
-        .load::<Uuid>(&mut db)
-        .await
-        .expect("error finding stewarded items");
-
-    // Then find all reserved transfers for those items where someone else is requesting them
-    let my_outstanding_item_transfers = item_transfers::table
-        .filter(item_transfers::status.eq(TransferStatus::Reserved))
-        .filter(item_transfers::steward_id.ne(user.id)) // Exclude transfers where user is the steward
-        .filter(item_transfers::item_id.eq_any(&items_stewarded_by_user))
-        .inner_join(users::table.on(item_transfers::steward_id.eq(users::id))) // Join with users for steward info
-        .inner_join(items::table) // Join with items table
-        .order(item_transfers::updated_at.desc())
-        .load::<(ItemTransfer, User, Item)>(&mut db)
-        .await
-        .expect("error getting outstanding item transfers");
-
-    let context = context! {
-        user,
-        my_reserved_item_transfers,
-        my_outstanding_item_transfers
-    };
+    let context = get_transfers_context(user, &mut db).await;
     Template::render("item_transfers", &context)
 }
-
-#[derive(Debug, PartialEq)]
-pub enum TransferRole {
-    NewSteward,
-    PrevSteward,
-}
-
-impl FromStr for TransferRole {
-    type Err = ();
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "NewSteward" => Ok(TransferRole::NewSteward),
-            "PrevSteward" => Ok(TransferRole::PrevSteward),
-            _ => Err(()),
-        }
-    }
-}
-
-impl<'r> FromParam<'r> for TransferRole {
-    type Error = &'r str;
-
-    fn from_param(param: &'r str) -> Result<Self, Self::Error> {
-        match TransferRole::from_str(param) {
-            Ok(tr) => Ok(tr),
-            Err(_) => Err(param),
-        }
-    }
-}
-// #[derive(FromForm, Debug)]
-// pub struct TransferConfirmation {
-//     role: TransferRole,
-// }
 
 #[put("/items/transfers/<transfer_id>/<role>")]
 pub async fn item_transfer_put(
