@@ -7,26 +7,7 @@
     {{> partials/styles}}
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div>
-                    <h1>NeighborGoods</h1>
-                    <p class="tagline">A Federated Library of Things</p>
-                </div>
-                <div class="user-menu">
-                    <div class="user-greeting">Welcome, {{user.name}}</div>
-                    <div class="nav-links">
-                        <a href="/inventory">Inventory</a>
-                        <a href="/feed">Feed</a>
-                        <a href="/campaigns">Campaigns</a>
-                        <a href="/profile">My Profile</a>
-                        <a href="/logout">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    {{> partials/navbar}}
 
     <main class="container">
         <div class="page-header">

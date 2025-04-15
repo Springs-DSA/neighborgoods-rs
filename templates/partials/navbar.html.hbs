@@ -1,0 +1,22 @@
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div>
+                <h1><a href="{{#if user}}/dashboard{{else}}/{{/if}}" class="site-title">NeighborGoods</a></h1>
+                <p class="tagline">A Federated Library of Things</p>
+            </div>
+            {{#if user}}
+                <div class="user-menu">
+                    <div class="user-greeting">Welcome, {{user.name}}</div>
+                    <div class="nav-links">
+                        <a href="/inventory">Inventory</a>
+                        <a href="/feed">Feed</a>
+                        <a href="/campaigns">Campaigns</a>
+                        <a href="/profile">My Profile</a>
+                        <a href="/logout">Logout</a>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</header>
