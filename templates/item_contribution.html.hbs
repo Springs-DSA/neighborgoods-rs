@@ -4,67 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contribute Item - NeighborGoods</title>
+    {{> partials/styles}}
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            color: #6C584C;
-            background-color: #F0EAD2;
-        }
-        .container {
-            width: 85%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            background-color: #ADC178;
-            color: #F0EAD2;
-            padding: 1rem 0;
-        }
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        h1, h2, h3 {
-            color: #A98467;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        .tagline {
-            font-size: 1.2rem;
-            margin-top: 0;
-            font-weight: normal;
-        }
-        .user-menu {
-            display: flex;
-            align-items: center;
-        }
-        .user-greeting {
-            margin-right: 15px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-        .nav-links a {
-            color: #F0EAD2;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+        /* Additional styles specific to item contribution */
         .contribution-form {
             background-color: #DDE5B6;
             padding: 25px;
@@ -72,30 +14,12 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ADC178;
-            border-radius: 4px;
-            background-color: #F0EAD2;
-            color: #6C584C;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
+        
         textarea {
             min-height: 120px;
             resize: vertical;
         }
+        
         .image-preview {
             width: 100%;
             height: 200px;
@@ -108,16 +32,19 @@
             background-color: #F0EAD2;
             overflow: hidden;
         }
+        
         .image-preview img {
             max-width: 100%;
             max-height: 100%;
             display: none;
         }
+        
         .file-input-wrapper {
             position: relative;
             overflow: hidden;
             display: inline-block;
         }
+        
         .file-input-wrapper input[type="file"] {
             position: absolute;
             font-size: 100px;
@@ -126,6 +53,7 @@
             top: 0;
             cursor: pointer;
         }
+        
         .file-input-button {
             background-color: #ADC178;
             color: #F0EAD2;
@@ -138,18 +66,22 @@
             font-size: 0.9rem;
             transition: background-color 0.3s;
         }
+        
         .file-input-button:hover {
             background-color: #A98467;
         }
+        
         .file-name {
             margin-left: 10px;
             font-size: 0.9rem;
         }
+        
         .cert-requirements {
             margin-top: 20px;
             border-top: 1px solid #ADC178;
             padding-top: 20px;
         }
+        
         .cert-item {
             display: flex;
             align-items: center;
@@ -158,19 +90,24 @@
             background-color: #F0EAD2;
             border-radius: 4px;
         }
+        
         .cert-item input[type="checkbox"] {
             margin-right: 10px;
         }
+        
         .cert-item-details {
             flex-grow: 1;
         }
+        
         .cert-name {
             font-weight: bold;
         }
+        
         .cert-description {
             font-size: 0.9rem;
             margin-top: 5px;
         }
+        
         .cert-purpose-select {
             margin-left: 15px;
             padding: 5px;
@@ -178,11 +115,13 @@
             border-radius: 4px;
             background-color: #F0EAD2;
         }
+        
         .buttons-row {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
         }
+        
         .cancel-button {
             background-color: #6C584C;
             color: #F0EAD2;
@@ -196,9 +135,11 @@
             font-size: 1rem;
             transition: background-color 0.3s;
         }
+        
         .cancel-button:hover {
             background-color: #594940;
         }
+        
         .submit-button {
             background-color: #A98467;
             color: #F0EAD2;
@@ -210,20 +151,24 @@
             font-size: 1rem;
             transition: background-color 0.3s;
         }
+        
         .submit-button:hover {
             background-color: #8D6E55;
         }
+        
         .required-field::after {
             content: "*";
             color: #A98467;
             margin-left: 5px;
         }
+        
         .help-text {
             font-size: 0.85rem;
             margin-top: 5px;
             color: #6C584C;
             font-style: italic;
         }
+        
         .agreement-checkbox {
             margin-top: 20px;
             padding: 15px;
@@ -231,37 +176,13 @@
             border-radius: 4px;
             border-left: 3px solid #ADC178;
         }
-        footer {
-            background-color: #6C584C;
-            color: #F0EAD2;
-            text-align: center;
-            padding: 1rem 0;
-            margin-top: 2rem;
-        }
+        
         @media (max-width: 768px) {
-            .container {
-                width: 95%;
-            }
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            .user-menu {
-                margin-top: 15px;
-                flex-direction: column;
-            }
-            .nav-links {
-                margin-top: 15px;
-            }
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
             .buttons-row {
                 flex-direction: column;
                 gap: 15px;
             }
+            
             .cancel-button, .submit-button {
                 width: 100%;
                 text-align: center;
