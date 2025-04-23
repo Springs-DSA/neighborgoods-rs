@@ -1,0 +1,54 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="#e0e0e0" />
+  <rect x="20" y="15" width="120" height="30" fill="#c0c0c0" />
+  <text x="50" y="35" font-family="Arial" font-size="14" text-anchor="middle">LOGO</text>
+  <circle cx="740" cy="30" r="15" fill="#c0c0c0" />
+  <text x="740" y="35" font-family="Arial" font-size="14" text-anchor="middle">👤</text>
+  
+  <!-- BORROWER VIEW -->
+  <text x="20" y="100" font-family="Arial" font-size="24" font-weight="bold">My Borrowings</text>
+  
+  <rect x="20" y="120" width="760" height="120" fill="#ffffff" stroke="#e0e0e0" />
+  <rect x="20" y="120" width="120" height="120" fill="#f0f0f0" />
+  <text x="80" y="180" font-family="Arial" font-size="14" text-anchor="middle">IMAGE</text>
+  
+  <text x="160" y="150" font-family="Arial" font-size="18" font-weight="bold">Professional Lawn Mower</text>
+  <text x="160" y="180" font-family="Arial" font-size="16">Borrowed from: David P.</text>
+  <text x="160" y="205" font-family="Arial" font-size="14">Due for return: May 7, 2025 (tomorrow)</text>
+  
+  <rect x="620" y="160" width="140" height="40" rx="5" fill="#4a86e8" />
+  <text x="690" y="185" font-family="Arial" font-size="14" fill="white" text-anchor="middle">RETURN ITEM</text>
+  
+  <!-- Return Form -->
+  <rect x="0" y="260" width="800" height="10" fill="#f0f0f0" />
+  <text x="20" y="300" font-family="Arial" font-size="24" font-weight="bold">Return Item</text>
+  
+  <rect x="20" y="320" width="760" height="300" fill="#ffffff" stroke="#e0e0e0" />
+  
+  <text x="40" y="350" font-family="Arial" font-size="18" font-weight="bold">Professional Lawn Mower - Return Process</text>
+  
+  <text x="40" y="390" font-family="Arial" font-size="16" font-weight="bold">Document Return Condition</text>
+  <text x="40" y="415" font-family="Arial" font-size="14">Take photos of the item's current condition</text>
+  
+  <rect x="40" y="430" width="120" height="100" fill="#f0f0f0" stroke="#c0c0c0" rx="5" />
+  <text x="100" y="480" font-family="Arial" font-size="24" text-anchor="middle">+</text>
+  
+  <rect x="180" y="430" width="120" height="100" fill="#f0f0f0" stroke="#c0c0c0" rx="5" />
+  <text x="240" y="480" font-family="Arial" font-size="24" text-anchor="middle">+</text>
+  
+  <text x="40" y="555" font-family="Arial" font-size="16" font-weight="bold">Return Notes</text>
+  <rect x="40" y="565" width="720" height="70" fill="#ffffff" stroke="#c0c0c0" rx="5" />
+  <text x="55" y="595" font-family="Arial" font-size="14" fill="#888">I emptied the fuel tank as instructed. Everything worked great!</text>
+  
+  <rect x="600" y="650" width="160" height="45" rx="5" fill="#4a86e8" />
+  <text x="680" y="678" font-family="Arial" font-size="16" fill="white" text-anchor="middle">CONFIRM RETURN</text>
+  
+  <!-- OWNER CONFIRMATION -->
+  <rect x="0" y="640" width="800" height="10" fill="#f0f0f0" />
+  <text x="400" y="680" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Owner Confirmation</text>
+  
+  <rect x="200" y="710" width="400" height="70" fill="#f7f7f7" stroke="#e0e0e0" />
+  <text x="400" y="745" font-family="Arial" font-size="16" text-anchor="middle">David P. will be notified to confirm the return.</text>
+  <text x="400" y="765" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">You'll receive confirmation once completed.</text>
+</svg>

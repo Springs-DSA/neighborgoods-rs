@@ -94,3 +94,231 @@ DDE5B6
 ADC178
 A98467
 6C584C
+
+# Design Doc
+Neighborhood Sharing Platform Design Document
+1. Product Overview
+1.1 Vision Statement
+Our neighborhood sharing platform aims to build stronger communities by facilitating the sharing of items, skills, and resources among neighbors. The platform provides a simple, intuitive interface that enables neighbors to borrow items they need occasionally, share skills, organize community events, and reduce overall consumption through a library economy.
+1.2 Target Users
+
+Neighbors seeking to borrow items for occasional use
+Community members willing to share items and skills
+Community organizers planning local events
+Neighborhood administrators managing community engagement
+
+1.3 Core Functionality
+
+Item and skill sharing registry
+Borrowing request and confirmation system
+Community events organization
+User verification and trust-building mechanisms
+Administration tools for community managers
+
+2. Design Philosophy & Principles
+2.1 Design Values
+
+Community-Focused: Prioritize features that strengthen neighborhood bonds
+Accessibility: Ensure the platform is usable by neighbors of all technical abilities
+Transparency: Create clear processes for borrowing, lending, and conflict resolution
+Simplicity: Keep interfaces clean and straightforward to encourage participation
+Trust-Building: Incorporate elements that foster trust among community members
+
+2.2 Visual Language
+
+Color Palette: Primary colors should be warm and welcoming
+Iconography: Simple, recognizable icons with consistent style throughout the application
+Spacing: Generous white space to maintain clarity and reduce cognitive load
+
+2.3 Responsive Design Approach
+
+Mobile-first design ensuring full functionality on smaller screens
+Desktop views to take advantage of additional screen real estate for more efficient workflows
+Consistent navigation patterns across device sizes
+
+3. User Personas (for considering user behavior)
+3.1 Deb - The Occasional Borrower
+
+Background: Homeowner who occasionally needs tools or equipment
+Goals: Access items without purchasing, connect with neighbors
+Pain Points: Hesitant about asking to borrow, worried about item condition
+Usage Patterns: Checks the platform when specific needs arise
+
+3.2 Adam - The Community Admin
+
+Background: Enthusiastic about community building, technically competent
+Goals: Ensure smooth platform operation, verify users, resolve conflicts
+Pain Points: Limited time for administration, needs efficient tools
+Usage Patterns: Regular but brief platform check-ins, responsive to notifications
+
+3.3 Joy - The Community Organizer
+
+Background: Extroverted, plans neighborhood events and gatherings
+Goals: Coordinate resources for events, engage more neighbors
+Pain Points: Tracking commitments, ensuring resources are available
+Usage Patterns: Heavy use leading up to events, creates and manages multiple requests
+
+4. Information Architecture
+4.1 Main Navigation Structure
+
+Home/Dashboard: Community activity feed, announcements, quick access functions
+Marketplace: Available items/skills, community needs, search functionality
+My Account: Profile, my shared items, borrowing history, calendar
+Community: Events, planning, resources
+Admin Panel: User management, dispute resolution, settings (admin user only)
+
+4.2 Content Organization
+
+Items organized by categories with tag filtering
+Skills categorized by type with availability indicators
+Events organized chronologically with resource needs highlighted
+Requests tracked by status (pending, active, completed)
+
+5. Key User Flows
+5.1 User Registration & Onboarding
+
+User completes sign-up form with basic information
+Admin schedules in-person verification meeting
+Admin approves user, enabling full platform access
+User completes profile with shareable items/skills
+
+5.2 Item Borrowing Flow
+
+User searches/browses for needed item
+User submits borrowing request with dates and purpose
+Owner receives notification and reviews request
+Owner accepts request and arranges pickup details
+Borrower and owner document item condition at handover
+System tracks borrowing period and sends return reminders
+Borrower returns item and both parties confirm return
+Optional feedback provided
+
+5.3 Community Event Organization
+
+Organizer creates event with date, description, location
+Organizer lists needed resources (items, skills, volunteers)
+Community members can commit resources or volunteer time
+System tracks commitments and outstanding needs
+Organizer communicates with participants through platform
+Event execution with check-in of contributed items
+Return process for borrowed items after event
+
+5.4 Dispute Resolution
+
+User reports issue through platform
+Both users are publicly flaged as being in dispute++
+System offers direct resolution options
+If unresolved, community mediator or admin is requested
+Mediator facilitates discussion between parties
+Resolution is documented and implemented, dispute--
+
+6. Component Library
+6.1 Core Components
+
+User Cards: Displaying user profile information with trust indicators
+Item Cards: Showcasing available items with key details
+Request Forms: Standardized interface for borrowing requests
+Calendar Elements: For scheduling and availability management
+Navigation Components: Consistent across the application
+Search & Filter Tools: For discovering resources
+Notification Components: For system alerts and messages
+
+6.2 Page Templates
+
+Dashboard Template: Activity feed, quick actions, announcements
+Listing Pages Template: Grid or list view with filtering sidebar
+Detail Pages Template: Full information about items/events with actions
+Form Pages Template: Consistent layout for all input forms
+Profile Pages Template: User information with tabbed sections
+
+7. Interaction Patterns
+7.1 Input Methods
+
+Form Fields: Consistent styling with clear labels and validation
+Selection Controls: Dropdowns, radio buttons, and checkboxes
+Date Selectors: Calendar-based interface for scheduling
+Image Upload: Simple interface for item/condition documentation
+Search Interface: Immediate feedback with suggestion capability
+
+7.2 Feedback & Notifications
+
+Status Indicators: Clear visual cues for request/item status
+Confirmation Messages: After successful actions
+Error Handling: User-friendly error messages with recovery actions
+Loading States: Consistent indicators during system operations
+Notification Center: Centralized location for all alerts and messages
+
+7.3 Motion & Transitions
+
+Subtle animations for state changes
+Smooth transitions between pages
+Microinteractions that provide feedback on user actions
+
+8. Technical Implementation Guidelines
+8.1 Technology Stack
+
+Backend: Rust with Rocket framework and Diesel ORM
+Database: PostgreSQL (as indicated by Diesel schema)
+Containerization: Docker for consistent deployment
+API Architecture: RESTful endpoints with potential ActivityPub integration
+
+8.2 Schema Considerations
+User management with verification flow (approved_at/approved_by)
+Item tracking with detailed ownership history
+Certification system for skills and item usage requirements
+Transfer tracking with status and purpose indicators
+Geolocation capabilities for users and transfers
+
+9. Federation & Scaling Strategy
+9.1 Federation Protocol
+
+ActivityPub implementation for inter-neighborhood federation
+Common vocabulary for items, skills, and community resources
+Federated identity management for cross-node authentication
+Content addressing for consistent item identification across nodes
+
+9.2 Node Architecture Needs
+
+Self-hostable neighborhood instances
+Discovery mechanism for nearby neighborhood nodes through nonprofit
+Global vs. local content distinctions
+Conflict resolution between federated nodes
+
+10. Organizational Structure
+10.1 Nonprofit Entity
+
+Legal organization for project governance
+Fundraising through grants and donations
+Community outreach and adoption programs
+Stewardship of shared code and standards
+Facilitation of inter-neighborhood cooperation
+
+10.2 Governance Model
+
+Open contribution model for code development
+Community input mechanisms for feature priorities
+Transparent decision-making processes
+Balance between local node autonomy and network coherence
+
+11. Revised Feature Roadmap
+
+Phase 1: Core borrowing and lending functionality
+Phase 2: Community events and resources
+Phase 2.5: Federation protocol implementation
+Phase 2.6: Nonprofit establishment and governance structure
+Phase 3: Ratings, reviews, and enhanced trust mechanisms
+Phase 4: Calendar integration and advanced scheduling
+
+12. Additional Implementation Considerations
+12.1 Security Approach
+
+User verification processes by node admin
+Transfer confirmation by both parties
+Privacy considerations for location/contact data
+
+12.2 Federation-Specific Components
+
+Node settings management interface
+Federation status indicators
+Cross-node search functionality
+Admin tools for federation management

@@ -1,0 +1,65 @@
+<svg viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="#e0e0e0" />
+  <rect x="20" y="15" width="120" height="30" fill="#c0c0c0" />
+  <text x="50" y="35" font-family="Arial" font-size="14" text-anchor="middle">LOGO</text>
+  <circle cx="740" cy="30" r="15" fill="#c0c0c0" />
+  <text x="740" y="35" font-family="Arial" font-size="14" text-anchor="middle">👤</text>
+  
+  <!-- Back Navigation -->
+  <rect x="20" y="70" width="100" height="30" rx="5" fill="#f0f0f0" stroke="#c0c0c0" />
+  <text x="45" y="90" font-family="Arial" font-size="14">← Back</text>
+  
+  <!-- STEP 1: REQUEST FORM -->
+  <text x="400" y="130" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Request to Borrow</text>
+  <text x="400" y="160" font-family="Arial" font-size="18" text-anchor="middle">Professional Lawn Mower from David P.</text>
+  
+  <rect x="100" y="180" width="600" height="350" fill="#ffffff" stroke="#e0e0e0" />
+  
+  <!-- Form Fields -->
+  <text x="130" y="220" font-family="Arial" font-size="16" font-weight="bold">When do you need this item?</text>
+  <rect x="130" y="230" width="540" height="60" fill="#ffffff" stroke="#c0c0c0" rx="5" />
+  <text x="150" y="255" font-family="Arial" font-size="14">Start Date</text>
+  <rect x="150" y="265" width="200" height="30" fill="#f7f7f7" stroke="#c0c0c0" rx="5" />
+  <text x="165" y="285" font-family="Arial" font-size="14">May 5, 2025</text>
+  
+  <text x="370" y="255" font-family="Arial" font-size="14">End Date</text>
+  <rect x="370" y="265" width="200" height="30" fill="#f7f7f7" stroke="#c0c0c0" rx="5" />
+  <text x="385" y="285" font-family="Arial" font-size="14">May 7, 2025</text>
+  
+  <text x="130" y="325" font-family="Arial" font-size="16" font-weight="bold">Purpose (Optional)</text>
+  <rect x="130" y="335" width="540" height="70" fill="#ffffff" stroke="#c0c0c0" rx="5" />
+  <text x="150" y="365" font-family="Arial" font-size="14" fill="#888">I need to mow my lawn before a backyard party this weekend.</text>
+  
+  <text x="130" y="425" font-family="Arial" font-size="16" font-weight="bold">Preferred Pickup Time</text>
+  <rect x="130" y="435" width="540" height="40" fill="#ffffff" stroke="#c0c0c0" rx="5" />
+  <text x="150" y="460" font-family="Arial" font-size="14">Morning (8am-12pm)</text>
+  <circle cx="140" cy="460" r="5" fill="#4a86e8" />
+  
+  <rect x="130" y="480" width="540" height="1" fill="#e0e0e0" />
+  
+  <text x="130" y="510" font-family="Arial" font-size="12" fill="#666">By submitting this request, you agree to handle the item with care and return it in the same condition.</text>
+  
+  <rect x="350" y="530" width="150" height="45" rx="5" fill="#4a86e8" />
+  <text x="425" y="558" font-family="Arial" font-size="16" fill="white" text-anchor="middle">SUBMIT</text>
+  
+  <rect x="180" y="530" width="150" height="45" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="255" y="558" font-family="Arial" font-size="16" text-anchor="middle">CANCEL</text>
+  
+  <!-- STEP 2: CONFIRMATION SCREEN -->
+  <rect x="0" y="600" width="800" height="10" fill="#f0f0f0" />
+  <text x="400" y="650" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle">Request Submitted</text>
+  
+  <rect x="200" y="670" width="400" height="200" fill="#ffffff" stroke="#e0e0e0" />
+  <circle cx="400" cy="730" r="30" fill="#4a86e8" />
+  <text x="400" y="730" font-family="Arial" font-size="28" fill="white" text-anchor="middle">✓</text>
+  
+  <text x="400" y="790" font-family="Arial" font-size="16" text-anchor="middle">Your request has been sent to David P.</text>
+  <text x="400" y="820" font-family="Arial" font-size="14" text-anchor="middle" fill="#666">You'll be notified when they respond.</text>
+  
+  <rect x="300" y="850" width="200" height="45" rx="5" fill="#4a86e8" />
+  <text x="400" y="878" font-family="Arial" font-size="16" fill="white" text-anchor="middle">VIEW REQUEST</text>
+  
+  <rect x="300" y="905" width="200" height="45" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="400" y="933" font-family="Arial" font-size="16" text-anchor="middle">BACK TO BROWSING</text>
+</svg>

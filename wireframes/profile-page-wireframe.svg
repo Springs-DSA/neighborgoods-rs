@@ -1,0 +1,85 @@
+<svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="#e0e0e0" />
+  <rect x="20" y="15" width="120" height="30" fill="#c0c0c0" />
+  <text x="50" y="35" font-family="Arial" font-size="14" text-anchor="middle">LOGO</text>
+  <rect x="250" y="15" width="300" height="30" rx="15" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="35" font-family="Arial" font-size="14" fill="#a0a0a0">Search items, skills...</text>
+  <circle cx="740" cy="30" r="15" fill="#4a86e8" />
+  <text x="740" y="35" font-family="Arial" font-size="14" fill="white" text-anchor="middle">D</text>
+  
+  <!-- Profile Header -->
+  <rect x="0" y="60" width="800" height="200" fill="#f7f7f7" />
+  
+  <circle cx="130" cy="140" r="60" fill="#c0c0c0" />
+  <text x="130" y="140" font-family="Arial" font-size="48" fill="white" text-anchor="middle">D</text>
+  
+  <text x="230" y="120" font-family="Arial" font-size="28" font-weight="bold">David Parker</text>
+  <text x="230" y="150" font-family="Arial" font-size="16">Oak Hill Neighborhood</text>
+  <text x="230" y="180" font-family="Arial" font-size="14">Member since January 2025</text>
+  
+  <rect x="650" y="130" width="120" height="40" rx="5" fill="#4a86e8" />
+  <text x="710" y="155" font-family="Arial" font-size="14" fill="white" text-anchor="middle">EDIT PROFILE</text>
+  
+  <!-- Tab Navigation -->
+  <rect x="0" y="260" width="800" height="50" fill="#ffffff" />
+  <rect x="0" y="307" width="800" height="3" fill="#e0e0e0" />
+  <rect x="20" y="260" width="150" height="50" fill="#ffffff" />
+  <rect x="20" y="307" width="150" height="3" fill="#4a86e8" />
+  <text x="95" y="290" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle">My Items</text>
+  
+  <rect x="170" y="260" width="150" height="50" fill="#ffffff" />
+  <text x="245" y="290" font-family="Arial" font-size="16" text-anchor="middle">Borrowed</text>
+  
+  <rect x="320" y="260" width="150" height="50" fill="#ffffff" />
+  <text x="395" y="290" font-family="Arial" font-size="16" text-anchor="middle">Lent Out</text>
+  
+  <rect x="470" y="260" width="150" height="50" fill="#ffffff" />
+  <text x="545" y="290" font-family="Arial" font-size="16" text-anchor="middle">History</text>
+  
+  <!-- My Items Section -->
+  <rect x="20" y="330" width="760" height="60" fill="#ffffff" />
+  <text x="20" y="365" font-family="Arial" font-size="18" font-weight="bold">Items I'm Sharing</text>
+  <rect x="650" y="340" width="130" height="40" rx="5" fill="#4a86e8" />
+  <text x="715" y="365" font-family="Arial" font-size="14" fill="white" text-anchor="middle">+ ADD ITEM</text>
+  
+  <!-- Item Cards -->
+  <!-- Row 1 -->
+  <rect x="20" y="410" width="230" height="170" fill="#ffffff" stroke="#e0e0e0" />
+  <rect x="20" y="410" width="230" height="100" fill="#f0f0f0" />
+  <text x="135" y="460" font-family="Arial" font-size="14" text-anchor="middle">IMAGE</text>
+  <text x="30" y="525" font-family="Arial" font-size="16" font-weight="bold">Lawn Mower</text>
+  <text x="30" y="550" font-family="Arial" font-size="14">Available now</text>
+  <rect x="160" y="540" width="80" height="30" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="200" y="560" font-family="Arial" font-size="12" text-anchor="middle">EDIT</text>
+  
+  <rect x="270" y="410" width="230" height="170" fill="#ffffff" stroke="#e0e0e0" />
+  <rect x="270" y="410" width="230" height="100" fill="#f0f0f0" />
+  <text x="385" y="460" font-family="Arial" font-size="14" text-anchor="middle">IMAGE</text>
+  <text x="280" y="525" font-family="Arial" font-size="16" font-weight="bold">Power Drill</text>
+  <text x="280" y="550" font-family="Arial" font-size="14">Available now</text>
+  <rect x="410" y="540" width="80" height="30" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="450" y="560" font-family="Arial" font-size="12" text-anchor="middle">EDIT</text>
+  
+  <rect x="520" y="410" width="230" height="170" fill="#ffffff" stroke="#e0e0e0" />
+  <rect x="520" y="410" width="230" height="100" fill="#f0f0f0" />
+  <text x="635" y="460" font-family="Arial" font-size="14" text-anchor="middle">IMAGE</text>
+  <text x="530" y="525" font-family="Arial" font-size="16" font-weight="bold">Carpentry Skills</text>
+  <text x="530" y="550" font-family="Arial" font-size="14">Weekends only</text>
+  <rect x="660" y="540" width="80" height="30" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="700" y="560" font-family="Arial" font-size="12" text-anchor="middle">EDIT</text>
+  
+  <!-- Account Settings Section -->
+  <rect x="0" y="600" width="800" height="10" fill="#f0f0f0" />
+  <text x="20" y="640" font-family="Arial" font-size="18" font-weight="bold">Account Settings</text>
+  
+  <rect x="20" y="660" width="760" height="120" fill="#ffffff" stroke="#e0e0e0" />
+  
+  <text x="40" y="690" font-family="Arial" font-size="16">Notification Preferences</text>
+  <text x="40" y="720" font-family="Arial" font-size="16">Privacy Settings</text>
+  <text x="40" y="750" font-family="Arial" font-size="16">Change Password</text>
+  
+  <text x="700" y="690" font-family="Arial" font-size="16">→</text>
+  <text x="700" y="720" font-family="Arial" font-size="16">→</text>
+  <text x="700" y="750" font-family="Arial" font-size="16">→</text>
+</svg>

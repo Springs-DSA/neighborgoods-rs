@@ -1,0 +1,61 @@
+<svg viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sign In Screen -->
+  <rect x="0" y="0" width="800" height="400" fill="#ffffff" />
+  <rect x="0" y="0" width="800" height="60" fill="#e0e0e0" />
+  <rect x="20" y="15" width="120" height="30" fill="#c0c0c0" />
+  <text x="50" y="35" font-family="Arial" font-size="14" text-anchor="middle">LOGO</text>
+  
+  <text x="400" y="130" font-family="Arial" font-size="30" font-weight="bold" text-anchor="middle">Welcome Back</text>
+  <text x="400" y="160" font-family="Arial" font-size="16" text-anchor="middle">Sign in to access your neighborhood sharing account</text>
+  
+  <rect x="250" y="190" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="220" font-family="Arial" font-size="14">Email</text>
+  
+  <rect x="250" y="250" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="280" font-family="Arial" font-size="14">Password</text>
+  
+  <rect x="250" y="310" width="300" height="50" rx="5" fill="#4a86e8" />
+  <text x="400" y="340" font-family="Arial" font-size="16" fill="white" text-anchor="middle">SIGN IN</text>
+  
+  <text x="400" y="380" font-family="Arial" font-size="14" text-anchor="middle">Don't have an account? <tspan fill="#4a86e8">Sign up</tspan></text>
+  
+  <!-- Sign Up Screen -->
+  <rect x="0" y="430" width="800" height="600" fill="#ffffff" />
+  <rect x="0" y="430" width="800" height="60" fill="#e0e0e0" />
+  <rect x="20" y="445" width="120" height="30" fill="#c0c0c0" />
+  <text x="50" y="465" font-family="Arial" font-size="14" text-anchor="middle">LOGO</text>
+  
+  <text x="400" y="530" font-family="Arial" font-size="30" font-weight="bold" text-anchor="middle">Join Your Neighborhood</text>
+  <text x="400" y="560" font-family="Arial" font-size="16" text-anchor="middle">Create an account to start sharing with neighbors</text>
+  
+  <rect x="250" y="590" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="620" font-family="Arial" font-size="14">Full Name</text>
+  
+  <rect x="250" y="650" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="680" font-family="Arial" font-size="14">Email</text>
+  
+  <rect x="250" y="710" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="740" font-family="Arial" font-size="14">Password</text>
+  
+  <rect x="250" y="770" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="800" font-family="Arial" font-size="14">Confirm Password</text>
+  
+  <rect x="250" y="830" width="300" height="50" rx="5" fill="#ffffff" stroke="#c0c0c0" />
+  <text x="270" y="860" font-family="Arial" font-size="14">Neighborhood</text>
+  
+  <rect x="250" y="890" width="300" height="50" rx="5" fill="#4a86e8" />
+  <text x="400" y="920" font-family="Arial" font-size="16" fill="white" text-anchor="middle">CREATE ACCOUNT</text>
+  
+  <text x="400" y="960" font-family="Arial" font-size="14" text-anchor="middle">Already have an account? <tspan fill="#4a86e8">Sign in</tspan></text>
+  
+  <!-- Verification Screen -->
+  <rect x="0" y="1030" width="800" height="170" fill="#ffffff" />
+  <rect x="100" y="1030" width="600" height="170" fill="#f7f7f7" stroke="#e0e0e0" />
+  
+  <text x="400" y="1070" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle">Verification Required</text>
+  <text x="400" y="1100" font-family="Arial" font-size="14" text-anchor="middle">Your account needs to be verified by a community admin</text>
+  <text x="400" y="1120" font-family="Arial" font-size="14" text-anchor="middle">before you can fully access the platform.</text>
+  
+  <rect x="250" y="1150" width="300" height="40" rx="5" fill="#4a86e8" />
+  <text x="400" y="1175" font-family="Arial" font-size="14" fill="white" text-anchor="middle">OK, I UNDERSTAND</text>
+</svg>
