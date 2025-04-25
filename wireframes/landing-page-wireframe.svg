@@ -1,0 +1,71 @@
+<svg viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="80" fill="#ADC178" />
+  <text x="30" y="50" font-family="Arial" font-size="24" font-weight="bold" fill="#6C584C">Neighborgoods</text>
+  <rect x="600" y="25" width="70" height="30" rx="15" fill="#A98467" />
+  <text x="635" y="45" font-family="Arial" font-size="14" text-anchor="middle" fill="#F0EAD2">Sign In</text>
+  <rect x="690" y="25" width="80" height="30" rx="15" fill="#A98467" />
+  <text x="730" y="45" font-family="Arial" font-size="14" text-anchor="middle" fill="#F0EAD2">Sign Up</text>
+
+  <!-- Hero Section -->
+  <rect x="0" y="80" width="800" height="300" fill="#F0EAD2" />
+  <text x="400" y="170" font-family="Arial" font-size="36" font-weight="bold" text-anchor="middle" fill="#6C584C">Maple Ridge Commons</text>
+  <text x="400" y="220" font-family="Arial" font-size="20" text-anchor="middle" fill="#6C584C">"Share More, Own Less, Connect Together"</text>
+  <rect x="300" y="250" width="200" height="50" rx="25" fill="#ADC178" />
+  <text x="400" y="280" font-family="Arial" font-size="18" text-anchor="middle" fill="#6C584C">Join Our Community</text>
+
+  <!-- Featured Items Section -->
+  <rect x="0" y="380" width="800" height="300" fill="#FFFFFF" />
+  <text x="400" y="420" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#6C584C">Recently Shared</text>
+  
+  <!-- Item Card 1 -->
+  <rect x="50" y="450" width="220" height="200" rx="5" fill="#F0EAD2" stroke="#ADC178" stroke-width="1" />
+  <rect x="50" y="450" width="220" height="120" rx="5" fill="#DDE5B6" />
+  <circle cx="160" cy="510" r="40" fill="#A98467" />
+  <text x="160" y="515" font-family="Arial" font-size="20" text-anchor="middle" fill="#F0EAD2">📚</text>
+  <text x="160" y="590" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C584C">Book Collection</text>
+  <text x="160" y="610" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C">Available Now</text>
+
+  <!-- Item Card 2 -->
+  <rect x="290" y="450" width="220" height="200" rx="5" fill="#F0EAD2" stroke="#ADC178" stroke-width="1" />
+  <rect x="290" y="450" width="220" height="120" rx="5" fill="#DDE5B6" />
+  <circle cx="400" cy="510" r="40" fill="#A98467" />
+  <text x="400" y="515" font-family="Arial" font-size="20" text-anchor="middle" fill="#F0EAD2">🔨</text>
+  <text x="400" y="590" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C584C">Power Drill</text>
+  <text x="400" y="610" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C">Available Tomorrow</text>
+
+  <!-- Item Card 3 -->
+  <rect x="530" y="450" width="220" height="200" rx="5" fill="#F0EAD2" stroke="#ADC178" stroke-width="1" />
+  <rect x="530" y="450" width="220" height="120" rx="5" fill="#DDE5B6" />
+  <circle cx="640" cy="510" r="40" fill="#A98467" />
+  <text x="640" y="515" font-family="Arial" font-size="20" text-anchor="middle" fill="#F0EAD2">🎸</text>
+  <text x="640" y="590" font-family="Arial" font-size="16" text-anchor="middle" fill="#6C584C">Guitar Lessons</text>
+  <text x="640" y="610" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C">Available Weekends</text>
+
+  <!-- Features Section -->
+  <rect x="0" y="680" width="800" height="220" fill="#DDE5B6" />
+  <text x="400" y="720" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#6C584C">How It Works</text>
+  
+  <!-- Feature 1 -->
+  <circle cx="160" cy="780" r="40" fill="#ADC178" />
+  <text x="160" y="785" font-family="Arial" font-size="20" text-anchor="middle" fill="#6C584C">1</text>
+  <text x="160" y="840" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#6C584C">Share Items</text>
+  <text x="160" y="865" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C" width="150">List things you're willing to lend to neighbors</text>
+  
+  <!-- Feature 2 -->
+  <circle cx="400" cy="780" r="40" fill="#ADC178" />
+  <text x="400" y="785" font-family="Arial" font-size="20" text-anchor="middle" fill="#6C584C">2</text>
+  <text x="400" y="840" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#6C584C">Borrow Locally</text>
+  <text x="400" y="865" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C" width="150">Find what you need from people nearby</text>
+  
+  <!-- Feature 3 -->
+  <circle cx="640" cy="780" r="40" fill="#ADC178" />
+  <text x="640" y="785" font-family="Arial" font-size="20" text-anchor="middle" fill="#6C584C">3</text>
+  <text x="640" y="840" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#6C584C">Build Community</text>
+  <text x="640" y="865" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C" width="150">Connect with neighbors through sharing</text>
+
+  <!-- Footer -->
+  <rect x="0" y="900" width="800" height="100" fill="#6C584C" />
+  <text x="400" y="940" font-family="Arial" font-size="16" text-anchor="middle" fill="#F0EAD2">Maple Ridge Commons • ShareLocal</text>
+  <text x="400" y="970" font-family="Arial" font-size="12" text-anchor="middle" fill="#F0EAD2">© 2025 • Privacy • Terms • Community Guidelines</text>
+</svg>

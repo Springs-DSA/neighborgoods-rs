@@ -1,45 +1,69 @@
-# NeighborGoods - Rust edition
-This is mostly just a playground for me to work with rust again, but also I wanted to make more than a todo-app and call it a day. This app has the same goals for functionality of the NeighborGoods app, but will probably be abandoned at some point once other people start working on the NeighborGoods app proper.
+# NeighborGoods
+NeighborGoods is a Federated Library of Things.
 
----------
-With that out of the way, NeighborGoods is a Federated Library of Things.
+## Overview
+### Vision Statement
+The Neighborgoods Project aims to build stronger communities by facilitating the sharing of items, skills, and resources among neighbors. The platform provides a simple, intuitive interface that enables neighbors to build community by borrowing items, shareing skills, organizeing community events, and reduceing overall consumption through the creation of a library economy.
+
+### Target Users
+Neighbors seeking to borrow items for occasional use
+Community members willing to share items and skills
+Community organizers planning local events
+Neighborhood administrators managing community engagement
+
+### Core Functionality
+Item and skill sharing registry
+Borrowing request and confirmation system
+Community events organization
+User verification and trust-building mechanisms
+Administration tools for community managers
+Inter-node Federation
+
+## Design Philosophy & Principles
+### Design Values
+Community-Focused: Maximize hyperlocal, face to face interactions
+Accessibility: Ensure the platform is usable by neighbors of all technical abilities
+Transparency: Create clear processes for borrowing, lending, and conflict resolution
+Simplicity: Keep interfaces clean and straightforward to encourage participation
+Trust-Building: Incorporate elements that foster trust among community members
+
+### Visual Language
+Color Palette: Primary colors should be warm and welcoming
+Iconography: Simple, recognizable icons with consistent style throughout the application
+Spacing: Generous white space to maintain clarity and reduce cognitive load
+
+### Responsive Design Approach
+Mobile-first design ensuring full functionality on smaller screens
+Desktop views to take advantage of additional screen real estate for more efficient workflows
+Consistent navigation patterns across device sizes
 
 # Features
+## Item Borrowing (Top Priority)
+A user should be able to offer items they own to the network. This includes creating a profile for the item including name, picture, description, borrowing, maintenance, and rules to use, etc. Once the object has been entered into the system, its location and stewardship is tracked, and it is displayed in a store-like list where other users can borrow it. As this is a distributed network of individuals offering up their items, there is no central repository that items must be checked in to. Instead, items are simply at the location they were last used at, until someone comes to borrow it again. Checking out an item involves clicking the borrow button, and meeting the requirements. Then, the item must transfer to the stewardship of the borrower. The owner of the item will receive a notification that the item has been reserved for borrowing, and it is up to the owner and the borrower how to move the item. In the future, it should be possible to have network members volunteer as gofers that move items around, but for now it's up to individual members to get their borrowed items.
 
-## Item Borrowing
-A user should be able to offer items they own to the network. This includes creating a profile for the item including name, picture, description, borrowing, maintenance, and certification rules, etc. Once the object has been entered into the system, its location and stewardship is tracked, and it is displayed in a store-like list where other users can borrow it. As this is a distributed network of individuals offering up their items, there is no central repository that items must be checked in to. Instead, items are simply at the location they were last used at, until someone comes to borrow it again. Checking out an item involves clicking the borrow button, and meeting the requirements. Then, the item must transfer to the stewardship of the borrower. The current steward of the item will receive a notification that the item has been reserved for borrowing, and it is up to previous steward and the borrower how to move the item. In the future, it should be possible to have network members volunteer as gofers that move items around, but for now it's up to individual members to get their borrowed items.
-
-Furthermore, there are different types of borrows:
-- use: the item is intended to be used by the borrower
-- maintenance: the item isn't going to be used, only repaired or maintained by the borrower
-- restock: the item isn't going to be used, only refueled, restored, or restocked
-- consume: the borrower will consume some portion of this item during the borrowing, for example, by refueling a lawnmower
-- contribution: this is a special initial borrow where a user has contributed an item to the community stock
-- de-list: this is a special type of borrow where a user (typically the owner or an admin) removes an item from circulation
-
-## Certifications
-Users sometimes need certification that they have specific skills or knowledge before they can borrow an item. For example, knowing how to safely handle a chainsaw before being able to use-borrow the chainsaw, or knowing how to fix two-stroke engines before being able to maintenance-borrow the chainsaw. These certs are generated by other peers in the network, either through a committee granting the cert through a collective action, or by peer assessment. A peer assessment can generate a cert by another user with the cert in question vouching for the user to receive the cert. For example, if a user with the chainsaw safety cert trains someone on proper handling of the tool, the user with the cert can choose to back the certification of the user they just taught using a peer assessment. These certs are expired by time, collective action, or by peer assessment. A peer assessment that expires a cert requires the user making the assessment to also expire their matching cert. In essence, if a user shows unsafe practices with a tool, the peer assessment is used to take the relevant cert away, at the cost of being willing to retake the cert training with the offender. These certs also provide access to administrative functions of the NeighborGoods application, such as an admin or moderator cert being required for a user to review a post.
-
-## Collective Action
-Users will sometimes need to solve the collective action problem, such as with establishing a new cert for the network, or executing on a community project. For NeighborGoods, the problem is solved using a crowd funding like procedure. When an action needs to be performed, individuals can start a collective action campaign. This campaign expires after a set amount of time, and is an all or nothing affair. If the campaign is successful, then each member must execute on their commitment. Commitments that can be performed automatically by the system are performed immediately.
+## Calander Integration
+Implementation of return dates and avalibility
 
 ## Dispute Resolution
-Dispute resolution is encouraged to be done by the individuals involved, with the aid of a certified monitor.
-
-## Posts
-Posts are essentially markdown documents, with delayed publishing. All posts won't be visible to anyone besides the author and moderators until 6 am the next morning. Posts can be made in response to other posts, but this delayed pattern still holds true.
-
-## Location Threads
-These are for real-time, localized communication. They work like the map markers in foxhole, where each pin is a thread, and can have its duration extended or reduced.
-
-## Contribution and Gamification
-To help align individual incentives with pro-social actions, contributions are tracked for all users, along with how their contributions are used. These values are put into a score "leaky bucket" or moving average, so that continuous contribution towards the other network members (and by extension the network itself) is encouraged.
-
-## The Community Currency Exchange
-To facilitate the above contribution, and also alow for interfacing with the world at large, the application supports a complementary currency system, based off of the [ROCS paradigm](https://transaction.net/money/rocs/). 
+Dispute resolution is handled through a restoritive justice framework. Users invloved in disputes will be encouraged to resolve the dispute on their own. If resolution cannot be reached a request for moderation will be made, either to the server Admin(s) or the broader User Base. While a dispute is pending, all Users involved will have flags on their public profiles with a simple summery of the issue automatically generated (overdue, damaged, etc). 
 
 ## ActivityPub Integration
 The eventual goal is to allow individuals to set up networks of these servers, and allow inter-node functionality for all of the above application features.
+
+## Social Media (Future Priority)
+Social media posts are essentially markdown documents, with delayed publishing. All posts won't be visible to anyone besides the author and moderators until 6 am the next morning. Posts can be made in response to other posts, but this delayed pattern still holds true.
+
+## Location Threads (Great Idea for a different App)
+These are for real-time, localized communication. They work like the map markers in foxhole, where each pin is a thread, and can have its duration extended or reduced.
+
+## Contribution and Gamification (Future Priority)
+To help align individual incentives with pro-social actions, contributions are tracked for all users, along with how their contributions are used. These values are put into a score "leaky bucket" or moving average, so that continuous contribution towards the other network members (and by extension the network itself) is encouraged.
+
+## The Community Currency Exchange (Future Priority)
+To facilitate the above contribution, and also alow for interfacing with the world at large, the application supports a complementary currency system, based off of the [ROCS paradigm](https://transaction.net/money/rocs/).
+
+## Collective Action (Future Priority)
+Users will sometimes need to solve the collective action problem, such as with establishing a new cert for the network, or executing on a community project. For NeighborGoods, the problem is solved using a crowd funding like procedure. When an action needs to be performed, individuals can start a collective action campaign. This campaign expires after a set amount of time, and is an all or nothing affair. If the campaign is successful, then each member must execute on their commitment. Commitments that can be performed automatically by the system are performed immediately.
 
 # Data Models
 The following are database models that will be needed for the above system:
@@ -78,15 +102,9 @@ The following are the available pages to interact with the application:
 6. ItemManagementView - the page displays a single item in full. Also allows for borrowing.
 7. ItemContribution - allows for the contribution of new items to the network.
 8. UserProfile - the main page for users to manage their own profiles. Includes their own stats and history of actions involving them, along with outstanding commitments.
-9. PeerAssessment - page for creating new peer assessments
-10. CollectiveActionCampaigns - page that lists ongoing collective action campaigns, as well as historical ones. 
-11. StartCampaign - page to start a new collective action campaign.
-12. CampaignView - page that shows a collective action campaign in full.
-13. Dashboard - the default page redirected to after logging in. Contains a map of the community, truncated list of collective actions, truncated list of posts, truncated list of user's outstanding commitments.
-14. Feed - the untruncated list of all posts, including historical
-15. PostThread - a post in full, along with other posts that respond to it.
-16. Wiki - a collection of wiki posts, allowing posts to be collected into a knowledge base.
+9. Dashboard - the default page redirected to after logging in. 
 
+# UI/UX
 [proposed palette](https://coolors.co/palette/f0ead2-dde5b6-adc178-a98467-6c584c)
 ----------- 
 F0EAD2
@@ -95,95 +113,46 @@ ADC178
 A98467
 6C584C
 
-# Design Doc
-Neighborhood Sharing Platform Design Document
-1. Product Overview
-1.1 Vision Statement
-Our neighborhood sharing platform aims to build stronger communities by facilitating the sharing of items, skills, and resources among neighbors. The platform provides a simple, intuitive interface that enables neighbors to borrow items they need occasionally, share skills, organize community events, and reduce overall consumption through a library economy.
-1.2 Target Users
-
-Neighbors seeking to borrow items for occasional use
-Community members willing to share items and skills
-Community organizers planning local events
-Neighborhood administrators managing community engagement
-
-1.3 Core Functionality
-
-Item and skill sharing registry
-Borrowing request and confirmation system
-Community events organization
-User verification and trust-building mechanisms
-Administration tools for community managers
-
-2. Design Philosophy & Principles
-2.1 Design Values
-
-Community-Focused: Prioritize features that strengthen neighborhood bonds
-Accessibility: Ensure the platform is usable by neighbors of all technical abilities
-Transparency: Create clear processes for borrowing, lending, and conflict resolution
-Simplicity: Keep interfaces clean and straightforward to encourage participation
-Trust-Building: Incorporate elements that foster trust among community members
-
-2.2 Visual Language
-
-Color Palette: Primary colors should be warm and welcoming
-Iconography: Simple, recognizable icons with consistent style throughout the application
-Spacing: Generous white space to maintain clarity and reduce cognitive load
-
-2.3 Responsive Design Approach
-
-Mobile-first design ensuring full functionality on smaller screens
-Desktop views to take advantage of additional screen real estate for more efficient workflows
-Consistent navigation patterns across device sizes
-
-3. User Personas (for considering user behavior)
-3.1 Deb - The Occasional Borrower
-
+## User Personas (for considering user behavior)
+### Deb - The Occasional Borrower
 Background: Homeowner who occasionally needs tools or equipment
 Goals: Access items without purchasing, connect with neighbors
 Pain Points: Hesitant about asking to borrow, worried about item condition
 Usage Patterns: Checks the platform when specific needs arise
 
-3.2 Adam - The Community Admin
-
+### Adam - The Community Admin
 Background: Enthusiastic about community building, technically competent
 Goals: Ensure smooth platform operation, verify users, resolve conflicts
 Pain Points: Limited time for administration, needs efficient tools
 Usage Patterns: Regular but brief platform check-ins, responsive to notifications
 
-3.3 Joy - The Community Organizer
-
+### Joy - The Community Organizer
 Background: Extroverted, plans neighborhood events and gatherings
 Goals: Coordinate resources for events, engage more neighbors
 Pain Points: Tracking commitments, ensuring resources are available
 Usage Patterns: Heavy use leading up to events, creates and manages multiple requests
 
-4. Information Architecture
-4.1 Main Navigation Structure
-
-Home/Dashboard: Community activity feed, announcements, quick access functions
+## Information Architecture
+### Main Navigation Structure
+Home/Dashboard: Community activity feeds, Active interactions, Community Events, quick access functions
 Marketplace: Available items/skills, community needs, search functionality
-My Account: Profile, my shared items, borrowing history, calendar
-Community: Events, planning, resources
+My Account: Profile (and edit option), my shared items, borrowing history, calendar
 Admin Panel: User management, dispute resolution, settings (admin user only)
 
-4.2 Content Organization
-
-Items organized by categories with tag filtering
-Skills categorized by type with availability indicators
+### Content Organization
+Items organized by user generated tags, and by popularity and date made avalible
+Skills categorized by tags with availability indicators
 Events organized chronologically with resource needs highlighted
 Requests tracked by status (pending, active, completed)
 
-5. Key User Flows
-5.1 User Registration & Onboarding
-
+## Key User Flows
+### User Registration & Onboarding
 User completes sign-up form with basic information
-Admin schedules in-person verification meeting
+Admin schedules in-person verification meeting (possible at the same time)
 Admin approves user, enabling full platform access
 User completes profile with shareable items/skills
 
-5.2 Item Borrowing Flow
-
+### Item Borrowing Flow
 User searches/browses for needed item
 User submits borrowing request with dates and purpose
 Owner receives notification and reviews request
@@ -193,28 +162,25 @@ System tracks borrowing period and sends return reminders
 Borrower returns item and both parties confirm return
 Optional feedback provided
 
-5.3 Community Event Organization
-
+### Community Event Organization
 Organizer creates event with date, description, location
-Organizer lists needed resources (items, skills, volunteers)
+Organizer lists needed resources (items, skills, volunteers) Automatically makes Request Tickets
 Community members can commit resources or volunteer time
 System tracks commitments and outstanding needs
-Organizer communicates with participants through platform
+Organizer communicates with participants off platform
 Event execution with check-in of contributed items
 Return process for borrowed items after event
 
-5.4 Dispute Resolution
-
-User reports issue through platform
+### Dispute Resolution
+User reports issue through platform or automatically added if overdue
 Both users are publicly flaged as being in dispute++
 System offers direct resolution options
-If unresolved, community mediator or admin is requested
+If unresolved, community mediator or admin is Requested
 Mediator facilitates discussion between parties
 Resolution is documented and implemented, dispute--
 
-6. Component Library
-6.1 Core Components
-
+## Component Library
+### Core Components
 User Cards: Displaying user profile information with trust indicators
 Item Cards: Showcasing available items with key details
 Request Forms: Standardized interface for borrowing requests
@@ -223,102 +189,78 @@ Navigation Components: Consistent across the application
 Search & Filter Tools: For discovering resources
 Notification Components: For system alerts and messages
 
-6.2 Page Templates
-
+### Page Templates
 Dashboard Template: Activity feed, quick actions, announcements
 Listing Pages Template: Grid or list view with filtering sidebar
 Detail Pages Template: Full information about items/events with actions
 Form Pages Template: Consistent layout for all input forms
 Profile Pages Template: User information with tabbed sections
 
-7. Interaction Patterns
-7.1 Input Methods
-
+## Interaction Patterns
+### Input Methods
 Form Fields: Consistent styling with clear labels and validation
 Selection Controls: Dropdowns, radio buttons, and checkboxes
 Date Selectors: Calendar-based interface for scheduling
 Image Upload: Simple interface for item/condition documentation
 Search Interface: Immediate feedback with suggestion capability
 
-7.2 Feedback & Notifications
-
+### Feedback & Notifications
 Status Indicators: Clear visual cues for request/item status
 Confirmation Messages: After successful actions
 Error Handling: User-friendly error messages with recovery actions
 Loading States: Consistent indicators during system operations
 Notification Center: Centralized location for all alerts and messages
 
-7.3 Motion & Transitions
-
+### Motion & Transitions
 Subtle animations for state changes
 Smooth transitions between pages
 Microinteractions that provide feedback on user actions
 
-8. Technical Implementation Guidelines
-8.1 Technology Stack
-
-Backend: Rust with Rocket framework and Diesel ORM
-Database: PostgreSQL (as indicated by Diesel schema)
-Containerization: Docker for consistent deployment
-API Architecture: RESTful endpoints with potential ActivityPub integration
-
-8.2 Schema Considerations
-User management with verification flow (approved_at/approved_by)
-Item tracking with detailed ownership history
-Certification system for skills and item usage requirements
-Transfer tracking with status and purpose indicators
-Geolocation capabilities for users and transfers
-
-9. Federation & Scaling Strategy
-9.1 Federation Protocol
-
+# Federation & Scaling Strategy
+## Federation Protocol
 ActivityPub implementation for inter-neighborhood federation
 Common vocabulary for items, skills, and community resources
 Federated identity management for cross-node authentication
 Content addressing for consistent item identification across nodes
 
-9.2 Node Architecture Needs
-
+## Node Architecture Needs
 Self-hostable neighborhood instances
 Discovery mechanism for nearby neighborhood nodes through nonprofit
 Global vs. local content distinctions
 Conflict resolution between federated nodes
 
-10. Organizational Structure
-10.1 Nonprofit Entity
-
+# Organizational Structure
+## Nonprofit Entity
 Legal organization for project governance
 Fundraising through grants and donations
 Community outreach and adoption programs
 Stewardship of shared code and standards
 Facilitation of inter-neighborhood cooperation
+Responsibility and storage for goods held in commons
 
-10.2 Governance Model
-
+## Governance Model
 Open contribution model for code development
 Community input mechanisms for feature priorities
 Transparent decision-making processes
 Balance between local node autonomy and network coherence
 
-11. Revised Feature Roadmap
-
+# Revised Feature Roadmap
 Phase 1: Core borrowing and lending functionality
 Phase 2: Community events and resources
-Phase 2.5: Federation protocol implementation
-Phase 2.6: Nonprofit establishment and governance structure
-Phase 3: Ratings, reviews, and enhanced trust mechanisms
-Phase 4: Calendar integration and advanced scheduling
+Phase 3: Federation protocol implementation
+Phase 4: Nonprofit establishment and governance structure
+Phase 5: Ratings, reviews, and enhanced trust mechanisms
 
-12. Additional Implementation Considerations
-12.1 Security Approach
-
-User verification processes by node admin
-Transfer confirmation by both parties
-Privacy considerations for location/contact data
-
-12.2 Federation-Specific Components
-
-Node settings management interface
-Federation status indicators
-Cross-node search functionality
-Admin tools for federation management
+# Glossery
+Lending - A User posting to make an item available for others to use temporarily. (Core Action)
+Offering - A User posting to make an item available for others to keep, or to volunteer their skills or time. (Core Action)
+Requesting - A User posting to ask for other Users to fill a need not availible in the Listings. (Core Action)
+Borrowing - A User posting a ticket to someone else's item temporarily. (Core Action)
+Accepting - A User posting a ticket to remove an Offered item (giving them ownership), or to use another User's skills or time (Core Action)
+Planning - Creating an Event with multiple Request or Borrow Tickets tied to the same location, date and time. (Core Action)
+Listings - All items/skills currently available to borrow
+Needs - All current requests from community members
+Tickets - Individual user transactions (so "Borrowing Ticket" instead of "Borrowing request", because that's just confusing)
+Posting - Catch all term for all core actions for Users.
+Node - An individual server running a neighborgoods instance. 
+Admin - A User with additional responsabilities of hoasting a node, moderating it, adding new Users, watching for problems and requesting additional features from developers.

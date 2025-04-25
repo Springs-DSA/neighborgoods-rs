@@ -1,0 +1,180 @@
+<svg viewBox="0 0 900 1200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Header -->
+  <rect x="0" y="0" width="900" height="70" fill="#ADC178" />
+  <text x="30" y="42" font-family="Segoe UI" font-size="24" fill="#F0EAD2" font-weight="bold">NeighborGoods</text>
+  <text x="220" y="42" font-family="Segoe UI" font-size="16" fill="#F0EAD2">Administrator Dashboard</text>
+  
+  <circle cx="830" cy="35" r="20" fill="#A98467" />
+  <text x="830" y="41" font-family="Segoe UI" font-size="16" fill="#F0EAD2" text-anchor="middle">👤</text>
+  <text x="770" y="42" font-family="Segoe UI" font-size="14" fill="#F0EAD2" text-anchor="end">Admin User</text>
+  
+  <!-- Main Content Container -->
+  <rect x="0" y="70" width="900" height="1130" fill="#F0EAD2" />
+  
+  <!-- Sidebar Navigation -->
+  <rect x="0" y="70" width="200" height="1130" fill="#DDE5B6" />
+  
+  <rect x="0" y="130" width="200" height="50" fill="#A98467" />
+  <text x="20" y="160" font-family="Segoe UI" font-size="16" fill="#F0EAD2">Dashboard</text>
+  
+  <rect x="0" y="180" width="200" height="50" fill="#DDE5B6" />
+  <text x="20" y="210" font-family="Segoe UI" font-size="16" fill="#6C584C">Community</text>
+  
+  <rect x="0" y="230" width="200" height="50" fill="#DDE5B6" />
+  <text x="20" y="260" font-family="Segoe UI" font-size="16" fill="#6C584C">User Management</text>
+  
+  <rect x="0" y="280" width="200" height="50" fill="#DDE5B6" />
+  <text x="20" y="310" font-family="Segoe UI" font-size="16" fill="#6C584C">Moderation</text>
+  
+  <rect x="0" y="330" width="200" height="50" fill="#DDE5B6" />
+  <text x="20" y="360" font-family="Segoe UI" font-size="16" fill="#6C584C">Dispute Resolution</text>
+  
+  <rect x="0" y="380" width="200" height="50" fill="#DDE5B6" />
+  <text x="20" y="410" font-family="Segoe UI" font-size="16" fill="#6C584C">Server Settings</text>
+  
+  <!-- Page Title -->
+  <text x="230" y="110" font-family="Segoe UI" font-size="24" fill="#A98467" font-weight="bold">Dashboard Overview</text>
+  
+  <!-- Community Metrics Section -->
+  <text x="230" y="150" font-family="Segoe UI" font-size="20" fill="#6C584C" font-weight="bold">Community Metrics</text>
+  
+  <!-- Activity Overview -->
+  <rect x="230" y="170" width="320" height="200" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  <text x="250" y="200" font-family="Segoe UI" font-size="16" fill="#A98467" font-weight="bold">Activity (Last 30 Days)</text>
+  
+  <!-- Simple Bar Graph -->
+  <rect x="250" y="220" width="280" height="120" fill="#F0EAD2" rx="5" />
+  <rect x="265" y="290" width="20" height="40" fill="#ADC178" />
+  <rect x="295" y="270" width="20" height="60" fill="#ADC178" />
+  <rect x="325" y="250" width="20" height="80" fill="#ADC178" />
+  <rect x="355" y="230" width="20" height="100" fill="#ADC178" />
+  <rect x="385" y="260" width="20" height="70" fill="#ADC178" />
+  <rect x="415" y="280" width="20" height="50" fill="#ADC178" />
+  <rect x="445" y="265" width="20" height="65" fill="#ADC178" />
+  <rect x="475" y="280" width="20" height="50" fill="#ADC178" />
+  
+  <text x="265" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 16</text>
+  <text x="295" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 17</text>
+  <text x="325" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 18</text>
+  <text x="355" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 19</text>
+  <text x="385" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 20</text>
+  <text x="415" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 21</text>
+  <text x="445" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 22</text>
+  <text x="475" y="345" font-family="Segoe UI" font-size="10" fill="#6C584C">Apr 23</text>
+  
+  <!-- User Stats Card -->
+  <rect x="570" y="170" width="300" height="200" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  <text x="590" y="200" font-family="Segoe UI" font-size="16" fill="#A98467" font-weight="bold">Community Stats</text>
+  
+  <rect x="590" y="220" width="260" height="130" fill="#F0EAD2" rx="5" />
+  
+  <text x="610" y="250" font-family="Segoe UI" font-size="14" fill="#6C584C">Total Users:</text>
+  <text x="820" y="250" font-family="Segoe UI" font-size="14" fill="#6C584C" text-anchor="end" font-weight="bold">137</text>
+  
+  <text x="610" y="280" font-family="Segoe UI" font-size="14" fill="#6C584C">Active Items:</text>
+  <text x="820" y="280" font-family="Segoe UI" font-size="14" fill="#6C584C" text-anchor="end" font-weight="bold">243</text>
+  
+  <text x="610" y="310" font-family="Segoe UI" font-size="14" fill="#6C584C">Ongoing Borrows:</text>
+  <text x="820" y="310" font-family="Segoe UI" font-size="14" fill="#6C584C" text-anchor="end" font-weight="bold">28</text>
+  
+  <text x="610" y="340" font-family="Segoe UI" font-size="14" fill="#6C584C">Skills Offered:</text>
+  <text x="820" y="340" font-family="Segoe UI" font-size="14" fill="#6C584C" text-anchor="end" font-weight="bold">76</text>
+  
+  <!-- Recent Activity -->
+  <text x="230" y="400" font-family="Segoe UI" font-size="20" fill="#6C584C" font-weight="bold">Recent Activity</text>
+  
+  <rect x="230" y="420" width="640" height="180" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  
+  <!-- Table Header -->
+  <rect x="230" y="420" width="640" height="40" rx="5 5 0 0" fill="#A98467" />
+  <text x="250" y="445" font-family="Segoe UI" font-size="14" fill="#F0EAD2">Type</text>
+  <text x="350" y="445" font-family="Segoe UI" font-size="14" fill="#F0EAD2">User</text>
+  <text x="500" y="445" font-family="Segoe UI" font-size="14" fill="#F0EAD2">Item/Action</text>
+  <text x="750" y="445" font-family="Segoe UI" font-size="14" fill="#F0EAD2">Time</text>
+  
+  <!-- Table Rows -->
+  <rect x="230" y="460" width="640" height="35" fill="#F0EAD2" />
+  <text x="250" y="482" font-family="Segoe UI" font-size="14" fill="#6C584C">Borrow</text>
+  <text x="350" y="482" font-family="Segoe UI" font-size="14" fill="#6C584C">Sarah K.</text>
+  <text x="500" y="482" font-family="Segoe UI" font-size="14" fill="#6C584C">Pressure Washer</text>
+  <text x="750" y="482" font-family="Segoe UI" font-size="14" fill="#6C584C">24 minutes ago</text>
+  
+  <rect x="230" y="495" width="640" height="35" fill="#DDE5B6" />
+  <text x="250" y="517" font-family="Segoe UI" font-size="14" fill="#6C584C">New Item</text>
+  <text x="350" y="517" font-family="Segoe UI" font-size="14" fill="#6C584C">Marcus T.</text>
+  <text x="500" y="517" font-family="Segoe UI" font-size="14" fill="#6C584C">Ladder (6-foot)</text>
+  <text x="750" y="517" font-family="Segoe UI" font-size="14" fill="#6C584C">1 hour ago</text>
+  
+  <rect x="230" y="530" width="640" height="35" fill="#F0EAD2" />
+  <text x="250" y="552" font-family="Segoe UI" font-size="14" fill="#6C584C">Return</text>
+  <text x="350" y="552" font-family="Segoe UI" font-size="14" fill="#6C584C">Elena P.</text>
+  <text x="500" y="552" font-family="Segoe UI" font-size="14" fill="#6C584C">Drill Set</text>
+  <text x="750" y="552" font-family="Segoe UI" font-size="14" fill="#6C584C">3 hours ago</text>
+  
+  <rect x="230" y="565" width="640" height="35" fill="#DDE5B6" />
+  <text x="250" y="587" font-family="Segoe UI" font-size="14" fill="#6C584C">New Skill</text>
+  <text x="350" y="587" font-family="Segoe UI" font-size="14" fill="#6C584C">Jamal W.</text>
+  <text x="500" y="587" font-family="Segoe UI" font-size="14" fill="#6C584C">Plumbing Basics</text>
+  <text x="750" y="587" font-family="Segoe UI" font-size="14" fill="#6C584C">5 hours ago</text>
+  
+  <!-- Quick Actions Section -->
+  <text x="230" y="640" font-family="Segoe UI" font-size="20" fill="#6C584C" font-weight="bold">Quick Actions</text>
+  
+  <!-- Action Buttons -->
+  <rect x="230" y="660" width="200" height="100" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  <text x="330" y="710" font-family="Segoe UI" font-size="16" fill="#6C584C" text-anchor="middle" font-weight="bold">Add New User</text>
+  <circle cx="280" cy="710" r="25" fill="#ADC178" />
+  <text x="280" y="715" font-family="Segoe UI" font-size="24" fill="#F0EAD2" text-anchor="middle">+</text>
+  
+  <rect x="450" y="660" width="200" height="100" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  <text x="550" y="710" font-family="Segoe UI" font-size="16" fill="#6C584C" text-anchor="middle" font-weight="bold">Moderation Queue</text>
+  <circle cx="500" cy="710" r="25" fill="#ADC178" />
+  <text x="500" y="715" font-family="Segoe UI" font-size="18" fill="#F0EAD2" text-anchor="middle">⚠️</text>
+  
+  <rect x="670" y="660" width="200" height="100" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  <text x="770" y="710" font-family="Segoe UI" font-size="16" fill="#6C584C" text-anchor="middle" font-weight="bold">Create Mediation</text>
+  <circle cx="720" cy="710" r="25" fill="#ADC178" />
+  <text x="720" y="715" font-family="Segoe UI" font-size="18" fill="#F0EAD2" text-anchor="middle">🤝</text>
+  
+  <!-- System Health -->
+  <text x="230" y="800" font-family="Segoe UI" font-size="20" fill="#6C584C" font-weight="bold">System Health</text>
+  
+  <rect x="230" y="820" width="640" height="120" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  
+  <text x="250" y="850" font-family="Segoe UI" font-size="16" fill="#A98467" font-weight="bold">Server Status</text>
+  <circle cx="380" cy="850" r="8" fill="#4CAF50" />
+  <text x="400" y="855" font-family="Segoe UI" font-size="16" fill="#6C584C">Online</text>
+  
+  <text x="250" y="880" font-family="Segoe UI" font-size="14" fill="#6C584C">Storage Used:</text>
+  <rect x="380" y="870" width="200" height="16" rx="8" fill="#F0EAD2" />
+  <rect x="380" y="870" width="50" height="16" rx="8" fill="#ADC178" />
+  <text x="590" y="883" font-family="Segoe UI" font-size="14" fill="#6C584C">25% (1GB/4GB)</text>
+  
+  <text x="250" y="910" font-family="Segoe UI" font-size="14" fill="#6C584C">Last Backup:</text>
+  <text x="380" y="910" font-family="Segoe UI" font-size="14" fill="#6C584C">April 22, 2025 (1 day ago)</text>
+  
+  <rect x="550" y="900" width="120" height="30" rx="5" fill="#ADC178" />
+  <text x="610" y="920" font-family="Segoe UI" font-size="14" fill="#F0EAD2" text-anchor="middle">Backup Now</text>
+  
+  <rect x="690" y="900" width="160" height="30" rx="5" fill="#A98467" />
+  <text x="770" y="920" font-family="Segoe UI" font-size="14" fill="#F0EAD2" text-anchor="middle">Server Settings</text>
+  
+  <!-- Open Issues -->
+  <text x="230" y="980" font-family="Segoe UI" font-size="20" fill="#6C584C" font-weight="bold">Open Issues</text>
+  
+  <rect x="230" y="1000" width="640" height="160" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="1" />
+  
+  <!-- Issues List -->
+  <rect x="250" y="1020" width="600" height="40" rx="5" fill="#F0EAD2" />
+  <text x="270" y="1043" font-family="Segoe UI" font-size="14" fill="#6C584C">Dispute: Item returned damaged</text>
+  <rect x="700" y="1025" width="80" height="30" rx="5" fill="#ADC178" />
+  <text x="740" y="1045" font-family="Segoe UI" font-size="14" fill="#F0EAD2" text-anchor="middle">View</text>
+  
+  <rect x="250" y="1070" width="600" height="40" rx="5" fill="#F0EAD2" />
+  <text x="270" y="1093" font-family="Segoe UI" font-size="14" fill="#6C584C">Flagged Listing: Text contains inappropriate content</text>
+  <rect x="700" y="1075" width="80" height="30" rx="5" fill="#ADC178" />
+  <text x="740" y="1095" font-family="Segoe UI" font-size="14" fill="#F0EAD2" text-anchor="middle">View</text>
+  
+  <rect x="250" y="1120" width="600" height="30" rx="5" fill="#ADC178" opacity="0.3" />
+  <text x="550" y="1140" font-family="Segoe UI" font-size="14" fill="#6C584C" text-anchor="middle">No more issues</text>
+</svg>

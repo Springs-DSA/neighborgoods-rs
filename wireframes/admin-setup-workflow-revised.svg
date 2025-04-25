@@ -1,0 +1,59 @@
+<svg viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#6C584C">Neighborgoods Server Setup</text>
+
+  <!-- Step 1: Admin Account Creation -->
+  <rect x="50" y="80" width="700" height="400" rx="10" fill="#F0EAD2" stroke="#ADC178" stroke-width="2" />
+  <text x="400" y="110" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#6C584C">Step 1: Admin Account Creation</text>
+  
+  <rect x="100" y="130" width="600" height="330" rx="5" fill="#FFFFFF" stroke="#DDE5B6" stroke-width="1" />
+  <text x="400" y="160" font-family="Arial" font-size="18" text-anchor="middle" fill="#6C584C">Welcome to Neighborgoods!</text>
+  <text x="400" y="185" font-family="Arial" font-size="14" text-anchor="middle" fill="#6C584C">Let's set up your neighborhood sharing community</text>
+  
+  <text x="150" y="220" font-family="Arial" font-size="14" fill="#6C584C">Username</text>
+  <rect x="150" y="230" width="500" height="30" rx="5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  
+  <text x="150" y="280" font-family="Arial" font-size="14" fill="#6C584C">Password</text>
+  <rect x="150" y="290" width="500" height="30" rx="5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  
+  <text x="150" y="340" font-family="Arial" font-size="14" fill="#6C584C">Full Name</text>
+  <rect x="150" y="350" width="500" height="30" rx="5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  
+  <text x="150" y="400" font-family="Arial" font-size="14" fill="#6C584C">Address</text>
+  <rect x="150" y="410" width="500" height="30" rx="5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  
+  <rect x="400" y="460" width="120" height="35" rx="17.5" fill="#ADC178" />
+  <text x="460" y="482" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">Next</text>
+
+  <!-- Arrow -->
+  <path d="M400,510 L400,530 L410,530 L400,550 L390,530 L400,530" fill="#6C584C" />
+
+  <!-- Step 2: Community Setup -->
+  <rect x="50" y="570" width="700" height="380" rx="10" fill="#F0EAD2" stroke="#ADC178" stroke-width="2" />
+  <text x="400" y="600" font-family="Arial" font-size="20" font-weight="bold" text-anchor="middle" fill="#6C584C">Step 2: Community Setup</text>
+  
+  <rect x="100" y="620" width="600" height="310" rx="5" fill="#FFFFFF" stroke="#DDE5B6" stroke-width="1" />
+  
+  <text x="150" y="650" font-family="Arial" font-size="14" fill="#6C584C">Neighborhood Name</text>
+  <rect x="150" y="660" width="500" height="30" rx="5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  <text x="170" y="680" font-family="Arial" font-size="12" fill="#A98467">e.g., Oak Ridge Community</text>
+  
+  <text x="150" y="710" font-family="Arial" font-size="14" fill="#6C584C">Community Description</text>
+  <rect x="150" y="720" width="500" height="60" rx="5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  <text x="170" y="740" font-family="Arial" font-size="12" fill="#A98467">Briefly describe your neighborhood sharing community...</text>
+  
+  <text x="150" y="800" font-family="Arial" font-size="14" fill="#6C584C">Upload Community Image (Optional)</text>
+  <rect x="150" y="810" width="200" height="30" rx="5" fill="#DDE5B6" stroke="#A98467" stroke-width="1" />
+  <text x="250" y="830" font-family="Arial" font-size="12" text-anchor="middle" fill="#6C584C">Choose File</text>
+  
+  <text x="150" y="860" font-family="Arial" font-size="14" fill="#6C584C">Registration Method</text>
+  <rect x="150" y="870" width="500" height="40" rx="5" fill="#DDE5B6" stroke="#ADC178" stroke-width="2" />
+  <text x="400" y="895" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold" fill="#6C584C">Admin Approval Required</text>
+  <text x="400" y="915" font-family="Arial" font-size="10" text-anchor="middle" font-style="italic" fill="#6C584C">(New users can register but must be approved by an admin)</text>
+  
+  <rect x="400" y="935" width="150" height="35" rx="17.5" fill="#ADC178" />
+  <text x="475" y="957" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#FFFFFF">Complete Setup</text>
+  
+  <rect x="225" y="935" width="150" height="35" rx="17.5" fill="#FFFFFF" stroke="#A98467" stroke-width="1" />
+  <text x="300" y="957" font-family="Arial" font-size="14" text-anchor="middle" fill="#6C584C">Back</text>
+</svg>
