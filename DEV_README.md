@@ -82,3 +82,8 @@ Starting the application for the first time requires following these steps:
 When developing, the docker containers are set to rebuild upon changes being detected in the source code. Rust is a compiled language, so the first build will take a while, but after that rebuilds should be relatively quick. Changes you make to the code should be reflected in the running app in a few seconds.
 
 We are using git issues to track what needs to be done. If you are unsure where to begin, start by going to [the repo issues page](https://github.com/Springs-DSA/neighborgoods-rs/issues) and picking out an issue with a `good first issue` tag. Make a comment on the issue to let others know you're working on it, and make a branch off of main with the format `ng-<issue number>-short-name`. When you're done with the issue, make a PR against main, and wait for at least one approving review before merging.
+
+
+# Dev Notes
+use tsvector extension for postgres db:
+https://www.postgresql.org/docs/current/datatype-textsearch.html

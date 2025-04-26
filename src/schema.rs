@@ -49,6 +49,14 @@ diesel::table! {
 }
 
 diesel::table! {
+    item_tags (item_id, tag) {
+        item_id -> Uuid,
+        tag -> Varchar,
+        created_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     use diesel::sql_types::*;
     use super::sql_types::TransferPurpose;
     use super::sql_types::TransferStatus;
@@ -110,6 +118,14 @@ diesel::table! {
 }
 
 diesel::table! {
+    tags (name) {
+        name -> Varchar,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     user_certifications (user_id, cert_id) {
         user_id -> Uuid,
         cert_id -> Uuid,
@@ -142,6 +158,8 @@ diesel::joinable!(cert_assessments -> certifications (cert_id));
 diesel::joinable!(cert_assessments -> peer_assessments (peer_assessment_id));
 diesel::joinable!(item_cert_requirements -> certifications (cert_id));
 diesel::joinable!(item_cert_requirements -> items (item_id));
+diesel::joinable!(item_tags -> items (item_id));
+diesel::joinable!(item_tags -> tags (tag));
 diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
 diesel::joinable!(user_certifications -> certifications (cert_id));
@@ -151,10 +169,12 @@ diesel::allow_tables_to_appear_in_same_query!(
     cert_assessments,
     certifications,
     item_cert_requirements,
+    item_tags,
     item_transfers,
     items,
     node_settings,
     peer_assessments,
+    tags,
     user_certifications,
     users,
 );
