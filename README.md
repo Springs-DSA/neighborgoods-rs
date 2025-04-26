@@ -3,7 +3,7 @@ NeighborGoods is a Federated Library of Things.
 
 ## Overview
 ### Vision Statement
-The Neighborgoods Project aims to build stronger communities by facilitating the sharing of items, skills, and resources among neighbors. The platform provides a simple, intuitive interface that enables neighbors to build community by borrowing items, shareing skills, organizeing community events, and reduceing overall consumption through the creation of a library economy.
+The Neighborgoods Project aims To create a hyper-local, non-commercial platform that empowers neighbors to share resources, time, skills, and support—strengthening solidarity, trust, and resilience within communities.
 
 ### Target Users
 Neighbors seeking to borrow items for occasional use
@@ -112,6 +112,54 @@ DDE5B6
 ADC178
 A98467
 6C584C
+
+## Themeing 
+Mutual Aid	"We uplift each other through shared resources, not profit."
+Solidarity	"We act together, not alone. We show up for our neighbors."
+Trust & Care	"Our platform is built on kindness, consent, and community accountability."
+Accessibiility	"Simple, inclusive design for all people, regardless of tech literacy."
+Decentralization	Local servers & local power: communities make decisions for themselves.
+Non-extractive	"No ads, no data harvesting, no rent-seeking—just people helping people."
+
+Voice: Friendly, warm, neighborly, non-hierarchical
+Tone: Casual but respectful. Community-first.
+Vibe: Think hand-painted signs on porches, potluck flyers, and zines.
+
+This app should feel human, not sterile. Prioritize hand-drawn, illustrated, or friendly-looking icons over sharp or ultra-minimal styles.
+
+Icons:
+Simple and recognizable
+Rounded corners or soft edges preferred
+Consistent line weight and style
+
+Photography or illustration:
+If used, prioritize real people, real places
+Avoid stock imagery with corporate or posed energy
+
+Emoji use:
+Use sparingly to enhance tone (e.g., ✅, 💬, 🌱)
+
+### Messaging
+NeighborLink app is built on community, solidarity, and mutual care. Its tone should reflect those values — speaking to neighbors as neighbors, not as customers or users.
+
+Voice qualities:
+Friendly and conversational
+Trustworthy but not corporate
+Empowering, not patronizing
+Grounded in shared values and real needs
+
+Avoid:
+Tech jargon or startup buzzwords
+Saviorism or charity framing
+
+Preferred:
+Words like share, support, build, 
+      offer, trade, borrow, connect
+“We” language over “you”
+Accessible vocabulary
+
+When in doubt, keep it simple. This brand is built on clarity, trust, and connection — and that should be reflected in every design choice. Minimalism isn’t about being plain; it’s about being purposeful. Every color, font, icon, or word should serve a function. If something doesn’t add value, it adds noise. Prioritize readability, accessibility, and emotional clarity. Let the message — and the mission — shine through without distraction.
+
 
 ## User Personas (for considering user behavior)
 ### Deb - The Occasional Borrower
