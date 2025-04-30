@@ -3,131 +3,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeighborGoods - Federated Library of Things</title>
-    {{> partials/styles}}
+    <title>NeighborGoods - Community Resource Sharing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&family=Cabin:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/templates/partials/styles.html.hbs">
     <style>
-        /* Landing page specific styles */
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --cream: #F0EAD2;
+            --light-green: #DDE5B6;
+            --medium-green: #ADC178;
+            --warm-brown: #A98467;
+            --dark-brown: #6C584C;
+            --success-green: #6A994E;
+            --warning-amber: #E9C46A;
+            --alert-red: #BC4749;
+            --link-blue: #597292;
+            --base-unit: 8px;
+        }
+        
+        body {
+            font-family: 'Cabin', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--dark-brown);
+            background-color: var(--cream);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Quando', serif;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: var(--warm-brown);
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+        }
+        
+        a {
+            color: var(--link-blue);
+            text-decoration: none;
+            transition: all 0.15s ease-out;
+        }
+        
+        a:hover {
+            color: var(--warm-brown);
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Cabin', sans-serif;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease-out;
+        }
+        
+        .btn-primary {
+            background-color: var(--medium-green);
+            color: var(--cream);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--warm-brown);
+            color: var(--cream);
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-green);
+            color: var(--dark-brown);
+            border: 1px solid var(--medium-green);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d0daa0;
+            color: var(--dark-brown);
+        }
+        
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 48px 0;
+            text-align: center;
+            background-color: var(--light-green);
+            border-bottom: 4px solid var(--medium-green);
+        }
+        
+        .hero__logo {
+            max-width: 600px;
+            margin-bottom: 24px;
+        }
+        
+        .hero__title {
+            margin-bottom: 16px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero__subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 32px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero__buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        /* Feature Cards */
         .features {
+            padding: 64px 0;
+        }
+        
+        .features__title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .features__grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 24px;
+        }
+        
+        @media (min-width: 640px) {
+            .features__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .features__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .feature-card {
+            background-color: var(--light-green);
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.15s ease-out;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card:hover {
+        box-shadow: 0 4px 8px rgba(108, 88, 76, 0.2);
+        transform: translateY(-2px);
+        border-left: 4px solid var(--medium-green);
+}
+        
+        .feature-card__icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--medium-green);
+            text-align: center;
+        }
+        
+        .feature-card__title {
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .feature-card__content {
+            flex-grow: 1;
+        }
+        
+        /* Values Section */
+        .values {
+            background-color: var(--warm-brown);
+            padding: 64px 0;
+        }
+        
+        .values__title {
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--light-green);
+        }
+        
+        .values__grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 24px;
+        }
+        
+        @media (min-width: 640px) {
+            .values__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .values__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .value-card {
+            padding: 24px;
+            background-color: var(--light-green);
+            border-radius: 8px;
+            height: 100%;
+        }
+        
+        .value-card__title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--warm-brown);
+        }
+        
+        /* CTA Section */
+        .cta {
+            background-color: var(--medium-green);
+            padding: 64px 0;
+            text-align: center;
+            color: var(--cream);
+        }
+        
+        .cta__title {
+            color: var(--cream);
+        }
+        
+        .cta__content {
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark-brown);
+            color: var(--cream);
+            padding: 48px 0;
+        }
+        
+        .footer__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .footer__links {
+            margin: 24px 0;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            margin: 2rem 0;
+            gap: 24px;
+            justify-content: center;
         }
         
-        .feature {
-            flex-basis: 30%;
-            background-color: #DDE5B6;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .footer__link {
+            color: var(--cream);
         }
         
-        .feature h3 {
-            color: #A98467;
-            margin-top: 0;
+        .footer__link:hover {
+            color: var(--light-green);
         }
         
-        .cta {
+        .footer__copyright {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
+        /* Helper Classes */
+        .text-center {
             text-align: center;
-            padding: 2rem 0;
-        }
-        
-        .button {
-            display: inline-block;
-            background-color: #ADC178;
-            color: #F0EAD2;
-            padding: 0.8rem 1.5rem;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-right: 1rem;
-            transition: background-color 0.3s;
-        }
-        
-        .button:hover {
-            background-color: #A98467;
-        }
-        
-        .secondary-button {
-            background-color: transparent;
-            color: #A98467;
-            border: 2px solid #A98467;
-        }
-        
-        .secondary-button:hover {
-            background-color: #DDE5B6;
-        }
-        
-        .intro {
-            background-color: #DDE5B6;
-            padding: 1.5rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .intro h2 {
-            color: #A98467;
-            margin-top: 0;
-        }
-        
-        @media (max-width: 768px) {
-            .feature {
-                flex-basis: 100%;
-            }
         }
     </style>
 </head>
 <body>
-    {{> partials/navbar}}
-
-    <main class="container">
-        <section class="intro">
-            <h2>Welcome to {{node_name}}</h2>
-            <p>{{node_description}}</p>
-            <p>NeighborGoods is a platform that helps communities share resources, reduce waste, and build stronger connections through collaborative consumption.</p>
-        </section>
-
-        <section class="features">
-            <div class="feature">
-                <h3>Item Borrowing</h3>
-                <p>Offer items you own to your community or borrow items you need, without the hassle of purchasing things you'll only use a few times.</p>
-            </div>
-            <div class="feature">
-                <h3>Skill Certification</h3>
-                <p>Gain certification for your skills through peer assessment, allowing you to access more items as you develop your expertise.</p>
-            </div>
-            <div class="feature">
-                <h3>Collective Action</h3>
-                <p>Join forces with your neighbors to accomplish community projects, solve collective problems, and make decisions together.</p>
-            </div>
-            <div class="feature">
-                <h3>Community Knowledge</h3>
-                <p>Access and contribute to a shared knowledge base, including guides, tutorials, and community-specific information.</p>
-            </div>
-            <div class="feature">
-                <h3>Local Communication</h3>
-                <p>Connect with others nearby through location-based threads and discussions to coordinate meetups and exchanges.</p>
-            </div>
-            <div class="feature">
-                <h3>Federated Network</h3>
-                <p>This node is part of a larger network, allowing you to connect with other communities while maintaining local autonomy.</p>
-            </div>
-        </section>
-
-        <section class="cta">
-            <h2>Ready to start sharing?</h2>
-            <p>Join our community today to start borrowing and lending items, sharing skills, and connecting with neighbors.</p>
-            <a href="/login" class="button">Log In</a>
-            <a href="/signup" class="button secondary-button">Sign Up</a>
-        </section>
-    </main>
-
-    <footer>
+    <!-- Navbar placeholder - your partial will be inserted here -->
+    <div id="navbar-placeholder">
+        {{> partials/styles}}
+        <!-- Your navbar.html.hbs partial would be included here -->
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <p>&copy; 2025 NeighborGoods. A Federated Library of Things.</p>
+            <img src="/public/heart.png" alt="NeighborGoods Logo" class="hero__logo">
+            <h1 class="hero__title">Share resources. Build community. Strengthen neighborhoods.</h1>
+            <p class="hero__subtitle">NeighborGoods is a platform that empowers neighbors to share resources, time, skills, and support—strengthening solidarity, trust, and resilience within communities.</p>
+            <div class="hero__buttons">
+                <a href="/signup" class="btn btn-primary">Join Your Neighborhood</a>
+                <a href="/login" class="btn btn-secondary">Sign In</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="features__title">How NeighborGoods Works</h2>
+            <div class="features__grid">
+                <div class="feature-card">
+                    <div class="feature-card__icon">🛠️</div>
+                    <h3 class="feature-card__title">Item Borrowing</h3>
+                    <div class="feature-card__content">
+                        <p>Borrow tools, equipment, and other items from your neighbors when you need them. No need to buy things you'll only use occasionally!</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🎁</div>
+                    <h3 class="feature-card__title">Resource Sharing</h3>
+                    <div class="feature-card__content">
+                        <p>Share your own items with neighbors who could use them. Build community connections while making better use of resources.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">👋</div>
+                    <h3 class="feature-card__title">Skill Exchange</h3>
+                    <div class="feature-card__content">
+                        <p>Offer your skills and talents to help neighbors, or find someone with the expertise you need for your next project.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">📅</div>
+                    <h3 class="feature-card__title">Community Events</h3>
+                    <div class="feature-card__content">
+                        <p>Organize and discover local events, from tool workshops to skill shares to neighborhood clean-ups.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🏡</div>
+                    <h3 class="feature-card__title">Hyperlocal Focus</h3>
+                    <div class="feature-card__content">
+                        <p>Connect with people who live nearby, making exchanges convenient and building real relationships in your community.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">🔒</div>
+                    <h3 class="feature-card__title">Trust Building</h3>
+                    <div class="feature-card__content">
+                        <p>Our community verification system helps ensure safe, reliable interactions between neighbors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Values Section -->
+    <section class="values">
+        <div class="container">
+            <h2 class="values__title">Our Values</h2>
+            <div class="values__grid">
+                <div class="value-card">
+                    <h4 class="value-card__title">Mutual Aid</h4>
+                    <p>We uplift each other through shared resources, not profit.</p>
+                </div>
+                <div class="value-card">
+                    <h4 class="value-card__title">Solidarity</h4>
+                    <p>We act together, not alone. We show up for our neighbors.</p>
+                </div>
+                <div class="value-card">
+                    <h4 class="value-card__title">Trust & Care</h4>
+                    <p>Our platform is built on kindness, consent, and community accountability.</p>
+                </div>
+                <div class="value-card">
+                    <h4 class="value-card__title">Accessibility</h4>
+                    <p>Simple, inclusive design for all people, regardless of tech literacy.</p>
+                </div>
+                <div class="value-card">
+                    <h4 class="value-card__title">Decentralization</h4>
+                    <p>Local servers & local power: communities make decisions for themselves.</p>
+                </div>
+                <div class="value-card">
+                    <h4 class="value-card__title">Non-extractive</h4>
+                    <p>No ads, no data harvesting, no rent-seeking—just people helping people.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="features__title">How To Get Started</h2>
+            <div class="features__grid">
+                <div class="feature-card">
+                    <div class="feature-card__icon">1️⃣</div>
+                    <h3 class="feature-card__title">Sign Up</h3>
+                    <div class="feature-card__content">
+                        <p>Create an account and complete your profile with items you're willing to share.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">2️⃣</div>
+                    <h3 class="feature-card__title">Get Verified</h3>
+                    <div class="feature-card__content">
+                        <p>Meet with a community admin for a quick in-person verification to ensure neighborhood safety.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">3️⃣</div>
+                    <h3 class="feature-card__title">Browse & Connect</h3>
+                    <div class="feature-card__content">
+                        <p>Explore available items and resources or post requests for things you need.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta__title">Ready to join your local NeighborGoods community?</h2>
+            <p class="cta__content">Create an account today and start connecting with neighbors who share your vision for a more resilient, cooperative community.</p>
+            <div class="hero__buttons">
+                <a href="/signup" class="btn btn-secondary">Sign Up Now</a>
+                <a href="/login" class="btn btn-secondary">Log In</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <img src="logo.png" alt="NeighborGoods Logo" style="max-width: 180px;">
+                <div class="footer__links">
+                    <a href="#" class="footer__link">About</a>
+                    <a href="#" class="footer__link">FAQ</a>
+                    <a href="#" class="footer__link">Community Agreement</a>
+                    <a href="#" class="footer__link">Contact</a>
+                </div>
+                <p class="footer__copyright">© 2025 NeighborGoods. Built with solidarity by and for communities.</p>
+            </div>
         </div>
     </footer>
+    
+    <script>
+        // Script to load your navbar partial
+        // This would be replaced with your actual method for including partials
+        document.addEventListener('DOMContentLoaded', function() {
+            // This is a placeholder for however you include your navbar partial
+            // You might use server-side includes, fetch API, or other methods
+            console.log('Your navbar.html.hbs partial would be loaded here');
+        });
+    </script>
 </body>
 </html>

@@ -111,7 +111,7 @@ F0EAD2
 DDE5B6
 ADC178
 A98467
-6C584C
+6C584C (text only)
 
 ## Themeing 
 Mutual Aid	"We uplift each other through shared resources, not profit."
@@ -308,7 +308,7 @@ Accepting - A User posting a ticket to remove an Offered item (giving them owner
 Planning - Creating an Event with multiple Request or Borrow Tickets tied to the same location, date and time. (Core Action)
 Listings - All items/skills currently available to borrow
 Needs - All current requests from community members
-Tickets - Individual user transactions (so "Borrowing Ticket" instead of "Borrowing request", because that's just confusing)
+Tickets - Individual user transactions (so "Borrowing Ticket" instead of "Borrowing request", because that's just confusing). internal use only.
 Posting - Catch all term for all core actions for Users.
 Node - An individual server running a neighborgoods instance. 
 Admin - A User with additional responsabilities of hoasting a node, moderating it, adding new Users, watching for problems and requesting additional features from developers.

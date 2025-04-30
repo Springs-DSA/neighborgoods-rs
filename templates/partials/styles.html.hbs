@@ -1,13 +1,29 @@
 <!-- Common styles for NeighborGoods application -->
 <style>
     /* === Base/Global Styles === */
+    :root {
+        /* Color Palette */
+        --cream: #F0EAD2;
+        --light-green: #DDE5B6;
+        --medium-green: #ADC178;
+        --warm-brown: #A98467;
+        --dark-brown: #6C584C;
+        --success-green: #6A994E;
+        --warning-amber: #E9C46A;
+        --alert-red: #BC4749;
+        --link-blue: #597292;
+        
+        /* Spacing */
+        --base-spacing: 8px;
+        --content-width: 1024px;
+    }
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
-        color: #6C584C;
-        background-color: #F0EAD2;
+        color: var(--dark-brown);
+        background-color: var(--cream);
     }
     
     .container {
@@ -17,7 +33,7 @@
     }
     
     h1, h2, h3 {
-        color: #A98467;
+        color: var(--warm-brown);
     }
     
     h1 {
@@ -33,8 +49,8 @@
     
     /* === Layout Components === */
     header {
-        background-color: #ADC178;
-        color: #F0EAD2;
+        background-color: var(--medium-green);
+        color:var(--cream);
         padding: 1rem 0;
         text-align: center;
     }
@@ -60,7 +76,7 @@
     }
     
     .nav-links a {
-        color: #F0EAD2;
+        color:var(--cream);
         text-decoration: none;
         font-weight: bold;
     }
@@ -88,8 +104,9 @@
     }
     
     footer {
-        background-color: #6C584C;
-        color: #F0EAD2;
+        background-color: var(--dark-brown);
+;
+        color:var(--cream);
         text-align: center;
         padding: 1rem 0;
         margin-top: 2rem;
@@ -99,7 +116,7 @@
     .form-container {
         max-width: 500px;
         margin: 2rem auto;
-        background-color: #DDE5B6;
+        background-color: var(--light-green);
         padding: 2rem;
         border-radius: 5px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -122,11 +139,11 @@
     select {
         width: 100%;
         padding: 0.8rem;
-        border: 1px solid #A98467;
+        border: 1px solid  var(--warm-brown);
         border-radius: 4px;
         font-size: 1rem;
-        background-color: #F0EAD2;
-        color: #6C584C;
+        background-color:var(--cream);
+        color: var(--dark-brown);
         box-sizing: border-box;
 
     }
@@ -135,7 +152,7 @@
     textarea:focus,
     select:focus {
         outline: none;
-        border-color: #ADC178;
+        border-color: var(--medium-green);
         box-shadow: 0 0 5px rgba(173, 193, 120, 0.5);
     }
     
@@ -148,8 +165,8 @@
     /* === Buttons === */
     .action-button, 
     .submit-btn {
-        background-color: #ADC178;
-        color: #F0EAD2;
+        background-color: var(--medium-green);
+        color:var(--cream);
         border: none;
         padding: 0.8rem 1.5rem;
         font-size: 1rem;
@@ -163,7 +180,7 @@
     
     .action-button:hover,
     .submit-btn:hover {
-        background-color: #A98467;
+        background-color:  var(--warm-brown);
     }
     
     .submit-btn {
@@ -171,8 +188,8 @@
     }
     
     .contribute-button {
-        background-color: #A98467;
-        color: #F0EAD2;
+        background-color: var(--warm-brown);
+        color:var(--cream);
         border: none;
         padding: 10px 15px;
         border-radius: 4px;
@@ -185,12 +202,12 @@
     }
     
     .contribute-button:hover {
-        background-color: #6C584C;
+        background-color: var(--dark-brown);
     }
     
     /* === Card Components === */
     .card {
-        background-color: #DDE5B6;
+        background-color:var(--light-green);
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -199,12 +216,12 @@
     
     .card h3 {
         margin-top: 0;
-        border-bottom: 2px solid #ADC178;
+        border-bottom: 2px solid var(--medium-green);
         padding-bottom: 10px;
     }
     
     .item-card {
-        background-color: #DDE5B6;
+        background-color:var(--light-green);
         border-radius: 5px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         overflow: hidden;
@@ -215,11 +232,11 @@
     
     .item-image {
         height: 180px;
-        background-color: #ADC178;
+        background-color: var(--medium-green);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #F0EAD2;
+        color:var(--cream);
     }
     
     .item-details {
@@ -233,7 +250,7 @@
         font-weight: bold;
         font-size: 1.2rem;
         margin-bottom: 5px;
-        color: #A98467;
+        color:  var(--warm-brown);
     }
     
     .item-description {
@@ -257,7 +274,7 @@
     .list-item {
         margin-bottom: 15px;
         padding-bottom: 15px;
-        border-bottom: 1px solid #ADC178;
+        border-bottom: 1px solid var(--medium-green);
     }
     
     .list-item:last-child {
@@ -271,7 +288,7 @@
     
     .list-item-meta {
         font-size: 0.8rem;
-        color: #6C584C;
+        color:var(--dark-brown);
         display: flex;
         justify-content: space-between;
     }
@@ -304,25 +321,25 @@
     }
     
     .status-available {
-        background-color: #ADC178;
-        color: #F0EAD2;
+        background-color: var(--medium-green);
+        color:var(--cream);
     }
     
     .status-borrowed {
-        background-color: #A98467;
-        color: #F0EAD2;
+        background-color:  var(--warm-brown);
+        color:var(--cream);
     }
     
     .status-maintenance {
-        background-color: #6C584C;
-        color: #F0EAD2;
+        background-color:var(--dark-brown);
+        color:var(--cream);
     }
     
     /* === Utility Classes === */
     .view-all {
         display: block;
         text-align: right;
-        color: #A98467;
+        color:  var(--warm-brown);
         text-decoration: none;
         font-size: 0.9rem;
         margin-top: 10px;
@@ -335,12 +352,12 @@
     .note {
         font-size: 0.85rem;
         margin-top: 1rem;
-        color: #6C584C;
+        color:var(--dark-brown);
     }
     
     .no-items {
         text-align: center;
-        background-color: #DDE5B6;
+        background-color:var(--light-green);
         padding: 40px;
         border-radius: 5px;
         grid-column: 1 / -1;
@@ -353,7 +370,7 @@
     }
     
     .signup-link a, .login-link a {
-        color: #A98467;
+        color:  var(--warm-brown);
         text-decoration: none;
     }
     
@@ -363,7 +380,7 @@
     
     /* === Filters & Search === */
     .filters {
-        background-color: #DDE5B6;
+        background-color:var(--light-green);
         padding: 15px;
         border-radius: 5px;
         margin-bottom: 20px;
@@ -385,10 +402,10 @@
     
     .filter-select, .search-input {
         padding: 8px;
-        border: 1px solid #ADC178;
+        border: 1px solid var(--medium-green);
         border-radius: 4px;
-        background-color: #F0EAD2;
-        color: #6C584C;
+        background-color:var(--cream);
+        color:var(--dark-brown);
     }
     
     .search-input {
@@ -405,8 +422,8 @@
     }
     
     .pagination-button {
-        background-color: #DDE5B6;
-        color: #6C584C;
+        background-color:var(--light-green);
+        color:var(--dark-brown);
         border: none;
         padding: 5px 10px;
         border-radius: 4px;
@@ -415,8 +432,8 @@
     }
     
     .pagination-button.active {
-        background-color: #ADC178;
-        color: #F0EAD2;
+        background-color: var(--medium-green);
+        color:var(--cream);
     }
     
     /* === Responsive Styles === */
