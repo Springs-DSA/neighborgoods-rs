@@ -9,105 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Quando&family=Cabin:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/templates/partials/styles.html.hbs">
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --cream: #F0EAD2;
-            --light-green: #DDE5B6;
-            --medium-green: #ADC178;
-            --warm-brown: #A98467;
-            --dark-brown: #6C584C;
-            --success-green: #6A994E;
-            --warning-amber: #E9C46A;
-            --alert-red: #BC4749;
-            --link-blue: #597292;
-            --base-unit: 8px;
-        }
-        
-        body {
-            font-family: 'Cabin', sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-            color: var(--dark-brown);
-            background-color: var(--cream);
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Quando', serif;
-            font-weight: 400;
-            margin-bottom: 16px;
-            color: var(--warm-brown);
-        }
-        
-        h1 {
-            font-size: 2rem;
-        }
-        
-        h2 {
-            font-size: 1.5rem;
-        }
-        
-        h3 {
-            font-size: 1.25rem;
-        }
-        
-        a {
-            color: var(--link-blue);
-            text-decoration: none;
-            transition: all 0.15s ease-out;
-        }
-        
-        a:hover {
-            color: var(--warm-brown);
-        }
-        
-        /* Button Styles */
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-family: 'Cabin', sans-serif;
-            font-weight: 500;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.15s ease-out;
-        }
-        
-        .btn-primary {
-            background-color: var(--medium-green);
-            color: var(--cream);
-            border: none;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--warm-brown);
-            color: var(--cream);
-        }
-        
-        .btn-secondary {
-            background-color: var(--light-green);
-            color: var(--dark-brown);
-            border: 1px solid var(--medium-green);
-        }
-        
-        .btn-secondary:hover {
-            background-color: #d0daa0;
-            color: var(--dark-brown);
-        }
-        
-        /* Container */
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-        
         /* Hero Section */
         .hero {
             padding: 48px 0;
@@ -262,42 +163,7 @@
             max-width: 700px;
             margin: 0 auto 32px;
         }
-        
-        /* Footer */
-        .footer {
-            background-color: var(--dark-brown);
-            color: var(--cream);
-            padding: 48px 0;
-        }
-        
-        .footer__content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .footer__links {
-            margin: 24px 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: center;
-        }
-        
-        .footer__link {
-            color: var(--cream);
-        }
-        
-        .footer__link:hover {
-            color: var(--light-green);
-        }
-        
-        .footer__copyright {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-        
+                
         /* Helper Classes */
         .text-center {
             text-align: center;
@@ -314,7 +180,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <img src="/public/heart.png" alt="NeighborGoods Logo" class="hero__logo">
+            <img src="/public/Logo-lightbg.png" alt="NeighborGoods Logo" class="hero__logo">
             <h1 class="hero__title">Share resources. Build community. Strengthen neighborhoods.</h1>
             <p class="hero__subtitle">NeighborGoods is a platform that empowers neighbors to share resources, time, skills, and support—strengthening solidarity, trust, and resilience within communities.</p>
             <div class="hero__buttons">
@@ -451,29 +317,6 @@
     </section>
     
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <img src="logo.png" alt="NeighborGoods Logo" style="max-width: 180px;">
-                <div class="footer__links">
-                    <a href="#" class="footer__link">About</a>
-                    <a href="#" class="footer__link">FAQ</a>
-                    <a href="#" class="footer__link">Community Agreement</a>
-                    <a href="#" class="footer__link">Contact</a>
-                </div>
-                <p class="footer__copyright">© 2025 NeighborGoods. Built with solidarity by and for communities.</p>
-            </div>
-        </div>
-    </footer>
-    
-    <script>
-        // Script to load your navbar partial
-        // This would be replaced with your actual method for including partials
-        document.addEventListener('DOMContentLoaded', function() {
-            // This is a placeholder for however you include your navbar partial
-            // You might use server-side includes, fetch API, or other methods
-            console.log('Your navbar.html.hbs partial would be loaded here');
-        });
-    </script>
+    {{> partials/footer}}
 </body>
 </html>

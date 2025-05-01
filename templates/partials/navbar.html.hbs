@@ -1,9 +1,61 @@
+<style>
+        
+    .logo {
+        max-width: 500px;
+    }
+    /* === Header & Navigation === */
+    header {
+        background-color: var(--medium-green);
+        color: var(--cream);
+        padding: calc(var(--base-unit)) 0;
+    }
+    
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .site-title {
+        color: inherit;
+        text-decoration: none;
+        transition: opacity 0.3s;
+    }
+    
+    .site-title:hover {
+        opacity: 0.8;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: calc(2.5 * var(--base-unit));
+    }
+    
+    .nav-links a {
+        color: var(--cream);
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.15s ease-out;
+    }
+    
+    .nav-links a:hover {
+        color: var(--light-green);
+    }
+    
+    .user-menu {
+        display: flex;
+        align-items: center;
+    }
+    
+    .user-greeting {
+        margin-right: calc(2 * var(--base-unit));
+    }
+</style>
 <header>
     <div class="container">
         <div class="header-content">
             <div>
-                <h1><a href="{{#if user}}/dashboard{{else}}/{{/if}}" class="site-title">NeighborGoods</a></h1>
-                <p class="tagline">A Federated Library of Things</p>
+                <img src="/public/Logo-darkbg.png" alt="NeighborGoods Logo" class="logo">
             </div>
             {{#if user}}
                 <div class="user-menu">
@@ -11,7 +63,7 @@
                     <div class="nav-links">
                         <a href="/inventory">Inventory</a>
                         <a href="/feed">Feed</a>
-                        <a href="/campaigns">Campaigns</a>
+                        <a href="/calendar">Events</a>
                         <a href="/profile">My Profile</a>
                         <a href="/items/transfers">Transfers</a>
                         <a href="/logout">Logout</a>
