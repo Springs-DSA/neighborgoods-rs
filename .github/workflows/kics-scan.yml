@@ -30,7 +30,7 @@ jobs:
           # Generate output formats
           output_formats: 'json,sarif'
           # Output file name
-          output_path: 'kics-results'
+          output_path: 'kics-results.sarif'
           # Optional: Exclude specific paths from scanning
           # exclude_paths: 'examples,docs'
           # Optional: Disable specific queries by their IDs
@@ -39,7 +39,7 @@ jobs:
           platform_type: 'github'
           
       - name: Upload KICS Scan results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()  # Run even if the previous step fails
         with:
           sarif_file: kics-results.sarif
