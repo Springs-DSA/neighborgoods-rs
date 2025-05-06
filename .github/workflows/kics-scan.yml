@@ -29,18 +29,9 @@ jobs:
           output_formats: 'sarif,json'
           output_path: 'kics-results'
           verbose: true
-      
-      - name: Display kics results
-        if: always()
-        run: |
-          cat kics-results/results.json
           
       - name: Upload KICS Scan results
         uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: kics-results/results.sarif
-
-      - name: List generated files
-        run: ls -la kics-results
-        if: always()
