@@ -2,9 +2,9 @@ name: KICS Security Scan
 
 on:
   push:
-    branches: [ main, master, feature ]
+    branches: [ main, master, feature/* ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master feature/* ]
   # Optional: Allow manual triggering
   workflow_dispatch:
 
