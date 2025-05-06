@@ -29,31 +29,37 @@ jobs:
           path: '.'
           # Optional: Specify types of queries to run
           # For Docker scans, include 'dockerfile' at minimum
-          type: 'dockerfile,docker-compose,kubernetes'
+          # type: 'dockerfile,docker-compose,kubernetes'
           # Generate output formats
-          output_formats: 'sarif'
+          output_formats: 'sarif,json'
           # Output file name
-          output_path: 'kics-results.sarif'
+          output_path: 'kics-results'
           # Optional: Exclude specific paths from scanning
           # exclude_paths: 'examples,docs'
           # Optional: Disable specific queries by their IDs
           # exclude_queries: '631a6892-7d42-44c0-a0ea-5417a6efd52eed221fcb-58d4-4a08-abba-1b2f2bc304f4'
           # Set platform type for the scan
-          platform_type: 'github'
+          # platform_type: 'github'
+          verbose: true
+      
+      - name: Display kics results
+        if: always()
+        run: |
+          cat kics-results/results.json
           
       - name: Upload KICS Scan results
         uses: github/codeql-action/upload-sarif@v3
         if: always()  # Run even if the previous step fails
         with:
-          sarif_file: kics-results.sarif
+          sarif_file: kics-results/kics-results.sarif
 
       - name: List generated files
         run: ls -la
         if: always()
 
-      - name: Archive KICS results
-        uses: actions/upload-artifact@v4
-        if: always()  # Run even if the previous steps fail
-        with:
-          name: kics-results
-          path: kics-results*
+      # - name: Archive KICS results
+      #   uses: actions/upload-artifact@v4
+      #   if: always()  # Run even if the previous steps fail
+      #   with:
+      #     name: kics-results
+      #     path: kics-results*
