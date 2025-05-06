@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags
       
-      - name: Run KICS Scan
+      - name: Run KICS IaC Scan
         uses: checkmarx/kics-github-action@latest
         with:
           # Scan specific path for Docker and other IaC files
