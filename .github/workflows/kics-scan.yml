@@ -31,7 +31,7 @@ jobs:
           # For Docker scans, include 'dockerfile' at minimum
           type: 'dockerfile,docker-compose,kubernetes'
           # Generate output formats
-          output_formats: 'json,sarif'
+          output_formats: 'sarif'
           # Output file name
           output_path: 'kics-results.sarif'
           # Optional: Exclude specific paths from scanning
