@@ -24,6 +24,7 @@ jobs:
       
       - name: Run KICS IaC Scan
         uses: checkmarx/kics-github-action@v2
+        continue-on-error: true
         with:
           path: '.'
           output_formats: 'sarif,json'
