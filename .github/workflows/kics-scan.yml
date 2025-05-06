@@ -54,7 +54,7 @@ jobs:
           sarif_file: kics-results/kics-results.sarif
 
       - name: List generated files
-        run: ls -la
+        run: ls -la kics-results
         if: always()
 
       # - name: Archive KICS results
