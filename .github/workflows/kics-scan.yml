@@ -2,7 +2,7 @@ name: KICS Security Scan
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, feature ]
   pull_request:
     branches: [ main, master ]
   # Optional: Allow manual triggering
@@ -50,3 +50,6 @@ jobs:
         with:
           name: kics-results
           path: kics-results*
+      
+      - name: List generated files
+        run: ls -la
