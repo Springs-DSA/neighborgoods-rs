@@ -45,7 +45,7 @@ jobs:
           sarif_file: kics-results.sarif
 
       - name: Archive KICS results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()  # Run even if the previous steps fail
         with:
           name: kics-results
