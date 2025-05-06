@@ -216,12 +216,7 @@
         height: 100%;
         transition: all 0.15s ease-out;
     }
-    
-    .item-card:hover {
-        box-shadow: 0 4px 8px rgba(108, 88, 76, 0.2);
-        transform: translateY(-2px);
-    }
-    
+
     .item-image {
         height: 180px;
         background-color: var(--medium-green);
@@ -277,6 +272,14 @@
         grid-template-columns: repeat(1, 1fr);
         gap: calc(3 * var(--base-unit));
         margin: calc(3 * var(--base-unit)) 0;
+    }
+    .quick-actions-grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: calc(2 * var(--base-unit));
+        margin: calc(2 * var(--base-unit)) 0;
+        margin-bottom: 0;
+        
     }
     
     @media (min-width: 640px) {
@@ -496,7 +499,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: calc(2.5 * var(--base-unit));
+        margin-bottom: calc(1.25 * var(--base-unit));
+        margin-top: calc(1.5 * var(--base-unit));
     }
     
     .signup-link, 

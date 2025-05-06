@@ -10,94 +10,101 @@
     {{> partials/navbar}}
 
     <main class="container">
-        <h2>Dashboard</h2>
-        
-        <div class="dashboard">
-            <div class="map-container">
-                <p>Community Map (Interactive map will be displayed here)</p>
-                <!-- Map will be implemented here -->
-            </div>
-            
-            <div class="card">
-                <h3>Collective Actions</h3>
-                {{#if collective_actions.length}}
-                    {{#each collective_actions}}
-                        <div class="list-item">
-                            <div class="list-item-title">{{this.title}}</div>
-                            <div class="list-item-description">{{this.description}}</div>
-                            <div class="list-item-meta">
-                                <span>Status: {{this.status}}</span>
-                                <span>Expires: {{this.expiry_date}}</span>
-                            </div>
-                            <a href="/campaigns/{{this.id}}" class="action-button">View Details</a>
-                        </div>
-                    {{/each}}
-                {{else}}
-                    <p>No active collective actions at this time.</p>
-                {{/if}}
-                <a href="/campaigns" class="view-all">View All Campaigns</a>
-            </div>
-            
-            <div class="card">
-                <h3>Recent Posts</h3>
-                {{#if posts.length}}
-                    {{#each posts}}
-                        <div class="list-item">
-                            <div class="list-item-title">{{this.title}}</div>
-                            <div class="list-item-description">{{this.excerpt}}</div>
-                            <div class="list-item-meta">
-                                <span>By: {{this.author}}</span>
-                                <span>Posted: {{this.date}}</span>
-                            </div>
-                            <a href="/posts/{{this.id}}" class="action-button">Read More</a>
-                        </div>
-                    {{/each}}
-                {{else}}
-                    <p>No recent posts.</p>
-                {{/if}}
-                <a href="/feed" class="view-all">View All Posts</a>
-            </div>
-            
-            <div class="card">
-                <h3>Your Outstanding Commitments</h3>
-                {{#if commitments.length}}
-                    {{#each commitments}}
-                        <div class="list-item">
-                            <div class="list-item-title">{{this.title}}</div>
-                            <div class="list-item-description">{{this.description}}</div>
-                            <div class="list-item-meta">
-                                <span>Type: {{this.type}}</span>
-                                <span>Due: {{this.due_date}}</span>
-                            </div>
-                            <a href="/commitments/{{this.id}}" class="action-button">View Details</a>
-                        </div>
-                    {{/each}}
-                {{else}}
-                    <p>You have no outstanding commitments.</p>
-                {{/if}}
-                <a href="/profile#commitments" class="view-all">View All Commitments</a>
-            </div>
-            
-            <div class="card">
-                <h3>Items You're Responsible For</h3>
-                {{#if items}}
-                    {{#each items}}
-                        <div class="list-item">
-                            <div class="list-item-title">{{this.1.name}}</div>
-                            <div class="list-item-description">{{this.1.description}}</div>
-                            <div class="list-item-meta">
-                                <span>Borrow Purpose: {{this.0.purpose}}</span>
-                                <span>Borrowed At: {{this.0.created_at}}</span>
-                            </div>
-                            <a href="/items/{{this.1.id}}" class="action-button">View Item</a>
-                        </div>
-                    {{/each}}
-                {{else}}
-                    <p>You are not currently responsible for any items.</p>
-                {{/if}}
-                <a href="/profile#items" class="view-all">View All Items</a>
+        <div class="page-header">
+            <div><h1>Dashboard</h1></div>
             </div>
         </div>
+        <!-- Dashboard will have banner at top for a condensed user Profile and cards in columns for Quick Actions, Upcoming Events, Notifications, User's Items, and a banner at the bottom for recomended tags -->
+        <div class="card">
+            <div class="profile-info">
+                <img src="{{user.profile_picture}}" alt="Profile Picture" class="profile-picture">
+                <div class="profile-details">
+                    <h2>{{user.name}}</h2>
+                    <p>Joined: {{user.joined_date}}</p>
+                    <p>Items Offered: </p>
+                    <p>Items Borrowed: </p>
+                    <a href="/profile/edit" class="action-button">Edit Profile</a>
+                </div>
+            </div>
+        </div>  
+        <div class="dashboard">
+            <div class="card">
+                <h2>Quick Actions</h2>
+                <ul class="quick-actions-grid">
+                    <a href="#" class="btn btn-secondary">Request</a>
+                    <a href="#" class="btn btn-secondary">Offer</a>
+                    <a href="#" class="btn btn-secondary">Manage Items</a>
+                    <a href="#" class="btn btn-secondary">Plan Event</a>
+                </ul>
+            </div>
+            <div class="card">
+                <h2>Notifications</h2>
+                {{Notifications}}
+            </div>
+            
+            <div class="card">
+                <h2>Upcomming Events</h2>
+                {{#if events.length}}
+                    {{#each events}}
+                        <div class="list-item">
+                            <div class="list-item-title">{{this.title}}</div>
+                            <div class="list-item-description">{{this.description}}</div>
+                            <div class="list-item-meta">
+                                <span>Date: {{this.date}}</span>
+                                <span>Location: {{this.location}}</span>
+                            </div>
+                            <a href="/events/{{this.id}}" class="action-button">View Event</a>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <p>No upcoming events.</p>
+                {{/if}}
+                <a href="/events" class="view-all">View All Events</a>
+            </div>
+            
+            <div class="card">
+                <h2>Borrowing/Offering</h2> <!-- make this tabs? /!-->
+                <div class="borrowing-offering-grid">
+                    <div class="borrowing-card">
+                        <h4>Borrowing</h4>
+                        {{#if borrowed_items.length}}
+                            {{#each borrowed_items}}
+                                <div class="list-item">
+                                    <div class="list-item-title">{{this.name}}</div>
+                                    <div class="list-item-description">{{this.description}}</div>
+                                    <a href="/items/{{this.id}}" class="action-button">View Item</a>
+                                </div>
+                            {{/each}}
+                        {{else}}
+                            <p>No items borrowed.</p>
+                        {{/if}}
+                    </div>
+                    <div class="offering-card">
+                        <h3>Offering</h3>
+                        {{#if offered_items.length}}
+                            {{#each offered_items}}
+                                <div class="list-item">
+                                    <div class="list-item-title">{{this.name}}</div>
+                                    <div class="list-item-description">{{this.description}}</div>
+                                    <a href="/items/{{this.id}}" class="action-button">View Item</a>
+                                </div>
+                            {{/each}}
+                        {{else}}
+                            <p>No items offered.</p>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--div class="card">
+            <h2>You Might Be Interested In</h2>
+            <ul class="tag-list">
+                {{#each recommended_tags}}
+                    <li class="tag-item">{{this}}</li>
+                {{/each}}
+            </ul>
+        </div!-->
+
     </main>
 
     {{> partials/footer}}
