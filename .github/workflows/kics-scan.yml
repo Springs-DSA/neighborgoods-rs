@@ -12,6 +12,9 @@ jobs:
   kics-scan:
     name: KICS Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
     
     steps:
       - name: Checkout code
@@ -44,12 +47,13 @@ jobs:
         with:
           sarif_file: kics-results.sarif
 
+      - name: List generated files
+        run: ls -la
+        if: always()
+
       - name: Archive KICS results
         uses: actions/upload-artifact@v4
         if: always()  # Run even if the previous steps fail
         with:
           name: kics-results
           path: kics-results*
-      
-      - name: List generated files
-        run: ls -la
