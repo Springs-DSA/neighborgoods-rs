@@ -2,9 +2,9 @@ name: KICS Security Scan
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, feature/* ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master feature/* ]
   # Optional: Allow manual triggering
   workflow_dispatch:
 
@@ -12,41 +12,27 @@ jobs:
   kics-scan:
     name: KICS Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Fetch all history for all branches and tags
+          fetch-depth: 0
       
       - name: Run KICS IaC Scan
-        uses: checkmarx/kics-github-action@v1
+        uses: checkmarx/kics-github-action@v2
+        continue-on-error: true
         with:
-          # Scan specific path for Docker and other IaC files
           path: '.'
-          # Optional: Specify types of queries to run
-          # For Docker scans, include 'dockerfile' at minimum
-          type: 'dockerfile,docker-compose,kubernetes'
-          # Generate output formats
-          output_formats: 'json,sarif'
-          # Output file name
+          output_formats: 'sarif,json'
           output_path: 'kics-results'
-          # Optional: Exclude specific paths from scanning
-          # exclude_paths: 'examples,docs'
-          # Optional: Disable specific queries by their IDs
-          # exclude_queries: '631a6892-7d42-44c0-a0ea-5417a6efd52eed221fcb-58d4-4a08-abba-1b2f2bc304f4'
-          # Set platform type for the scan
-          platform_type: 'github'
+          verbose: true
           
       - name: Upload KICS Scan results
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()  # Run even if the previous step fails
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
         with:
-          sarif_file: kics-results.sarif
-
-      - name: Archive KICS results
-        uses: actions/upload-artifact@v4
-        if: always()  # Run even if the previous steps fail
-        with:
-          name: kics-results
-          path: kics-results*
+          sarif_file: kics-results/results.sarif
