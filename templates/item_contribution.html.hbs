@@ -238,7 +238,7 @@
                 <p class="help-text">Upload a clear photo of the item. This helps others identify and choose the item.</p>
             </div>
             
-            <div class="cert-requirements">
+            <!--div class="cert-requirements">
                 <h3>Certification Requirements</h3>
                 <p>Select any certifications that should be required for borrowing this item:</p>
                 
@@ -262,16 +262,23 @@
                 {{/if}}
                 
                 <p class="help-text">Certifications help ensure that people who borrow your item have the necessary skills to use it safely and properly.</p>
-            </div>
+            </div!-->
             
             <div class="agreement-checkbox">
-                <input type="checkbox" id="agreement" name="agreement" required>
-                <label for="agreement">I confirm that I own this item and agree to make it available for borrowing by others in the NeighborGoods community, according to the <a href="/community-agreement" target="_blank">Community Agreement</a>.</label>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="agreement" name="agreement" required>
+                    <span class="checkmark"></span>
+                    <span class="agreement-text">
+                        I confirm that I own this item and agree to make it available for borrowing by others in the NeighborGoods community, according to the 
+                        <a href="/community-agreement" target="_blank">Community Agreement</a>.
+                    </span>
+                    
+                </label>
             </div>
             
             <div class="buttons-row">
-                <a href="/inventory" class="cancel-button">Cancel</a>
-                <button type="submit" class="submit-button">Contribute Item</button>
+                <a href="/inventory" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Contribute Item</button>
             </div>
         </form>
     </main>

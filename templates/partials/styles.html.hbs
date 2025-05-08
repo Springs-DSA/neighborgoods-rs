@@ -153,7 +153,7 @@
         margin-bottom: calc(2 * var(--base-unit));
     }
     
-    label {
+    .agreement-text {
         font-family: 'Quando', serif;
         font-weight: 400;
         margin-bottom: 16px;
@@ -188,6 +188,59 @@
         color: var(--alert-red);
         font-size: 0.9rem;
         margin-top: calc(0.5 * var(--base-unit));
+    }
+
+    /* === Checkbox === */
+    .checkbox-container {
+        position: relative;
+        display: flex; /* Use flexbox for alignment */
+        align-items: center; /* Vertically align the checkbox and text */
+        cursor: pointer;
+        font-size: 1rem;
+        user-select: none;
+        gap: calc(2 * var(--base-unit)); /* Add spacing between checkbox and text */
+    }
+
+    input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+    
+    .checkmark {
+        position: relative;
+        flex-shrink: 0;
+        top: 0;
+        left: 0;
+        height: 29px;
+        width: 29px;
+        background-color: var(--cream);
+        border: 2px solid var(--medium-green);
+    }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .checkbox-container:hover input ~ .checkmark {
+        background-color: var(--light-green);
+    }
+    .checkbox-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+    .checkmark:after {
+        left: 5.5px;
+        top: -1px;
+        width: 11px;
+        height: 17px;
+        border: solid var(--medium-green);
+        border-width: 0 4px 4px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
     }
     
     /* === Card Components === */
