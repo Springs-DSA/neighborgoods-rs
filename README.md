@@ -21,7 +21,7 @@ Inter-node Federation
 
 ## Design Philosophy & Principles
 ### Design Values
-Community-Focused: Maximize hyperlocal, face to face interactions
+Community-Focused: Maximize hyper-local, face to face interactions
 Accessibility: Ensure the platform is usable by neighbors of all technical abilities
 Transparency: Create clear processes for borrowing, lending, and conflict resolution
 Simplicity: Keep interfaces clean and straightforward to encourage participation
@@ -41,11 +41,11 @@ Consistent navigation patterns across device sizes
 ## Item Borrowing (Top Priority)
 A user should be able to offer items they own to the network. This includes creating a profile for the item including name, picture, description, borrowing, maintenance, and rules to use, etc. Once the object has been entered into the system, its location and stewardship is tracked, and it is displayed in a store-like list where other users can borrow it. As this is a distributed network of individuals offering up their items, there is no central repository that items must be checked in to. Instead, items are simply at the location they were last used at, until someone comes to borrow it again. Checking out an item involves clicking the borrow button, and meeting the requirements. Then, the item must transfer to the stewardship of the borrower. The owner of the item will receive a notification that the item has been reserved for borrowing, and it is up to the owner and the borrower how to move the item. In the future, it should be possible to have network members volunteer as gofers that move items around, but for now it's up to individual members to get their borrowed items.
 
-## Calander Integration
-Implementation of return dates and avalibility
+## Calendar Integration
+Implementation of return dates and availability
 
 ## Dispute Resolution
-Dispute resolution is handled through a restoritive justice framework. Users invloved in disputes will be encouraged to resolve the dispute on their own. If resolution cannot be reached a request for moderation will be made, either to the server Admin(s) or the broader User Base. While a dispute is pending, all Users involved will have flags on their public profiles with a simple summery of the issue automatically generated (overdue, damaged, etc). 
+Dispute resolution is handled through a restorative justice framework. Users involved in disputes will be encouraged to resolve the dispute on their own. If resolution cannot be reached a request for moderation will be made, either to the server Admin(s) or the broader User Base. While a dispute is pending, all Users involved will have flags on their public profiles with a simple summery of the issue automatically generated (overdue, damaged, etc). 
 
 ## ActivityPub Integration
 The eventual goal is to allow individuals to set up networks of these servers, and allow inter-node functionality for all of the above application features.
@@ -113,11 +113,11 @@ ADC178
 A98467
 6C584C (text only)
 
-## Themeing 
+## Theming  
 Mutual Aid	"We uplift each other through shared resources, not profit."
 Solidarity	"We act together, not alone. We show up for our neighbors."
 Trust & Care	"Our platform is built on kindness, consent, and community accountability."
-Accessibiility	"Simple, inclusive design for all people, regardless of tech literacy."
+Accessibility	"Simple, inclusive design for all people, regardless of tech literacy."
 Decentralization	Local servers & local power: communities make decisions for themselves.
 Non-extractive	"No ads, no data harvesting, no rent-seeking—just people helping people."
 
@@ -188,7 +188,7 @@ My Account: Profile (and edit option), my shared items, borrowing history, calen
 Admin Panel: User management, dispute resolution, settings (admin user only)
 
 ### Content Organization
-Items organized by user generated tags, and by popularity and date made avalible
+Items organized by user generated tags, and by popularity and date made available
 Skills categorized by tags with availability indicators
 Events organized chronologically with resource needs highlighted
 Requests tracked by status (pending, active, completed)
@@ -221,7 +221,7 @@ Return process for borrowed items after event
 
 ### Dispute Resolution
 User reports issue through platform or automatically added if overdue
-Both users are publicly flaged as being in dispute++
+Both users are publicly flagged as being in dispute++
 System offers direct resolution options
 If unresolved, community mediator or admin is Requested
 Mediator facilitates discussion between parties
@@ -299,10 +299,10 @@ Phase 3: Federation protocol implementation
 Phase 4: Nonprofit establishment and governance structure
 Phase 5: Ratings, reviews, and enhanced trust mechanisms
 
-# Glossery
+# Glossary
 Lending - A User posting to make an item available for others to use temporarily. (Core Action)
 Offering - A User posting to make an item available for others to keep, or to volunteer their skills or time. (Core Action)
-Requesting - A User posting to ask for other Users to fill a need not availible in the Listings. (Core Action)
+Requesting - A User posting to ask for other Users to fill a need not available in the Listings. (Core Action)
 Borrowing - A User posting a ticket to someone else's item temporarily. (Core Action)
 Accepting - A User posting a ticket to remove an Offered item (giving them ownership), or to use another User's skills or time (Core Action)
 Planning - Creating an Event with multiple Request or Borrow Tickets tied to the same location, date and time. (Core Action)
@@ -311,4 +311,4 @@ Needs - All current requests from community members
 Tickets - Individual user transactions (so "Borrowing Ticket" instead of "Borrowing request", because that's just confusing). internal use only.
 Posting - Catch all term for all core actions for Users.
 Node - An individual server running a neighborgoods instance. 
-Admin - A User with additional responsabilities of hoasting a node, moderating it, adding new Users, watching for problems and requesting additional features from developers.
+Admin - A User with additional responsibilities of hosting a node, moderating it, adding new Users, watching for problems and requesting additional features from developers.
