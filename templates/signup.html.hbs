@@ -14,50 +14,60 @@
             <h2>Create an Account</h2>
             <p>Join our community to start sharing resources with your neighbors.</p>
             
-            {{#if error}}
-            <div class="error-message">{{error}}</div>
-            {{/if}}
-            
-            <form action="/signup" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="{{username}}" required>
-                    {{#if errors.username}}
-                    <div class="error-message">{{errors.username}}</div>
-                    {{/if}}
-                </div>
+            <div class="space-wrapper">
+                {{#if error}}
+                <div class="error-message">{{error}}</div>
+                {{/if}}
                 
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" value="{{email}}" required>
-                    {{#if errors.email}}
-                    <div class="error-message">{{errors.email}}</div>
-                    {{/if}}
+                <form action="/signup" method="POST">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="{{username}}" required>
+                        {{#if errors.username}}
+                        <div class="error-message">{{errors.username}}</div>
+                        {{/if}}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        {{#if errors.password}}
+                        <div class="error-message">{{errors.password}}</div>
+                        {{/if}}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirm">Confirm Password</label>
+                        <input type="password" id="password_confirm" name="password_confirm" required>
+                        {{#if errors.password_confirm}}
+                        <div class="error-message">{{errors.password_confirm}}</div>
+                        {{/if}}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Home Address</label>
+                        <input type="address" id="address" name="address" value="{{address}}" required>
+                        {{#if errors.address}}
+                        <div class="error-message">{{errors.address}}</div>
+                        {{/if}}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="phone" id="phone" name="phone" value="{{phone}}" required>
+                        {{#if errors.phone}}
+                        <div class="error-message">{{errors.phone}}</div>
+                        {{/if}}
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                    {{#if errors.password}}
-                    <div class="error-message">{{errors.password}}</div>
-                    {{/if}}
-                </div>
-                
-                <div class="form-group">
-                    <label for="password_confirm">Confirm Password</label>
-                    <input type="password" id="password_confirm" name="password_confirm" required>
-                    {{#if errors.password_confirm}}
-                    <div class="error-message">{{errors.password_confirm}}</div>
-                    {{/if}}
-                </div>
-                
+
                 <button type="submit" class="submit-btn">Sign Up</button>
                 
                 <div class="note">
                     <p>By signing up, you agree to our Terms of Service and Privacy Policy.</p>
-                    <p>Note: Your account will require approval by a node administrator before you can fully access the platform.</p>
-                </div>
-            </form>
+                    <p>Note: Your account will require approval by the {{node_name}} administrator before you can fully access the platform.</p>
+                
+                </form>
             
             <div class="login-link">
                 <p>Already have an account? <a href="/login">Log in</a></p>
