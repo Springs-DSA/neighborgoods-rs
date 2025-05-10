@@ -1,5 +1,19 @@
 # NeighborGoods
 NeighborGoods is a Federated Library of Things.
+## Server Usage
+If you are an admin, or anyone looking to host their own server based on this project, this section contains instructions for Linux and Windows systems.
+These scripts will ask for 2 parameters and will generate the rest. Advanced users can modify the script files as they see fit.
+### Linux Example
+```
+./start.sh --node-name "My Node Name" --node-description "This is my test node"
+```
+
+### Windows Example
+```
+.\start.cmd --node-name "My Node Name" --node-description "This is my test node"
+```
+
+You can optionally pass in the parameters --node-lat and --node-lng to specify location coordinates
 
 ## Overview
 ### Vision Statement

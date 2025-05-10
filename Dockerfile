@@ -20,6 +20,10 @@ COPY Rocket.toml.docker ./Rocket.toml
 # Create uploads directory
 RUN mkdir -p uploads
 
+# To avoid running as root from here on
+RUN groupadd -r neighborgoodsgroup && useradd -r -g neighborgoodsgroup neighborgoodsuser
+USER neighborgoodsuser
+
 # For development hot-reloading, we'll use cargo-watch
 # --why shows why restarts happen, --poll ensures changes are detected across volumes
 CMD ["cargo", "watch", "--poll", "--why", "-x", "run"]
