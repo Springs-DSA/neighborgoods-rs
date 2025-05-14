@@ -5,7 +5,7 @@ use crate::models::user::User;
 
 
 #[get("/profile")]
-pub fn profile_get(_user:User) -> Template {
-    let context = context! {};
+pub fn profile_get(user:User) -> Template {
+    let context = context! {user};
     Template::render("profile", &context)
 }
