@@ -23,23 +23,6 @@
             align-items: center;
         }
         
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: var(--cream);
-            border: 3px solid var(--medium-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .avatar img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        
         .profile-name-section {
             flex-grow: 1;
         }
@@ -52,7 +35,7 @@
         .trust-indicator {
             display: inline-block;
             background-color: var(--medium-green);
-            color: white;
+            color: var(--lighter-green);
             padding: 4px 8px;
             border-radius: 16px;
             font-size: 14px;
@@ -61,51 +44,32 @@
         
         .profile-actions {
             display: flex;
-            gap: 8px;
+            gap: calc(1 * var(--base-unit));
         }
-        
-        .tabs {
-            display: flex;
-            gap: 8px;
-            border-bottom: 1px solid var(--medium-green);
-            margin-bottom: 24px;
-        }
-        
-        .tab {
-            padding: 8px 16px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab.active {
-            border-bottom: 3px solid var(--warm-brown);
-            font-weight: 500;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
+
+        .bio{
+            margin-left: calc(3 * var(--base-unit));
+            margin-top: calc(2 * var(--base-unit));
+            color: var(--warm-brown);
+            font-family: 'Quando', serif;
+            font-size: 18px; 
+            }
         .card-title {
             font-family: 'Quando', serif;
             font-size: 18px;
-            margin-bottom: 8px;
+            margin-bottom: calc(1 * var(--base-unit));
         }
         
         .card-status {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: calc(2 * var(--base-unit));
+            margin-bottom: calc(1 * var(--base-unit));
         }
         
         .status-indicator {
-            width: 12px;
-            height: 12px;
+            width: calc(2 * var(--base-unit));
+            height: calc(2 * var(--base-unit));
             border-radius: 50%;
         }
         
@@ -123,23 +87,14 @@
         
         .card-footer {
             margin-top: auto;
-            padding-top: 12px;
+            padding-top: calc(2 * var(--base-unit));
         }
         
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        
-        .stat-card {
-            background-color: var(--light-green);
-            border-radius: 8px;
-            padding: 16px;
-            text-align: center;
-            margin-top: calc(2 * var(--base-unit));
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            gap: calc(2 * var(--base-unit));
+            margin-bottom: calc(2* var(--base-unit));
         }
         
         .stat-number {
@@ -154,8 +109,8 @@
         
         .history-item {
             display: flex;
-            gap: 16px;
-            padding: 16px;
+            gap: calc(2 * var(--base-unit));
+            padding: calc(2 * var(--base-unit));
             border-bottom: 1px solid var(--light-green);
         }
         
@@ -175,7 +130,7 @@
         
         .history-date {
             font-size: 14px;
-            color: rgba(108, 88, 76, 0.7);
+            color: var(--warm-brown);
         }
         
         .skill-tag {
@@ -184,71 +139,22 @@
             color: var(--cream);
             padding: 4px 12px;
             border-radius: 16px;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .footer {
-            background-color: var(--dark-brown);
-            color: var(--cream);
-            padding: 32px 16px;
-            margin-top: 48px;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 32px;
-        }
-        
-        @media (max-width: 639px) {
-            .footer-content {
-                flex-direction: column;
-            }
-        }
-        
-        .footer-section {
-            max-width: 300px;
-        }
-        
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-        
-        .footer-links a {
-            color: var(--cream);
-            text-decoration: none;
-        }
-        
-        .footer-links a:hover {
-            text-decoration: underline;
+            margin-right: calc(2 * var(--base-unit));
+            margin-bottom: calc(2 * var(--base-unit));
         }
     </style>
 </head>
 <body>
     {{> partials/navbar}}
     <main class="container">
-        <div class="page-header">
-            <div><h1>Profile</h1></div>
-            </div>
-        </div>
-        <div class="card">
+        <div class="card-header card">
             <div class="profile-top">
                 <div class="avatar">
                     <img src="/api/placeholder/120/120" alt="User Avatar">
                 </div>
                 <div class="profile-name-section">
-                    <h1 class="profile-name">Sarah Johnson</h1>
-                    <p>Member since May 2024 • Ridgewood Community</p>
+                    <h1 class="profile-name">{{user.name}}</h1>
+                    <p>Member since {{user.joined_date}} • {{node_name}}</p>
                     <div>
                         <span class="trust-indicator">Verified Neighbor</span>
                         <span class="trust-indicator">10+ Shares</span>
@@ -258,25 +164,25 @@
                     <button class="btn btn-secondary">Edit Profile</button>
                 </div>
             </div>
-            <div>
+            <div class="bio">
                 <p>I love gardening and DIY projects! Happy to share my tools and skills with neighbors.</p>
             </div>
         </div>
         
         <div class="stats-grid">
-            <div class="stat-card">
+            <div class="card center">
                 <div class="stat-number">12</div>
                 <div class="stat-label">Items Shared</div>
             </div>
-            <div class="stat-card">
+            <div class="card center">
                 <div class="stat-number">8</div>
                 <div class="stat-label">Items Borrowed</div>
             </div>
-            <div class="stat-card">
+            <div class="card center">
                 <div class="stat-number">4</div>
                 <div class="stat-label">Events Joined</div>
             </div>
-            <div class="stat-card">
+            <div class="card center">
                 <div class="stat-number">95%</div>
                 <div class="stat-label">Return Rate</div>
             </div>
@@ -419,7 +325,7 @@
                 <span class="skill-tag">Pet Sitting</span>
             </div>
             
-            <h3>Certifications</h3>
+            <!--h3>Certifications</h3>
             <div class="inventory-grid">
                 <div class="card">
                     <div class="card-title">Power Tool Safety</div>
@@ -442,7 +348,7 @@
                         <div class="history-date">Obtained: March 2025</div>
                     </div>
                 </div>
-            </div>
+            </div!-->
         </div>
         
         <div class="tab-content">
@@ -491,4 +397,24 @@
     </main>
     {{> partials/footer}}
 </body>
+    <script>
+        // Simple tab switching
+        document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Hide all content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Deactivate all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Activate clicked tab and content
+                tab.classList.add('active');
+                document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+        });
+    </script>
 </html>

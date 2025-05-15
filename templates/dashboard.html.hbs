@@ -5,6 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - NeighborGoods</title>
     {{> partials/styles}}
+    <style>
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            gap: calc(2 * var(--base-unit));;
+            margin-bottom: calc(3 * var(--base-unit));;
+            background-color: var(--light-green);
+            border-radius: 8px;
+            padding: 24px;
+        }
+        
+        .profile-top {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .profile-name-section {
+            flex-grow: 1;
+        }
+        
+        .profile-name {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .trust-indicator {
+            display: inline-block;
+            background-color: var(--medium-green);
+            color: var(--lighter-green);
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: calc(1 * var(--base-unit));
+        }
+
+        .bio{
+            margin-left: calc(3 * var(--base-unit));
+            margin-top: calc(2 * var(--base-unit));
+            color: var(--warm-brown);
+            font-family: 'Quando', serif;
+            font-size: 18px; 
+            }
+
+    </style>
 </head>
 <body>
     {{> partials/navbar}}
@@ -12,20 +62,29 @@
     <main class="container">
         <div class="page-header">
             <div><h1>Dashboard</h1></div>
+            <div>
+                <a href="/items/contribute" class="btn btn-primary">Contribute New Item</a>
             </div>
         </div>
         <!-- Dashboard will have banner at top for a condensed user Profile and cards in columns for Quick Actions, Upcoming Events, Notifications, User's Items, and a banner at the bottom for recomended tags -->
         <div class="card">
-            <div class="profile-info">
-                <img src="{{user.profile_picture}}" alt="Profile Picture" class="profile-picture">
-                <div class="profile-details">
-                    <h2>{{user.name}}</h2>
-                    <p>Joined: {{user.joined_date}}</p>
-                    <p>Items Offered: </p>
-                    <p>Items Borrowed: </p>
-                    <a href="/profile/edit" class="action-button">Edit Profile</a>
+            <div class="profile-top">
+                <div class="avatar">
+                    <img src="/api/placeholder/120/120" alt="User Avatar">
+                </div>
+                <div class="profile-name-section">
+                    <h1 class="profile-name">{{user.name}}</h1>
+                    <p>Member since {{user.joined_date}} • {{node_name}}</p>
+                    <div>
+                        <span class="trust-indicator">Verified Neighbor</span>
+                        <span class="trust-indicator">10+ Shares</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn btn-secondary">Edit Profile</button>
                 </div>
             </div>
+        </div>
         </div>  
         <div class="dashboard">
             <div class="card">
@@ -63,10 +122,12 @@
             </div>
             
             <div class="card">
-                <h2>Borrowing/Offering</h2> <!-- make this tabs? /!-->
+                <div class="tabs">
+                    <div class="tab active">Borrowing</div>
+                    <div class="tab">Offering</div>
+                </div>
                 <div class="borrowing-offering-grid">
-                    <div class="borrowing-card">
-                        <h4>Borrowing</h4>
+                    <div class="borrowing-card tab-content active">
                         {{#if borrowed_items.length}}
                             {{#each borrowed_items}}
                                 <div class="list-item">
@@ -79,8 +140,7 @@
                             <p>No items borrowed.</p>
                         {{/if}}
                     </div>
-                    <div class="offering-card">
-                        <h3>Offering</h3>
+                    <div class="offering-card tab-content">
                         {{#if offered_items.length}}
                             {{#each offered_items}}
                                 <div class="list-item">
@@ -109,4 +169,24 @@
 
     {{> partials/footer}}
 </body>
+<script>
+        // Simple tab switching
+        document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Hide all content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Deactivate all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Activate clicked tab and content
+                tab.classList.add('active');
+                document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+        });
+    </script>
 </html>
