@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeighborGoods - User Profile</title>
+    {{> partials/styles}}
+    <style>
+        
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            gap: calc(2 * var(--base-unit));;
+            margin-bottom: calc(3 * var(--base-unit));;
+            background-color: var(--light-green);
+            border-radius: 8px;
+            padding: 24px;
+        }
+        
+        .profile-top {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .profile-name-section {
+            flex-grow: 1;
+        }
+        
+        .profile-name {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .trust-indicator {
+            display: inline-block;
+            background-color: var(--medium-green);
+            color: var(--lighter-green);
+            padding: 4px 8px;
+            border-radius: 16px;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: calc(1 * var(--base-unit));
+        }
+
+        .bio{
+            margin-left: calc(3 * var(--base-unit));
+            margin-top: calc(2 * var(--base-unit));
+            color: var(--warm-brown);
+            font-family: 'Quando', serif;
+            font-size: 18px; 
+            }
+        .card-title {
+            font-family: 'Quando', serif;
+            font-size: 18px;
+            margin-bottom: calc(1 * var(--base-unit));
+        }
+        
+        .card-status {
+            display: flex;
+            align-items: center;
+            gap: calc(2 * var(--base-unit));
+            margin-bottom: calc(1 * var(--base-unit));
+        }
+        
+        .status-indicator {
+            width: calc(2 * var(--base-unit));
+            height: calc(2 * var(--base-unit));
+            border-radius: 50%;
+        }
+        
+        .status-available {
+            background-color: var(--success-green);
+        }
+        
+        .status-borrowed {
+            background-color: var(--alert-red);
+        }
+        
+        .status-pending {
+            background-color: var(--warning-amber);
+        }
+        
+        .card-footer {
+            margin-top: auto;
+            padding-top: calc(2 * var(--base-unit));
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: calc(2 * var(--base-unit));
+            margin-bottom: calc(2* var(--base-unit));
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--warm-brown);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+        }
+        
+        .history-item {
+            display: flex;
+            gap: calc(2 * var(--base-unit));
+            padding: calc(2 * var(--base-unit));
+            border-bottom: 1px solid var(--light-green);
+        }
+        
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .history-details {
+            flex-grow: 1;
+        }
+        
+        .history-date {
+            font-size: 14px;
+            color: var(--warm-brown);
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background-color: var(--medium-green);
+            color: var(--cream);
+            padding: 4px 12px;
+            border-radius: 16px;
+            margin-right: calc(2 * var(--base-unit));
+            margin-bottom: calc(2 * var(--base-unit));
+        }
+    </style>
+</head>
+<body>
+    {{> partials/navbar}}
+    <main class="container">
+        <div class="card-header card">
+            <div class="profile-top">
+                <div class="avatar">
+                    <img src="/api/placeholder/120/120" alt="User Avatar">
+                </div>
+                <div class="profile-name-section">
+                    <h1 class="profile-name">{{user.name}}</h1>
+                    <p>Member since {{user.joined_date}} • {{node_name}}</p>
+                    <div>
+                        <span class="trust-indicator">Verified Neighbor</span>
+                        <span class="trust-indicator">10+ Shares</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn btn-secondary">Edit Profile</button>
+                </div>
+            </div>
+            <div class="bio">
+                <p>I love gardening and DIY projects! Happy to share my tools and skills with neighbors.</p>
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="card center">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Items Shared</div>
+            </div>
+            <div class="card center">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Items Borrowed</div>
+            </div>
+            <div class="card center">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Events Joined</div>
+            </div>
+            <div class="card center">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Return Rate</div>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active">My Items</div>
+            <div class="tab">Borrowing History</div>
+            <div class="tab">Skills & Certifications</div>
+            <div class="tab">Activity</div>
+        </div>
+        
+        <div class="tab-content active">
+            <div class="inventory-grid">
+                <div class="card">
+                    <div class="item-image">
+                        <img src="/api/placeholder/280/160" alt="Power Drill">
+                    </div>
+                    <div class="item-details">
+                        <h2 class="card-title">Cordless Power Drill</h2>
+                        <div class="card-status">
+                            <span class="status-indicator status-available"></span>
+                            <span>Available</span>
+                        </div>
+                        <p>Cordless power drill with various bits. Perfect for household projects.</p>
+                        <div class="card-footer">
+                            <button class="btn btn-secondary">Manage Item</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="item-image">
+                        <img src="/api/placeholder/280/160" alt="Garden Shears">
+                    </div>
+                    <div class="item-details">
+                        <h2 class="card-title">Garden Shears</h2>
+                        <div class="card-status">
+                            <span class="status-indicator status-borrowed"></span>
+                            <span>Borrowed by Alex until May 15</span>
+                        </div>
+                        <p>Heavy-duty garden shears. Great for pruning shrubs and small branches.</p>
+                        <div class="card-footer">
+                            <button class="btn btn-secondary">Manage Item</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="item-image">
+                        <img src="/api/placeholder/280/160" alt="Camping Tent">
+                    </div>
+                    <div class="item-details">
+                        <h2 class="card-title">Camping Tent (4-Person)</h2>
+                        <div class="card-status">
+                            <span class="status-indicator status-available"></span>
+                            <span>Available</span>
+                        </div>
+                        <p>Weatherproof tent that fits 4 people comfortably. Easy to set up.</p>
+                        <div class="card-footer">
+                            <button class="btn btn-secondary">Manage Item</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="item-image">
+                        <img src="/api/placeholder/280/160" alt="Cake Pans">
+                    </div>
+                    <div class="item-details">
+                        <h2 class="card-title">Cake Pans (Set of 3)</h2>
+                        <div class="card-status">
+                            <span class="status-indicator status-pending"></span>
+                            <span>Request from Maria</span>
+                        </div>
+                        <p>Three round cake pans, different sizes. Perfect for layered cakes.</p>
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Review Request</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 24px; text-align: center;">
+                <button class="btn btn-primary">+ Add New Item</button>
+            </div>
+        </div>
+        
+        <div class="tab-content">
+            <div class="history-item">
+                <div class="history-icon">
+                    ↓
+                </div>
+                <div class="history-details">
+                    <div><strong>Borrowed:</strong> Ladder from Jamie Wilson</div>
+                    <div>Used for: Home maintenance</div>
+                    <div class="history-date">April 28 - May 5, 2025</div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-icon">
+                    ↓
+                </div>
+                <div class="history-details">
+                    <div><strong>Borrowed:</strong> Food Processor from Community Kitchen</div>
+                    <div>Used for: Neighborhood potluck</div>
+                    <div class="history-date">April 15, 2025</div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-icon">
+                    ↑
+                </div>
+                <div class="history-details">
+                    <div><strong>Lent:</strong> Garden Shears to Alex Chen</div>
+                    <div>Being used for: Garden cleanup</div>
+                    <div class="history-date">May 1 - May 15, 2025</div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content">
+            <h3>Skills I Can Share</h3>
+            <div style="margin-bottom: 24px;">
+                <span class="skill-tag">Gardening</span>
+                <span class="skill-tag">Basic Carpentry</span>
+                <span class="skill-tag">Baking</span>
+                <span class="skill-tag">Home Organization</span>
+                <span class="skill-tag">Pet Sitting</span>
+            </div>
+            
+            <!--h3>Certifications</h3>
+            <div class="inventory-grid">
+                <div class="card">
+                    <div class="card-title">Power Tool Safety</div>
+                    <p>Certified to safely operate power tools including drills, saws, and sanders.</p>
+                    <div class="card-status">
+                        <span>Verified by: Community Workshop</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="history-date">Obtained: January 2025</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Food Handler's Certificate</div>
+                    <p>Certified in safe food preparation and handling for community events.</p>
+                    <div class="card-status">
+                        <span>Verified by: Local Health Department</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="history-date">Obtained: March 2025</div>
+                    </div>
+                </div>
+            </div!-->
+        </div>
+        
+        <div class="tab-content">
+            <div class="history-item">
+                <div class="history-icon">
+                    📅
+                </div>
+                <div class="history-details">
+                    <div><strong>RSVP'd to Event:</strong> Spring Garden Swap</div>
+                    <div>Contributing: Extra seedlings, Garden tools for day-of use</div>
+                    <div class="history-date">Upcoming: May 20, 2025</div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">View Event</button>
+                </div>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-icon">
+                    💬
+                </div>
+                <div class="history-details">
+                    <div><strong>Posted Request:</strong> Looking for a pressure washer</div>
+                    <div>For: Cleaning driveway and patio furniture</div>
+                    <div class="history-date">Posted: May 2, 2025 • 2 offers received</div>
+                </div>
+                <div>
+                    <button class="btn btn-secondary">View Request</button>
+                </div>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-icon">
+                    👍
+                </div>
+                <div class="history-details">
+                    <div><strong>Received Positive Feedback:</strong> From Jamie Wilson</div>
+                    <div>"Sarah returned the ladder in perfect condition and even helped me move some boxes while she was here. Great neighbor!"</div>
+                    <div class="history-date">May 5, 2025</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </main>
+    {{> partials/footer}}
+</body>
+    <script>
+        // Simple tab switching
+        document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Hide all content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Deactivate all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Activate clicked tab and content
+                tab.classList.add('active');
+                document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+        });
+    </script>
+</html>

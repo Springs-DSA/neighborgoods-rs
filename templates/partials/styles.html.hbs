@@ -18,6 +18,7 @@
         --warning-amber: #E9C46A;
         --alert-red: #BC4749;
         --link-blue: #597292;
+        --lighter-green:#ebf3c1;
         
         /* Spacing */
         --base-unit: 8px;
@@ -57,6 +58,10 @@
     
     h4 {
         font-size: 1rem;
+    }
+
+    p {
+        margin: calc(.5 * var(--base-unit));
     }
     
     .tagline {
@@ -242,6 +247,24 @@
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
     }
+
+    /* avatar */
+    .avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: var(--cream);
+        border: 3px solid var(--medium-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .avatar img {
+        max-width: 100%;
+        max-height: 100%;
+    }
     
     /* === Card Components === */
     .card {
@@ -317,6 +340,9 @@
         gap: calc(2.5 * var(--base-unit));
         margin: calc(2.5 * var(--base-unit)) 0;
     }
+    .center{
+        text-align: center;
+    }
     
     .features__grid,
     .values__grid,
@@ -380,7 +406,34 @@
     .list-item-description {
         margin: calc(0.5 * var(--base-unit)) 0;
     }
+    /* tabs */
+    .tabs {
+        display: flex;
+        gap: 8px;
+        border-bottom: 1px solid var(--medium-green);
+        margin-bottom: 24px;
+    }
     
+    .tab {
+        padding: 8px 16px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+    }
+    
+    .tab.active {
+        border-bottom: 3px solid var(--warm-brown);
+        font-weight: 500;
+    }
+    
+    .tab-content {
+        display: none;
+    }
+    
+    .tab-content.active {
+        display: block;
+    }
+        
+
     /* Call to Action */
     .cta {
         background-color: var(--medium-green);
@@ -554,6 +607,13 @@
         align-items: center;
         margin-bottom: calc(1.25 * var(--base-unit));
         margin-top: calc(1.5 * var(--base-unit));
+    }
+    .card-header {
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: calc(2 * var(--base-unit));
+        margin-bottom: calc(2.5 * var(--base-unit));
+        margin-top: calc(2 * var(--base-unit));
     }
     
     .signup-link, 
