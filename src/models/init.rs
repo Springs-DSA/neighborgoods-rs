@@ -45,3 +45,18 @@ where
 
     Ok(())
 }
+
+pub async fn get_node_setting<C>(db: &mut C, key: &str) -> Option<String>
+where
+    C: AsyncConnection<Backend = diesel::pg::Pg> + Send,
+{
+    use crate::schema::node_settings::dsl::*;
+    let node_id = std::env::var("NODE_ID").ok()?;
+    node_settings
+        .filter(entity.eq(node_id))
+        .filter(attribute.eq(key))
+        .select(value)
+        .first::<String>(db)
+        .await
+        .ok()
+}

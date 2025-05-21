@@ -3,6 +3,7 @@ use rocket_db_pools::diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use rocket::response::Redirect;
 use crate::{db::Db, models::{item::Item, item_transfer::ItemTransfer, user::User}, schema::{item_transfers, items}};
+use crate::models::init::get_node_setting;
 
 
 #[get("/dashboard")]
@@ -15,10 +16,16 @@ pub async fn dashboard_get(user: User, mut db: Connection<Db>) -> Template {
         .load::<(ItemTransfer, Item)>(&mut db)    
         .await
         .expect("Error loading items and transfers");
+
+    let node_name = get_node_setting(&mut db, "name").await.unwrap_or_else(|| "NeighborGoods Local Node".to_string());
+    let node_description = get_node_setting(&mut db, "description").await.unwrap_or_else(|| "".to_string());
+
     
     let context = context! {
         user,
-        items
+        items,
+        node_name,
+        node_description
     };
     Template::render("dashboard", &context)
 }
