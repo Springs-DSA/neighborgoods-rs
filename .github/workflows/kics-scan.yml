@@ -33,9 +33,6 @@ jobs:
 
       - name: Fix permissions on output directory
         run: sudo chown -R $USER:$USER kics-results
-
-      - name: Debug - List output directory
-        run: ls -R kics-results
           
       - name: Upload KICS Scan results
         uses: github/codeql-action/upload-sarif@v3
