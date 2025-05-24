@@ -36,3 +36,6 @@ jobs:
         if: always()
         with:
           sarif_file: kics-results/results.sarif
+
+      - name: Debug - List output directory
+        run: ls -R kics-results
