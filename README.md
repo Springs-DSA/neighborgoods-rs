@@ -1,8 +1,6 @@
 # NeighborGoods
 NeighborGoods is a Federated Library of Things.
 
-You can optionally pass in the parameters --node-lat and --node-lng to specify location coordinates
-
 ## Overview
 ### Vision Statement
 The Neighborgoods Project aims To create a hyper-local, non-commercial platform that empowers neighbors to share resources, time, skills, and support—strengthening solidarity, trust, and resilience within communities.
