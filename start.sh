@@ -29,9 +29,9 @@ prompt_if_empty NODE_NAME "Enter NODE_NAME"
 prompt_if_empty NODE_DESCRIPTION "Enter NODE_DESCRIPTION"
 
 # Generate a random password and rocket secret
-DB_PASSWORD=$(openssl rand -base64 32)
-ROCKET_SECRET_KEY=$(openssl rand -base64 32)
-NODE_ID=$(openssl rand -base64 32)
+DB_PASSWORD=$(tr -dc 'A-Za-z0-9_-+=' </dev/urandom | head -c 32)
+ROCKET_SECRET_KEY=$(tr -dc 'A-Za-z0-9_-+=' </dev/urandom | head -c 32)
+NODE_ID=$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 32)
 
 # Write all variables to .env
 cat > .env <<EOF
@@ -48,6 +48,7 @@ ROCKET_SECRET_KEY="$ROCKET_SECRET_KEY"
 EOF
 
 # Start docker compose
+docker-compose build --no-cache
 docker-compose up -d
 
 

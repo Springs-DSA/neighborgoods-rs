@@ -5,15 +5,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     depends_on:
       - db
-    volumes:
-      - .:/app
-      - cargo_cache:/usr/local/cargo/registry
-      - target_cache:/app/target
-      - ./uploads:/app/uploads
+#    volumes:
+#      - .:/app
+#      - cargo_cache:/usr/local/cargo/registry
+#      - target_cache:/app/target
+#      - ./uploads:/app/uploads
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - ROCKET_DATABASES={neighborgoods_db={url=${DATABASE_URL}}}
@@ -27,6 +29,8 @@ services:
     ports:
       - "5444:5432"
     command: -p 5432
+    env_file:
+      - .env
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -37,5 +41,3 @@ services:
 
 volumes:
   postgres_data:
-  cargo_cache:
-  target_cache:
