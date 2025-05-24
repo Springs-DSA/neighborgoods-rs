@@ -17,6 +17,9 @@ jobs:
       contents: read
     
     steps:
+      - name: Create output directory
+        run: mkdir -p kics-results
+
       - name: Checkout code
         uses: actions/checkout@v3
         with:
