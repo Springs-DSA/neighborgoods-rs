@@ -9,7 +9,7 @@ set NODE_LNG=
 set NODE_ID=
 
 :: Check if .env file exists
-set OVERWRITE_ENV=y
+set OVERWRITE_ENV=n
 if exist .env (
     echo A .env file already exists.
     set /p OVERWRITE_ENV="Do you want to overwrite it? (y/n) [default: n]: "

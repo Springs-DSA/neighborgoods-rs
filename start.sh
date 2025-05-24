@@ -12,7 +12,7 @@ ROCKET_SECRET_KEY=""
 ENV_FILE=".env"
 
 # Load existing values if .env exists and user doesn't want to overwrite
-OVERWRITE_ENV="y"
+OVERWRITE_ENV="n"
 if [[ -f "$ENV_FILE" ]]; then
     read -p "A .env file already exists. Do you want to overwrite it? (y/n) [default: n]: " OVERWRITE_ENV
     OVERWRITE_ENV=${OVERWRITE_ENV,,}  # to lowercase
