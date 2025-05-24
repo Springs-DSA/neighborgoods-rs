@@ -30,6 +30,9 @@ jobs:
           output_formats: 'sarif,json'
           output_path: 'kics-results'
           verbose: true
+
+      - name: Fix permissions on output directory
+        run: sudo chown -R $USER:$USER kics-results
           
       - name: Upload KICS Scan results
         uses: github/codeql-action/upload-sarif@v3

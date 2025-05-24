@@ -1,5 +1,5 @@
 [default.databases.neighborgoods_db]
-url = "postgres://postgres:password@localhost:5444/neighborgoods"
+url = "${DATABASE_URL}"
 
 # Only `url` is required. These have sane defaults and are optional.
 min_connections = 64
