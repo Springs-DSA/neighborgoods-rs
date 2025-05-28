@@ -18,9 +18,18 @@
         }
         
         .hero__logo {
-            max-width: 600px;
-            margin-bottom: 24px;
+            
+            max-width: 600px;  
+            width: 100%;
+            height: auto;
         }
+
+        @media (max-width: 600px) {
+            .hero__logo {
+                max-width: 90vw; 
+            }
+        }
+            
         
         .hero__title {
             margin-bottom: 16px;
