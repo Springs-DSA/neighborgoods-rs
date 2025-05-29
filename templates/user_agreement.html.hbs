@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Agreement - NeighborGoods</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&family=Cabin:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/templates/partials/styles.html.hbs">
+    <style>
+        
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6C584C;
+            font-style: italic;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .value-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 88, 76, 0.15);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #A98467;
+            margin-bottom: 0.5rem;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.5);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border-left: 4px solid #ADC178;
+        }
+
+
+        .guidelines-list {
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .guidelines-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .guidelines-list li {
+            margin: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .guidelines-list li::before {
+            content: "●";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight {
+            background: rgba(173, 193, 120, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+    
+    {{> partials/styles}}
+    {{> partials/navbar}}
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Community Agreement</h1>
+        </div>
+        <div class="features__grid">
+            <div class="feature-card">
+                <div class="feature-card__icon">🛠️</div>
+                <h3 class="feature-card__title">When Borrowing Items</h3>
+                <div class="guidelines-list">
+                    <h4>I will:</h4>
+                    <ul>
+                        <li>Schedule pickup and return times that work for everyone involved</li>
+                        <li>Document the condition of items when I pick them up and return them</li>
+                        <li>Use items safely and follow any instructions provided</li>
+                        <li>Return items on time and in clean, working condition</li>
+                        <li>Compensate owners fairly if items are damaged or lost while in my care</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">🎁</div>
+                <h3 class="feature-card__title">When Lending Items</h3>
+                <div class="guidelines-list">
+                    <h4>I will:</h4>
+                    <ul>
+                        <li>Provide clear instructions for proper use and care</li>
+                        <li>Make sure items are clean, safe, and work properly before lending</li>
+                        <li>Communicate any quirks or issues with the item upfront</li>
+                        <li>Be reasonable about wear and tear versus actual damage</li>
+                        <li>Respond promptly to borrowing requests</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">🎓</div>
+                <h3 class="feature-card__title">Skills & Certifications</h3>
+                <div class="guidelines-list">
+                    <h4>When offering or using certified skills, I will:</h4>
+                    <ul>
+                        <li>Be honest about my level of expertise and capabilities</li>
+                        <li>Only use equipment I'm properly trained and certified to operate</li>
+                        <li>Help others learn and develop their skills when appropriate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">🌐</div>
+                <h3 class="feature-card__title">Platform Use</h3>
+                <h4>I understand that:</h4>
+                <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                    <li>This platform exists to <span class="highlight">strengthen community bonds</span>, not for commercial purposes</li>
+                    <li>My behavior affects the trust and functionality of the entire community</li>
+                    <li>Administrators may temporarily suspend my account if these agreements are violated</li>
+                    <li>Serious or repeated violations may result in removal from the community</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-card__icon">⚠️</div>
+                <h3 class="feature-card__title">Participation & Risk</h3>
+                <h4><strong>By participating in NeighborGoods, I acknowledge:</strong></h4>
+                <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                    <li>
+                        <h4>Platform Liability</h4>
+                        <ul>
+                            <li>NeighborGoods is a platform that facilitates connections between community members.</li>
+                            <li>NeighborGoods does not own, maintain, or inspect shared items.</li>
+                            <li>The platform and its administrators are not responsible for the condition, safety, or functionality of shared items.</li>
+                            <li>All transactions and interactions occur directly between community members.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>Personal Responsibility</h4>
+                        <ul>
+                            <li>I participate in all activities at my own risk.</li>
+                            <li>I am solely responsible for my own safety and the safety of others when using borrowed items.</li>
+                            <li>I understand that some activities may involve inherent risks.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>Item Condition &amp; Safety</h4>
+                        <ul>
+                            <li>I acknowledge that borrowed items may have wear, defects, or safety issues not immediately apparent.</li>
+                            <li>I will inspect all items before use and decline to use anything I consider unsafe.</li>
+                            <li>I am responsible for using items safely and within my skill level.</li>
+                            <li>I will not hold other community members liable for normal wear and tear.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>Insurance &amp; Damages</h4>
+                        <ul>
+                            <li>I am responsible for any damage I cause to borrowed items beyond normal wear and tear.</li>
+                            <li>I will not rely on NeighborGoods or other members to provide insurance coverage.</li>
+                            <li>Disputes over damages will be resolved through the community mediation process.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>Legal Compliance</h4>
+                        <ul>
+                            <li>I will comply with all applicable local, state, and federal laws.</li>
+                            <li>I understand that some items may require licenses, permits, or certifications to use legally.</li>
+                            <li>I am responsible for ensuring I am legally authorized to use all borrowed items.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h4>Hold Harmless</h4>
+                        <ul>
+                            <li>I agree to hold harmless NeighborGoods, its administrators, and other community members from any liability arising from my participation.</li>
+                            <li>This includes but is not limited to: property damage, personal injury, financial loss, or legal consequences.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>By continuing to use this platform, I acknowledge that I have read, understood, and agree to these terms and the community agreement above.</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-card__icon">📝</div>
+            <h3 class="feature-card__title">Community Amendments</h3>
+            <p>This agreement may be modified through <strong>collective community action</strong>. Proposed changes will be subject to community discussion and consent before implementation.</p>
+            <p>By joining NeighborGoods, I commit to upholding these agreements and contributing to a community of care, trust, and mutual aid.</p>
+        </div>
+
+        <div style="text-align: center; margin: 2rem 0; color: #A98467; font-style: italic;">
+            Last updated: May 21, 2025
+        </div>
+
+    </div>
+    {{> partials/footer}}
+</body>
+</html>

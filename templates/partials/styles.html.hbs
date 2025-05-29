@@ -58,6 +58,7 @@
     
     h4 {
         font-size: 1rem;
+        color:var(--dark-brown)
     }
 
     p {
@@ -265,6 +266,66 @@
         max-width: 100%;
         max-height: 100%;
     }
+
+    /* Feature Cards */
+        .features {
+            padding: 64px 0;
+        }
+        
+        .features__title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .features__grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 24px;
+        }
+        
+        @media (min-width: 640px) {
+            .features__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .features__grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        .feature-card {
+            background-color: var(--light-green);
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.15s ease-out;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card:hover {
+        box-shadow: 0 4px 8px rgba(108, 88, 76, 0.2);
+        transform: translateY(-2px);
+        border-left: 4px solid var(--medium-green);
+}
+        
+        .feature-card__icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--medium-green);
+            text-align: center;
+        }
+        
+        .feature-card__title {
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .feature-card__content {
+            flex-grow: 1;
+        }
     
     /* === Card Components === */
     .card {
@@ -272,7 +333,6 @@
         padding: calc(3 * var(--base-unit));
         border-radius: calc(1 * var(--base-unit));
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        height: 100%;
         transition: all 0.15s ease-out;
     }
     
@@ -609,7 +669,17 @@
         margin-top: calc(1.5 * var(--base-unit));
     }
 
-    
+    .logo {
+    max-width: 600px;   /* or 400px, whatever looks best on desktop */
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .logo {
+        max-width: 90vw; /* or 300px, or whatever fits nicely on mobile */
+    }
+}
     .card-header {
         justify-content: space-between;
         align-items: center;

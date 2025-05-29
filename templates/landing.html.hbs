@@ -53,65 +53,6 @@
             flex-wrap: wrap;
         }
         
-        /* Feature Cards */
-        .features {
-            padding: 64px 0;
-        }
-        
-        .features__title {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-        
-        .features__grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 24px;
-        }
-        
-        @media (min-width: 640px) {
-            .features__grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .features__grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        .feature-card {
-            background-color: var(--light-green);
-            border-radius: 8px;
-            padding: 24px;
-            transition: all 0.15s ease-out;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .feature-card:hover {
-        box-shadow: 0 4px 8px rgba(108, 88, 76, 0.2);
-        transform: translateY(-2px);
-        border-left: 4px solid var(--medium-green);
-}
-        
-        .feature-card__icon {
-            font-size: 2rem;
-            margin-bottom: 16px;
-            color: var(--medium-green);
-            text-align: center;
-        }
-        
-        .feature-card__title {
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        
-        .feature-card__content {
-            flex-grow: 1;
-        }
         
         /* Values Section */
         .values {

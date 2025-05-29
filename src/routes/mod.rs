@@ -4,3 +4,4 @@ pub mod dashboard;
 pub mod items;
 pub mod item_transfers;
 pub mod profile;
+pub mod user_agreement;

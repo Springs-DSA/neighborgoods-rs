@@ -119,6 +119,8 @@ fn rocket() -> _ {
             inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete,
             item_transfer_post, item_transfers_get, item_transfer_put,
             routes::profile::profile_get,
+            routes::user_agreement::user_agreement_get,
+            
         ])
         .mount("/public", FileServer::from(relative!("uploads")))
         .mount("/static", FileServer::from(relative!("static")))
