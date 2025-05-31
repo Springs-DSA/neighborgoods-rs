@@ -25,8 +25,8 @@ if /i "!OVERWRITE_ENV!"=="n" (
         if /i "!key!"=="POSTGRES_PASSWORD" set POSTGRES_PASSWORD=!value!
         if /i "!key!"=="ROCKET_SECRET_KEY" set ROCKET_SECRET_KEY=!value!
         if /i "!key!"=="NODE_ID" set NODE_ID=!value!
-        if /i "!key!"=="NODE_NAME" set NODE_NAME=!value!
-        if /i "!key!"=="NODE_DESCRIPTION" set NODE_DESCRIPTION=!value!
+        if /i "!key!"=="NODE_NAME" set NODE_NAME="!value!"
+        if /i "!key!"=="NODE_DESCRIPTION" set NODE_DESCRIPTION="!value!"
         if /i "!key!"=="NODE_LAT" set NODE_LAT=!value!
         if /i "!key!"=="NODE_LNG" set NODE_LNG=!value!
     )
