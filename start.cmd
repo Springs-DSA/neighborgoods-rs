@@ -42,8 +42,28 @@ if /i "!OVERWRITE_ENV!"=="n" (
         if /i "!key!"=="NODE_LAT" set NODE_LAT=!value!
         if /i "!key!"=="NODE_LNG" set NODE_LNG=!value!
     )
+
     if not defined POSTGRES_PASSWORD (
-        echo WARNING: POSTGRES_PASSWORD is not set. This will be generated and added to .env
+        if defined DATABASE_URL (
+            rem Strip the protocol prefix
+            set "TEMP_URL=!DATABASE_URL:postgres://=!"
+
+            rem TEMP_URL now is: postgres:password@localhost:5444/neighborgoods
+
+            rem Strip user (postgres:)
+            for /f "tokens=2 delims=:" %%A in ("!TEMP_URL!") do set "AFTER_USER=%%A"
+
+            rem AFTER_USER now is: password@localhost:5444/neighborgoods
+
+            rem Extract password (split at @)
+            for /f "tokens=1 delims=@" %%B in ("!AFTER_USER!") do set "POSTGRES_PASSWORD=%%B"
+
+            echo WARNING: POSTGRES_PASSWORD is not set, but found DATABASE_URL. Setting POSTGRES_PASSWORD to value derived from DATABASE_URL
+            echo( >> .env
+            echo POSTGRES_PASSWORD=!POSTGRES_PASSWORD! >> .env
+        ) else (
+            echo WARNING: POSTGRES_PASSWORD is not set nor is DATABASE_URL. This will be generated and added to .env
+        )
     )
 
     if not defined ROCKET_SECRET_KEY (
