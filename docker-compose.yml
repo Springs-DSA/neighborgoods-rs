@@ -25,8 +25,8 @@ services:
   db:
     image: postgres:15
 #    Use for local dev testing only. Exposes DB to outside world
-#    ports:
-#      - "5444:5432"
+    ports:
+      - "5444:5432"
     command: -p 5432
     environment:
       - POSTGRES_USER=postgres
