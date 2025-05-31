@@ -15,21 +15,22 @@ services:
       - target_cache:/app/target
       - ./uploads:/app/uploads
     environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/neighborgoods
-      - ROCKET_DATABASES={neighborgoods_db={url="postgres://postgres:password@db:5432/neighborgoods"}}
-      - ROCKET_ADDRESS=0.0.0.0
-      - ROCKET_PORT=8000
-      - NODE_ID=local_dev_node
+      - DATABASE_URL=${DOCKER_DATABASE_URL}
+      - ROCKET_DATABASES={neighborgoods_db={url=${DOCKER_DATABASE_URL}}}
+      - ROCKET_ADDRESS=${ROCKET_ADDRESS}
+      - ROCKET_PORT=${ROCKET_PORT}
+      - NODE_ID=${NODE_ID}
     restart: unless-stopped
 
   db:
     image: postgres:15
+#    Use for local dev testing only. Exposes DB to outside world
     ports:
       - "5444:5432"
     command: -p 5432
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=neighborgoods
     volumes:
       - postgres_data:/var/lib/postgresql/data

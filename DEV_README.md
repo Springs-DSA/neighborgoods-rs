@@ -73,10 +73,18 @@ cargo install diesel_cli --no-default-features --features "postgres"
 Starting the application for the first time requires following these steps:
 
 1. clone the NeighborGoods repo: `git clone git@github.com:Springs-DSA/neighborgoods-rs.git`
-2. in the repo root, make a `.env` file, and fill it out according to the `.env.example` file.
-3. in the repo root, run `docker compose up --build -d` and wait for it to complete
-4. once everything has built successfully, you will need to run the migrations. run `diesel migration run` in the project root.
-5. after compiling for a moment, your development instance should be available at `localhost:8000`!
+2. Run start.cmd for Windows, or start.sh for Linux
+   ### Linux Example
+    ```
+    ./start.sh --node-name "My Node Name" --node-description "This is my test node"
+    ```
+    
+    ### Windows Example
+    ```
+    .\start.cmd --node-name "My Node Name" --node-description "This is my test node"
+    ```
+3. once everything has built successfully, you will need to run the migrations. run `diesel migration run` in the project root.
+4. after compiling for a moment, your development instance should be available at `localhost:8000`!
 
 ## Developing NeighborGoods
 When developing, the docker containers are set to rebuild upon changes being detected in the source code. Rust is a compiled language, so the first build will take a while, but after that rebuilds should be relatively quick. Changes you make to the code should be reflected in the running app in a few seconds.
