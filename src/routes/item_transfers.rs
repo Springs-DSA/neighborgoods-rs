@@ -8,7 +8,7 @@ use rocket_dyn_templates::{context, Template};
 use uuid::Uuid;
 use rocket::request::FromParam;
 
-use crate::{db::Db, models::{item::Item, item_transfer::{ItemTransfer, TransferPurpose, TransferStatus}, user::User}, schema::{item_transfers, items, users}, services::item_transfer_service::{current_steward_get, get_transfers_context, TransferRole}};
+use crate::{db::Db, models::{item::Item, item_transfer::{ItemTransfer, TransferPurpose, TransferStatus}, user::User}, schema::{item_transfers, items, users}, services::{item_transfer_service::{current_steward_get, get_transfers_context, TransferRole}, notification_service}};
 
 
 
@@ -53,7 +53,18 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
     let item_url = format!("/items/{}", item_id);
 
     match transfer_result {
-        Ok(_) => Flash::success(Redirect::to(item_url), "Item transfer requested!"),
+        Ok(_) => {
+            // Create notification for the current steward (owner) about the borrow request
+            let _ = notification_service::create_borrow_request_notification(
+                current_transfer.1.id, // owner_id
+                &user.name, // borrower_name
+                &current_transfer.2.name, // item_name
+                item_id,
+                &mut db,
+            ).await;
+            
+            Flash::success(Redirect::to(item_url), "Item transfer requested!")
+        },
         Err(_) => Flash::error(Redirect::to(item_url), "Item transfer was unable to be created"),
     }
 }
@@ -112,7 +123,18 @@ pub async fn item_return_post(user: User, item_id: Uuid, mut db: Connection<Db>)
     let item_url = format!("/items/{}", item_id);
 
     match transfer_result {
-        Ok(_) => Flash::success(Redirect::to(item_url), "Item return initiated! Both parties must confirm the return."),
+        Ok(_) => {
+            // Create notification for the owner about the return request
+            let _ = notification_service::create_return_request_notification(
+                owner_id, // owner_id
+                &user.name, // borrower_name
+                &current_transfer.2.name, // item_name
+                item_id,
+                &mut db,
+            ).await;
+            
+            Flash::success(Redirect::to(item_url), "Item return initiated! Both parties must confirm the return.")
+        },
         Err(_) => Flash::error(Redirect::to(item_url), "Item return could not be initiated"),
     }
 }
@@ -168,6 +190,34 @@ pub async fn item_transfer_put(
                 .get_result::<ItemTransfer>(&mut db)
                 .await
                 .expect("Could not complete ItemTransfer");
+
+        // Get item information for notifications
+        let item = items::table
+            .find(item_transfer.item_id)
+            .first::<Item>(&mut db)
+            .await
+            .expect("Could not find item");
+
+        // Create appropriate notifications based on transfer type
+        if item_transfer.purpose == TransferPurpose::Return {
+            // Return completed - notify the borrower
+            if let Some(prev_steward_id) = item_transfer.prev_steward_id {
+                let _ = notification_service::create_return_confirmed_notification(
+                    prev_steward_id, // borrower_id
+                    &item.name, // item_name
+                    item_transfer.item_id,
+                    &mut db,
+                ).await;
+            }
+        } else {
+            // Borrow approved - notify the borrower
+            let _ = notification_service::create_borrow_approved_notification(
+                item_transfer.steward_id, // borrower_id
+                &item.name, // item_name
+                item_transfer.item_id,
+                &mut db,
+            ).await;
+        }
 
         //TODO update all OTHER reserved item transfers so that they point
         // at the correct previous steward.

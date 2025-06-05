@@ -54,6 +54,82 @@
             font-size: 18px; 
             }
 
+        .notification-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background-color: #fff;
+        }
+
+        .notification-card.unread {
+            border-left: 4px solid var(--medium-green);
+            background-color: #f9f9f9;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .notification-title {
+            margin: 0;
+            font-size: 18px;
+            color: var(--warm-brown);
+        }
+
+        .mark-read-btn {
+            background-color: var(--medium-green);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .mark-read-btn:hover {
+            background-color: var(--dark-green);
+        }
+
+        .notification-body {
+            margin-bottom: 8px;
+        }
+
+        .notification-link {
+            color: var(--medium-green);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .notification-link:hover {
+            text-decoration: underline;
+        }
+
+        .notification-details {
+            margin-top: 8px;
+        }
+
+        .notification-details summary {
+            cursor: pointer;
+            color: var(--medium-green);
+            font-size: 14px;
+        }
+
+        .notification-meta {
+            margin-top: 8px;
+            padding: 8px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .notification-meta p {
+            margin: 4px 0;
+        }
+
     </style>
 </head>
 <body>
@@ -98,7 +174,38 @@
             </div>
             <div class="card">
                 <h2>Notifications</h2>
-                {{Notifications}}
+                {{#if notifications}}
+                    {{#each notifications}}
+                        <div class="notification-card {{#unless read}}unread{{/unless}}" data-notification-id="{{id}}">
+                            <div class="notification-header">
+                                <h3 class="notification-title">{{title}}</h3>
+                                {{#unless read}}
+                                    <button class="btn btn-sm mark-read-btn" onclick="markAsRead('{{id}}')">Mark Read</button>
+                                {{/unless}}
+                            </div>
+                            <div class="notification-body">
+                                <p>{{body}}</p>
+                                {{#if link}}
+                                    <a href="{{link}}" class="notification-link">View Details</a>
+                                {{/if}}
+                            </div>
+                            <details class="notification-details">
+                                <summary>More Details</summary>
+                                <div class="notification-meta">
+                                    <p><strong>Type:</strong> {{notification_type}}</p>
+                                    <p><strong>Created:</strong> {{created_at}}</p>
+                                    {{#if read}}
+                                        <p><strong>Status:</strong> Read</p>
+                                    {{else}}
+                                        <p><strong>Status:</strong> Unread</p>
+                                    {{/if}}
+                                </div>
+                            </details>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <p>No notifications yet.</p>
+                {{/if}}
             </div>
             
             <div class="card">
@@ -188,5 +295,40 @@
                 document.querySelectorAll('.tab-content')[index].classList.add('active');
             });
         });
+
+        // Mark notification as read
+        async function markAsRead(notificationId) {
+            try {
+                const response = await fetch(`/api/notifications/${notificationId}/read`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    // Remove the unread class and hide the mark read button
+                    const notificationCard = document.querySelector(`[data-notification-id="${notificationId}"]`);
+                    if (notificationCard) {
+                        notificationCard.classList.remove('unread');
+                        const markReadBtn = notificationCard.querySelector('.mark-read-btn');
+                        if (markReadBtn) {
+                            markReadBtn.style.display = 'none';
+                        }
+                        // Update the status in the details section
+                        const statusElement = notificationCard.querySelector('.notification-meta p:last-child');
+                        if (statusElement) {
+                            statusElement.innerHTML = '<strong>Status:</strong> Read';
+                        }
+                    }
+                } else {
+                    console.error('Failed to mark notification as read');
+                    alert('Failed to mark notification as read. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error marking notification as read:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
     </script>
 </html>

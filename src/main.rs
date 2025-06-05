@@ -122,6 +122,7 @@ fn rocket() -> _ {
             routes::user_agreement::user_agreement_get,
             
         ])
+        .mount("/api", routes::notifications::routes())
         .mount("/public", FileServer::from(relative!("uploads")))
         .mount("/static", FileServer::from(relative!("static")))
         .attach(Template::fairing())

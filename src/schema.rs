@@ -94,6 +94,19 @@ diesel::table! {
 }
 
 diesel::table! {
+    notifications (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        title -> Varchar,
+        body -> Text,
+        link -> Nullable<Varchar>,
+        created_at -> Timestamp,
+        read -> Bool,
+        notification_type -> Varchar,
+    }
+}
+
+diesel::table! {
     use diesel::sql_types::*;
     use super::sql_types::AssessmentType;
 
@@ -144,6 +157,7 @@ diesel::joinable!(item_cert_requirements -> certifications (cert_id));
 diesel::joinable!(item_cert_requirements -> items (item_id));
 diesel::joinable!(item_transfers -> items (item_id));
 diesel::joinable!(items -> users (contributed_by));
+diesel::joinable!(notifications -> users (user_id));
 diesel::joinable!(user_certifications -> certifications (cert_id));
 diesel::joinable!(user_certifications -> users (user_id));
 
@@ -154,6 +168,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     item_transfers,
     items,
     node_settings,
+    notifications,
     peer_assessments,
     user_certifications,
     users,
