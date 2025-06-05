@@ -23,7 +23,7 @@ use rocket_db_pools::{Database, Connection};
 use rocket_db_pools::diesel::prelude::*;
 use rocket_dyn_templates::{Template, context};
 use rocket::{fairing::{self, AdHoc}, Rocket, Build};
-use routes::item_transfers::{item_transfer_post, item_transfer_put, item_transfers_get};
+use routes::item_transfers::{item_transfer_post, item_transfer_put, item_transfers_get, item_return_post, item_transfer_cancel};
 use schema::{item_transfers, items, node_settings, users};
 use uuid::Uuid;
 use std::env;
@@ -117,7 +117,7 @@ fn rocket() -> _ {
             dashboard_get,
             dashboard_redirect,
             inventory_get, items_contribute_get, items_contribute_post, item_get, item_delete,
-            item_transfer_post, item_transfers_get, item_transfer_put,
+            item_transfer_post, item_transfers_get, item_transfer_put, item_return_post, item_transfer_cancel,
             routes::profile::profile_get,
             routes::user_agreement::user_agreement_get,
             

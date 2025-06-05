@@ -7,7 +7,7 @@ use uuid::Uuid;
 use crate::db::Db;
 use crate::models::item::Item;
 use crate::models::user::User;
-use crate::models::item_transfer::{ItemTransfer, TransferStatus};
+use crate::models::item_transfer::{ItemTransfer, TransferStatus, TransferPurpose};
 use crate::schema::{item_transfers, items, users};
 
 #[derive(Serialize)]
@@ -17,7 +17,8 @@ pub struct ItemViewContext {
     pub contributor: User,
     pub transfers_with_stewards: Vec<(ItemTransfer, User)>,
     pub current_steward: User,
-    pub is_current_steward: bool
+    pub is_current_steward: bool,
+    pub has_pending_return: bool
 }
 
 pub async fn get_item_view_context(user: User, item_id: Uuid, mut db: Connection<Db>) -> Result<ItemViewContext> {
@@ -56,8 +57,15 @@ pub async fn get_item_view_context(user: User, item_id: Uuid, mut db: Connection
     
     // 5. Check if the current user is the steward
     let is_current_steward = current_steward.id == user.id;
-    //     .map(|steward_id| steward_id == user.id)
-    //     .unwrap_or(false);
+    
+    // 6. Check if there's a pending return request for this item
+    let has_pending_return = item_transfers::table
+        .filter(item_transfers::item_id.eq(item_id))
+        .filter(item_transfers::status.eq(TransferStatus::Reserved))
+        .filter(item_transfers::purpose.eq(TransferPurpose::Return))
+        .first::<ItemTransfer>(&mut db)
+        .await
+        .is_ok();
     
     Ok(ItemViewContext {
         user,
@@ -65,6 +73,7 @@ pub async fn get_item_view_context(user: User, item_id: Uuid, mut db: Connection
         contributor,
         transfers_with_stewards,
         current_steward,
-        is_current_steward
+        is_current_steward,
+        has_pending_return
     })
 }

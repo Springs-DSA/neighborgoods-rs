@@ -10,7 +10,7 @@ use uuid::Uuid;
 use crate::db::Db;
 use crate::models::item::Item;
 use crate::models::user::User;
-use crate::models::item_transfer::{ItemTransfer, TransferStatus};
+use crate::models::item_transfer::{ItemTransfer, TransferStatus, TransferPurpose};
 use crate::schema::{item_transfers, items, users};
 
 
@@ -103,4 +103,9 @@ pub async fn get_transfers_context(user: User, db: &mut Connection<Db>) -> Trans
         my_reserved_item_transfers,
         my_outstanding_item_transfers,
     }
+}
+
+/// Helper function to check if a transfer is a return
+pub fn is_return_transfer(transfer: &ItemTransfer) -> bool {
+    matches!(transfer.purpose, TransferPurpose::Return)
 }

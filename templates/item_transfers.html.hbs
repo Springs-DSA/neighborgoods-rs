@@ -50,6 +50,18 @@
             background-color: #ADC178;
             color: #F0EAD2;
         }
+        .return-transfer {
+            border-left: 4px solid #609966;
+        }
+        .return-purpose {
+            background-color: #609966;
+            color: #F0EAD2;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
         .transfer-content {
             display: flex;
             gap: 20px;
@@ -198,7 +210,7 @@
             
             {{#if my_reserved_item_transfers}}
                 {{#each my_reserved_item_transfers}}
-                <div class="transfer-card">
+                <div class="transfer-card {{#if (eq this.0.purpose "Return")}}return-transfer{{/if}}">
                     <div class="transfer-header">
                         <div class="transfer-title">{{this.2.name}}</div>
                         <div class="transfer-status">Status: {{this.0.status}}</div>
@@ -271,7 +283,7 @@
             
             {{#if my_outstanding_item_transfers}}
                 {{#each my_outstanding_item_transfers}}
-                <div class="transfer-card">
+                <div class="transfer-card {{#if (eq this.0.purpose "Return")}}return-transfer{{/if}}">
                     <div class="transfer-header">
                         <div class="transfer-title">{{this.2.name}}</div>
                         <div class="transfer-status">Status: {{this.0.status}}</div>

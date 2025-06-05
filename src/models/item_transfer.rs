@@ -4,7 +4,7 @@ use bigdecimal::BigDecimal;
 use serde::{Serialize, Deserialize};
 use uuid::Uuid;
 
-#[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum, FromFormField)]
+#[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum, FromFormField, PartialEq)]
 #[db_enum(existing_type_path = "crate::schema::sql_types::TransferPurpose")]
 pub enum TransferPurpose {
     Use,
@@ -13,9 +13,10 @@ pub enum TransferPurpose {
     Consume,
     Contribute,
     Delist,
+    Return,
 }
 
-#[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum)]
+#[derive(Debug, Serialize, Deserialize, diesel_derive_enum::DbEnum, PartialEq)]
 #[db_enum(existing_type_path = "crate::schema::sql_types::TransferStatus")]
 pub enum TransferStatus {
     Reserved,

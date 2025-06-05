@@ -381,6 +381,19 @@
                         <button id="delete-item-btn" class="delete-button" onclick="confirmDelete('{{item.id}}')">
                             🗑️ Delete Item
                         </button>
+                    <!-- Show return button if the user is not the original steward and is the current one -->
+                    {{else}}
+                        {{#if is_current_steward}}
+                            {{#unless has_pending_return}}
+                            <button id="return-item-btn" class="action-button" onclick="confirmReturn('{{item.id}}')">
+                                🏠 Return Item
+                            </button>
+                            {{else}}
+                            <span class="action-button" style="background-color: #cccccc; cursor: not-allowed;">
+                                Return Pending
+                            </span>
+                            {{/unless}}
+                        {{/if}}
                     {{/if}}
                 </div>
             </div>
@@ -468,6 +481,41 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred while deleting the item.');
+                });
+            }
+        }
+        
+        function confirmReturn(itemId) {
+            // Show confirmation dialog
+            const isConfirmed = confirm("Are you sure you want to return this item? This will initiate a return process that requires confirmation from both parties.");
+            
+            // If user confirms, send POST request to return endpoint
+            if (isConfirmed) {
+                // Create fetch request to return the item
+                fetch(`/items/${itemId}/return`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        // If the response contains a redirect URL, follow it
+                        window.location.href = response.url;
+                    } else {
+                        // Handle the response based on status
+                        if (response.ok) {
+                            // Redirect to transfers page to see the pending return
+                            window.location.href = '/items/transfers';
+                        } else {
+                            // Show error message
+                            alert('Failed to initiate return. Please try again.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while initiating the return.');
                 });
             }
         }

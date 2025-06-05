@@ -58,6 +58,65 @@ pub async fn item_transfer_post(user: User, item_id: Uuid, transfer_request: For
     }
 }
 
+#[post("/items/<item_id>/return")]
+pub async fn item_return_post(user: User, item_id: Uuid, mut db: Connection<Db>) -> Flash<Redirect> {
+    // Get the current steward transfer to find who the item should be returned to
+    let current_transfer = current_steward_get(item_id, &mut db)
+        .await
+        .expect("Unable to get current steward transfer");
+
+    // Verify that the user is the current steward (borrower)
+    if current_transfer.1.id != user.id {
+        return Flash::error(Redirect::to(format!("/items/{}", item_id)), "You are not the current steward of this item");
+    }
+
+    // Check if there's already a pending return request for this item
+    let existing_return = item_transfers::table
+        .filter(item_transfers::item_id.eq(item_id))
+        .filter(item_transfers::status.eq(TransferStatus::Reserved))
+        .filter(item_transfers::purpose.eq(TransferPurpose::Return))
+        .filter(item_transfers::prev_steward_id.eq(user.id))
+        .first::<ItemTransfer>(&mut db)
+        .await;
+
+    if existing_return.is_ok() {
+        return Flash::error(Redirect::to(format!("/items/{}", item_id)), "A return request for this item is already pending");
+    }
+
+    // Find the previous steward (owner/lender) to return the item to
+    let owner_id = current_transfer.0.prev_steward_id
+        .expect("No previous steward found - cannot determine who to return item to");
+
+    let now = Utc::now().naive_utc();
+    // Create the return transfer with the owner as the new steward
+    let return_transfer = ItemTransfer {
+        id: Uuid::new_v4(),
+        item_id,
+        steward_id: owner_id,  // Owner becomes the new steward
+        prev_steward_id: Some(user.id),  // Current user (borrower) is the previous steward
+        purpose: TransferPurpose::Return,
+        lat: None,
+        lng: None,
+        status: TransferStatus::Reserved,
+        created_at: now.clone(),
+        updated_at: now.clone(),
+        steward_confirmed_at: None,
+        prev_steward_confirmed_at: None
+    };
+
+    let transfer_result = diesel::insert_into(item_transfers::table)
+        .values(&return_transfer)
+        .execute(&mut db)
+        .await;
+
+    let item_url = format!("/items/{}", item_id);
+
+    match transfer_result {
+        Ok(_) => Flash::success(Redirect::to(item_url), "Item return initiated! Both parties must confirm the return."),
+        Err(_) => Flash::error(Redirect::to(item_url), "Item return could not be initiated"),
+    }
+}
+
 #[get("/items/transfers")]
 pub async fn item_transfers_get(user: User, mut db: Connection<Db>) -> Template {
 
@@ -115,4 +174,43 @@ pub async fn item_transfer_put(
     }
 
     Flash::success(Redirect::to("/items/transfers"), "Item transfer confirmed! You may have to wait for the other party to confirm before the transfer shows as completed.")
+}
+
+#[post("/items/transfer/<transfer_id>/cancel")]
+pub async fn item_transfer_cancel(
+    user: User,
+    transfer_id: Uuid,
+    mut db: Connection<Db>
+) -> Flash<Redirect> {
+    // Get the transfer to verify the user can cancel it
+    let transfer = item_transfers::table
+        .find(transfer_id)
+        .first::<ItemTransfer>(&mut db)
+        .await;
+
+    match transfer {
+        Ok(transfer) => {
+            // Only allow the requester (steward) to cancel their own request
+            if transfer.steward_id != user.id {
+                return Flash::error(Redirect::to("/items/transfers"), "You can only cancel your own transfer requests");
+            }
+
+            // Only allow canceling if the transfer is still reserved
+            if transfer.status != TransferStatus::Reserved {
+                return Flash::error(Redirect::to("/items/transfers"), "This transfer cannot be canceled");
+            }
+
+            // Update the transfer status to canceled
+            let cancel_result = diesel::update(item_transfers::table.filter(item_transfers::id.eq(transfer_id)))
+                .set(item_transfers::status.eq(TransferStatus::Canceled))
+                .execute(&mut db)
+                .await;
+
+            match cancel_result {
+                Ok(_) => Flash::success(Redirect::to("/items/transfers"), "Transfer request canceled successfully"),
+                Err(_) => Flash::error(Redirect::to("/items/transfers"), "Failed to cancel transfer request"),
+            }
+        },
+        Err(_) => Flash::error(Redirect::to("/items/transfers"), "Transfer not found"),
+    }
 }
