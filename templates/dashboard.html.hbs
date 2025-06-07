@@ -55,16 +55,11 @@
             }
 
         .notification-card {
-            border: 1px solid #ddd;
+            border: 1.5px solid var(--medium-green);
             border-radius: 8px;
             padding: 16px;
             margin-bottom: 12px;
-            background-color: #fff;
-        }
-
-        .notification-card.unread {
-            border-left: 4px solid var(--medium-green);
-            background-color: #f9f9f9;
+            background-color: var(--light-green);
         }
 
         .notification-header {
@@ -82,8 +77,8 @@
 
         .mark-read-btn {
             background-color: var(--medium-green);
-            color: white;
-            border: none;
+            color: var(--cream);
+            border: 1px solid var(--light-green);
             padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
@@ -91,7 +86,9 @@
         }
 
         .mark-read-btn:hover {
-            background-color: var(--dark-green);
+            background-color: var(--light-green);
+            border-color: var(--medium-green);
+            color: var(--warm-brown);
         }
 
         .notification-body {
@@ -99,7 +96,7 @@
         }
 
         .notification-link {
-            color: var(--medium-green);
+            color: var(--warm-brown);
             text-decoration: none;
             font-weight: bold;
         }
@@ -114,15 +111,15 @@
 
         .notification-details summary {
             cursor: pointer;
-            color: var(--medium-green);
+            color: var(--warm-brown);
             font-size: 14px;
         }
 
         .notification-meta {
             margin-top: 8px;
             padding: 8px;
-            background-color: #f5f5f5;
-            border-radius: 4px;
+            border: 1px solid var(--medium-green);
+            border-radius: 8px;
             font-size: 14px;
         }
 
@@ -176,36 +173,35 @@
                 <h2>Notifications</h2>
                 {{#if notifications}}
                     {{#each notifications}}
-                        <div class="notification-card {{#unless read}}unread{{/unless}}" data-notification-id="{{id}}">
+                        {{#unless read}}
+                        <div class="notification-card" data-notification-id="{{id}}">
                             <div class="notification-header">
                                 <h3 class="notification-title">{{title}}</h3>
-                                {{#unless read}}
                                     <button class="btn btn-sm mark-read-btn" onclick="markAsRead('{{id}}')">Mark Read</button>
-                                {{/unless}}
                             </div>
                             <div class="notification-body">
                                 <p>{{body}}</p>
-                                {{#if link}}
-                                    <a href="{{link}}" class="notification-link">View Details</a>
-                                {{/if}}
-                            </div>
                             <details class="notification-details">
                                 <summary>More Details</summary>
                                 <div class="notification-meta">
                                     <p><strong>Type:</strong> {{notification_type}}</p>
                                     <p><strong>Created:</strong> {{created_at}}</p>
-                                    {{#if read}}
-                                        <p><strong>Status:</strong> Read</p>
-                                    {{else}}
-                                        <p><strong>Status:</strong> Unread</p>
+                                    <p><strong>Status:</strong> Unread</p>
+                                    {{#if link}}
+                                        <a href="{{link}}" class="notification-link">View Details</a>
                                     {{/if}}
+                                </div>
                                 </div>
                             </details>
                         </div>
+                        {{/unless}}
                     {{/each}}
                 {{else}}
                     <p>No notifications yet.</p>
                 {{/if}}
+                <div id="no-unread-notifications" style="display: none;">
+                    <p>No notifications yet.</p>
+                </div>
             </div>
             
             <div class="card">
@@ -296,6 +292,18 @@
             });
         });
 
+        // Check if there are any unread notifications and show/hide the "No notifications yet." message
+        function checkUnreadNotifications() {
+            const notificationCards = document.querySelectorAll('.notification-card');
+            const noNotificationsDiv = document.getElementById('no-unread-notifications');
+            
+            if (notificationCards.length === 0) {
+                noNotificationsDiv.style.display = 'block';
+            } else {
+                noNotificationsDiv.style.display = 'none';
+            }
+        }
+
         // Mark notification as read
         async function markAsRead(notificationId) {
             try {
@@ -307,19 +315,12 @@
                 });
 
                 if (response.ok) {
-                    // Remove the unread class and hide the mark read button
+                    // Remove the notification card entirely
                     const notificationCard = document.querySelector(`[data-notification-id="${notificationId}"]`);
                     if (notificationCard) {
-                        notificationCard.classList.remove('unread');
-                        const markReadBtn = notificationCard.querySelector('.mark-read-btn');
-                        if (markReadBtn) {
-                            markReadBtn.style.display = 'none';
-                        }
-                        // Update the status in the details section
-                        const statusElement = notificationCard.querySelector('.notification-meta p:last-child');
-                        if (statusElement) {
-                            statusElement.innerHTML = '<strong>Status:</strong> Read';
-                        }
+                        notificationCard.remove();
+                        // Check if we need to show the "No notifications yet." message
+                        checkUnreadNotifications();
                     }
                 } else {
                     console.error('Failed to mark notification as read');
@@ -330,5 +331,10 @@
                 alert('An error occurred. Please try again.');
             }
         }
+
+        // Initialize the notification display on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkUnreadNotifications();
+        });
     </script>
 </html>
