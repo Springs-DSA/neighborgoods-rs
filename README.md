@@ -1,36 +1,43 @@
+
 # NeighborGoods
 NeighborGoods is a Federated Library of Things.
 
 ## Overview
 ### Vision Statement
-The Neighborgoods Project aims To create a hyper-local, non-commercial platform that empowers neighbors to share resources, time, skills, and support—strengthening solidarity, trust, and resilience within communities.
+The NeighborGoods Project aims to create a hyper-local, non-commercial platform that empowers neighbors to share resources, time, skills, and support—strengthening solidarity, trust, and resilience within communities.
 
 ### Target Users
-Neighbors seeking to borrow items for occasional use
-Community members willing to share items and skills
-Community organizers planning local events
-Neighborhood administrators managing community engagement
+ - Neighbors seeking to borrow items for occasional use
+ - Community Members willing to share items and skills
+ - Community Organizers planning local events
+ - Neighborhood Administrators managing community engagement
 
 ### Core Functionality
-Item and skill sharing registry
-Borrowing request and confirmation system
-Community events organization
-User verification and trust-building mechanisms
-Administration tools for community managers
-Inter-node Federation
+ - Item and skill sharing registry
+ - Borrowing request and confirmation system
+ - Community events organization
+ - User verification and trust-building mechanisms
+ - Administration tools for community managers
+ - Inter-node Federation
 
 ## Design Philosophy & Principles
 ### Design Values
-Community-Focused: Maximize hyper-local, face to face interactions
-Accessibility: Ensure the platform is usable by neighbors of all technical abilities
+Community-Focused: Maximize hyper-local, face-to-face interactions
+Accessibility: Ensure the platform is usable by neighbors of all technical abilities 
+
+ - [ ] Referring to disabilities, low computer literacy, or both?
+
 Transparency: Create clear processes for borrowing, lending, and conflict resolution
 Simplicity: Keep interfaces clean and straightforward to encourage participation
 Trust-Building: Incorporate elements that foster trust among community members
 
 ### Visual Language
-Color Palette: Primary colors should be warm and welcoming
-Iconography: Simple, recognizable icons with consistent style throughout the application
-Spacing: Generous white space to maintain clarity and reduce cognitive load
+Color Palette: Primary colors should be warm and welcoming. 
+
+ - [ ] Reference style guide?
+
+Iconography: Simple, recognizable icons with consistent style throughout the application.
+Spacing: Generous white space to maintain clarity and reduce cognitive load.
 
 ### Responsive Design Approach
 Mobile-first design ensuring full functionality on smaller screens
@@ -39,31 +46,57 @@ Consistent navigation patterns across device sizes
 
 # Features
 ## Item Borrowing (Top Priority)
-A user should be able to offer items they own to the network. This includes creating a profile for the item including name, picture, description, borrowing, maintenance, and rules to use, etc. Once the object has been entered into the system, its location and stewardship is tracked, and it is displayed in a store-like list where other users can borrow it. As this is a distributed network of individuals offering up their items, there is no central repository that items must be checked in to. Instead, items are simply at the location they were last used at, until someone comes to borrow it again. Checking out an item involves clicking the borrow button, and meeting the requirements. Then, the item must transfer to the stewardship of the borrower. The owner of the item will receive a notification that the item has been reserved for borrowing, and it is up to the owner and the borrower how to move the item. In the future, it should be possible to have network members volunteer as gofers that move items around, but for now it's up to individual members to get their borrowed items.
+A user should be able to offer items they own on their community node. 
+This includes creating a listing for the item which includes the item name, picture, description, borrowing status, maintenance, rules to use, borrowing duration, and other details.
+Once the item has been entered into the system, its location and stewardship is tracked, and it is displayed in a store-like list where other users can borrow it. 
+As NeighborGoods is a distributed network of individuals offering up their items, there is no central repository that items must be checked in to. Instead, items are tracked according to their last known steward. 
+Checking out an item involves clicking the borrow button, and confirming that the user meets any requirements.
+Then, the item must transfer to the stewardship of the borrower. 
+The owner of the item will receive a notification that the item has been reserved for borrowing, and it is up to the owner and the borrower to move the item. 
+In the future, it should be possible to have network members volunteer as intermediaries that move items around, but at launch it will up to individual members to retrieve their borrowed items.
 
 ## Calendar Integration
 Implementation of return dates and availability
 
+ - [ ] ICS export, internal calendar, or calendar app linking?
+
 ## Dispute Resolution
-Dispute resolution is handled through a restorative justice framework. Users involved in disputes will be encouraged to resolve the dispute on their own. If resolution cannot be reached a request for moderation will be made, either to the server Admin(s) or the broader User Base. While a dispute is pending, all Users involved will have flags on their public profiles with a simple summery of the issue automatically generated (overdue, damaged, etc). 
+Users will be encouraged to resolve their own disputes as a first resort.
+If resolution cannot be reached a request for moderation can be made, either to the server Admin(s) or the broader User Base. Moderator guidelines will recommend a framework of Restorative Justice in handling disputes.
+While a dispute is pending, all Users involved will have flags on their public profiles with a simple summery of the issue automatically generated (overdue, damaged, etc). 
 
 ## ActivityPub Integration
-The eventual goal is to allow individuals to set up networks of these servers, and allow inter-node functionality for all of the above application features.
+A Federation system will allow users to create NeighborGoods networks for their own communities, each network or "node" can connect to other independent nodes to exchange NeighborGoods services with other communities as needed.
 
 ## Social Media (Future Priority)
-Social media posts are essentially markdown documents, with delayed publishing. All posts won't be visible to anyone besides the author and moderators until 6 am the next morning. Posts can be made in response to other posts, but this delayed pattern still holds true.
+Social media posts will essentially be markdown documents, with delayed publishing. Posts will not be visible to anyone besides the author and moderators until 6 am the next morning. 
 
-## Location Threads (Great Idea for a different App)
+ - [ ] If a post is made at 5:50am, will it wait 10min, or 24hrs?
+
+Posts can be made in response to other posts, but will likewise stay hidden until the next day.
+
+## Location Threads (Spinoff App)
 These are for real-time, localized communication. They work like the map markers in foxhole, where each pin is a thread, and can have its duration extended or reduced.
+
+ - [ ] User makes a pin, marks their location on the map, along with a duration. Anyone in the immediate area can respond until the pin expires?
 
 ## Contribution and Gamification (Future Priority)
 To help align individual incentives with pro-social actions, contributions are tracked for all users, along with how their contributions are used. These values are put into a score "leaky bucket" or moving average, so that continuous contribution towards the other network members (and by extension the network itself) is encouraged.
+ - [ ] Like a micro reputation economy? Top contributors get a high score, encouraging preferential treatment on competing borrows and the like?
 
 ## The Community Currency Exchange (Future Priority)
-To facilitate the above contribution, and also alow for interfacing with the world at large, the application supports a complementary currency system, based off of the [ROCS paradigm](https://transaction.net/money/rocs/).
+To facilitate Contribution and Gamification, and also allow for interfacing with the world at large, the application supports a complementary currency system, based off of the [ROCS paradigm](https://transaction.net/money/rocs/).
 
 ## Collective Action (Future Priority)
-Users will sometimes need to solve the collective action problem, such as with establishing a new cert for the network, or executing on a community project. For NeighborGoods, the problem is solved using a crowd funding like procedure. When an action needs to be performed, individuals can start a collective action campaign. This campaign expires after a set amount of time, and is an all or nothing affair. If the campaign is successful, then each member must execute on their commitment. Commitments that can be performed automatically by the system are performed immediately.
+Users will sometimes need to solve a problem collectively, such as establishing a new cert for their node, or organizing community project. For NeighborGoods, the problem is solved using a procedure similar to crowdfunding. 
+When an action needs to be performed, individuals can start a Collective Action Campaign. 
+
+ - [ ] CAC page will include necessary manpower roles and resources required? 
+
+This campaign expires after a set amount of time, and is an all or nothing affair. 
+If the campaign is successful, each member who pledges to the campaign must execute on their commitment. Commitments that can be performed automatically by the system are performed immediately.
+
+ - [ ] Examples including listing items as "borrowed" or transferring money?
 
 # Data Models
 The following are database models that will be needed for the above system:
@@ -94,15 +127,15 @@ The following are database models that will be needed for the above system:
 
 # Pages
 The following are the available pages to interact with the application:
-1. Landing - a simple page giving a high level overview of the application.
+1. Landing - a simple page giving a high level overview of the application. The starting page for first-time users.
 2. Login - self explanatory
 3. SignUp - self explanatory
-4. FAQ/About/Community Agreement - pages offering more in depth information about the platform, and this node in particular.
-5. Inventory - the main page for viewing what items are available in the network, and examining them.
-6. ItemManagementView - the page displays a single item in full. Also allows for borrowing.
-7. ItemContribution - allows for the contribution of new items to the network.
-8. UserProfile - the main page for users to manage their own profiles. Includes their own stats and history of actions involving them, along with outstanding commitments.
-9. Dashboard - the default page redirected to after logging in. 
+4. FAQ/About/Community Agreement - pages offering more in depth information about the platform, and the node being viewed.
+5. Inventory - a collection of all open offers and requests listed on the node, along with search tools to find what a user needs.
+6. Item Management View - the page displays a single item in full. Items are borrowed from this page.
+7. Item Contribution - allows for the contribution of new items to the network.
+8. User Profile - the main page for users to manage their own profiles. Includes their own stats and history of actions involving them, along with outstanding commitments.
+9. Dashboard - AKA home page. The starting page for users who have logged in.
 
 # UI/UX
 [proposed palette](https://coolors.co/palette/f0ead2-dde5b6-adc178-a98467-6c584c)
@@ -118,10 +151,10 @@ Mutual Aid	"We uplift each other through shared resources, not profit."
 Solidarity	"We act together, not alone. We show up for our neighbors."
 Trust & Care	"Our platform is built on kindness, consent, and community accountability."
 Accessibility	"Simple, inclusive design for all people, regardless of tech literacy."
-Decentralization	Local servers & local power: communities make decisions for themselves.
+Decentralization	"Local servers & local power; communities make decisions for themselves."
 Non-extractive	"No ads, no data harvesting, no rent-seeking—just people helping people."
 
-Voice: Friendly, warm, neighborly, non-hierarchical
+Voice: Friendly, warm, neighborly, non-hierarchical.
 Tone: Casual but respectful. Community-first.
 Vibe: Think hand-painted signs on porches, potluck flyers, and zines.
 
@@ -136,6 +169,8 @@ Photography or illustration:
 If used, prioritize real people, real places
 Avoid stock imagery with corporate or posed energy
 
+ - [ ] Policy on genAI images?
+
 Emoji use:
 Use sparingly to enhance tone (e.g., ✅, 💬, 🌱)
 
@@ -144,7 +179,7 @@ NeighborLink app is built on community, solidarity, and mutual care. Its tone sh
 
 Voice qualities:
 Friendly and conversational
-Trustworthy but not corporate
+Authentic, not corporate
 Empowering, not patronizing
 Grounded in shared values and real needs
 
@@ -153,18 +188,17 @@ Tech jargon or startup buzzwords
 Saviorism or charity framing
 
 Preferred:
-Words like share, support, build, 
-      offer, trade, borrow, connect
+Words like share, support, or build
 “We” language over “you”
 Accessible vocabulary
 
-When in doubt, keep it simple. This brand is built on clarity, trust, and connection — and that should be reflected in every design choice. Minimalism isn’t about being plain; it’s about being purposeful. Every color, font, icon, or word should serve a function. If something doesn’t add value, it adds noise. Prioritize readability, accessibility, and emotional clarity. Let the message — and the mission — shine through without distraction.
+When in doubt, keep it simple. This brand is built on clarity, trust, and connection — and that should be reflected in every design choice. Prioritize readability, accessibility, and emotional clarity. Let the message — and the mission — shine through without distraction.
 
 
 ## User Personas (for considering user behavior)
 ### Deb - The Occasional Borrower
 Background: Homeowner who occasionally needs tools or equipment
-Goals: Access items without purchasing, connect with neighbors
+Goals: Access items for short-term use without getting a full tool set, connect with neighbors
 Pain Points: Hesitant about asking to borrow, worried about item condition
 Usage Patterns: Checks the platform when specific needs arise
 
@@ -180,15 +214,21 @@ Goals: Coordinate resources for events, engage more neighbors
 Pain Points: Tracking commitments, ensuring resources are available
 Usage Patterns: Heavy use leading up to events, creates and manages multiple requests
 
+### Jimmy - The Intensive Borrower
+Background: Community member experiencing economic hardship.
+Goals: Access items for medium to long-term use to supplement safety net.
+Pain Points: Borrowing limits, maintenance costs for equipment, social stigma of "charity case"
+Usage Patterns: Heavy use, will either monitor inventory or make requests for urgent needs.
+
 ## Information Architecture
 ### Main Navigation Structure
 Home/Dashboard: Community activity feeds, Active interactions, Community Events, quick access functions
 Marketplace: Available items/skills, community needs, search functionality
-My Account: Profile (and edit option), my shared items, borrowing history, calendar
+My Account: Profile, edit profile, my shared items, borrowing history, calendar
 Admin Panel: User management, dispute resolution, settings (admin user only)
 
 ### Content Organization
-Items organized by user generated tags, and by popularity and date made available
+Items organized by user generated tags, by popularity, and by date added
 Skills categorized by tags with availability indicators
 Events organized chronologically with resource needs highlighted
 Requests tracked by status (pending, active, completed)
@@ -211,26 +251,26 @@ Borrower returns item and both parties confirm return
 Optional feedback provided
 
 ### Community Event Organization
-Organizer creates event with date, description, location
-Organizer lists needed resources (items, skills, volunteers) Automatically makes Request Tickets
+Organizer creates event with date, description, and location
+Organizer lists needed resources (items, skills, volunteers), system automatically makes Request Tickets
 Community members can commit resources or volunteer time
 System tracks commitments and outstanding needs
-Organizer communicates with participants off platform
+Organizer communicates with participants off-platform
 Event execution with check-in of contributed items
 Return process for borrowed items after event
 
 ### Dispute Resolution
-User reports issue through platform or automatically added if overdue
-Both users are publicly flagged as being in dispute++
+User reports issue through platform or issue is automatically added if item is overdue
+Both users are publicly flagged as being in dispute
 System offers direct resolution options
-If unresolved, community mediator or admin is Requested
+If unresolved, community mediator or admin is requested
 Mediator facilitates discussion between parties
-Resolution is documented and implemented, dispute--
+Resolution is documented and implemented, dispute is closed
 
 ## Component Library
 ### Core Components
-User Cards: Displaying user profile information with trust indicators
-Item Cards: Showcasing available items with key details
+User Cards: Displays user profile information with trust indicators
+Item Cards: Showcases available items with key details
 Request Forms: Standardized interface for borrowing requests
 Calendar Elements: For scheduling and availability management
 Navigation Components: Consistent across the application
@@ -273,7 +313,7 @@ Content addressing for consistent item identification across nodes
 
 ## Node Architecture Needs
 Self-hostable neighborhood instances
-Discovery mechanism for nearby neighborhood nodes through nonprofit
+Discovery mechanism for nearby neighborhood nodes through Neighborgoods nonprofit
 Global vs. local content distinctions
 Conflict resolution between federated nodes
 
@@ -295,20 +335,32 @@ Balance between local node autonomy and network coherence
 # Revised Feature Roadmap
 Phase 1: Core borrowing and lending functionality
 Phase 2: Community events and resources
-Phase 3: Federation protocol implementation
-Phase 4: Nonprofit establishment and governance structure
+Phase 3: Nonprofit establishment and governance structure
+Phase 4: Federation protocol implementation 
 Phase 5: Ratings, reviews, and enhanced trust mechanisms
 
 # Glossary
-Lending - A User posting to make an item available for others to use temporarily. (Core Action)
-Offering - A User posting to make an item available for others to keep, or to volunteer their skills or time. (Core Action)
-Requesting - A User posting to ask for other Users to fill a need not available in the Listings. (Core Action)
-Borrowing - A User posting a ticket to someone else's item temporarily. (Core Action)
-Accepting - A User posting a ticket to remove an Offered item (giving them ownership), or to use another User's skills or time (Core Action)
-Planning - Creating an Event with multiple Request or Borrow Tickets tied to the same location, date and time. (Core Action)
-Listings - All items/skills currently available to borrow
-Needs - All current requests from community members
-Tickets - Individual user transactions (so "Borrowing Ticket" instead of "Borrowing request", because that's just confusing). internal use only.
-Posting - Catch all term for all core actions for Users.
-Node - An individual server running a neighborgoods instance. 
-Admin - A User with additional responsibilities of hosting a node, moderating it, adding new Users, watching for problems and requesting additional features from developers.
+
+ - Lending - A User posting to make an item available for others to use
+   temporarily. (Core Action)
+ - Offering - A User posting to make an item available for others to
+   keep, or to volunteer their skills or time. (Core Action)
+ - Requesting - A User posting to ask for other Users to fill a need not
+   available in the Listings. (Core Action)
+ - Borrowing - A User posting a ticket to someone else's item
+   temporarily. (Core Action)
+ - Accepting - A User posting a ticket to remove an Offered item (giving
+   them ownership), or to use another User's skills or time (Core
+   Action)
+ - Planning - Creating an Event with multiple Request or Borrow Tickets
+   tied to the same location, date and time. (Core Action)
+ - Listings - All items/skills currently available to borrow
+ - Needs - All current requests from community members
+ - Tickets - Individual user transactions, IE "Borrowing Ticket" instead
+   of "Borrowing request" to avoid confusion. (Internal use
+   only)
+ - Posting - Catch-all term for all core actions for Users. (Offers, requests, plans, etc.) 
+ - Node - An individual server running a Neighborgoods instance.
+ - Admin - A User with additional responsibilities of hosting a node,
+   moderating it, adding new Users, watching for problems and requesting
+   additional features from developers. 
